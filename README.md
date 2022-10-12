@@ -61,7 +61,7 @@
 <details>
   <summary>Server</summary>
   <ul>
-    <li><a href="https://www.javascript.com/">JavaScript</a></li>
+    <li><a href="https://nodejs.dev/en/">Node</a></li>
     <li><a href="https://expressjs.com/">Express.js</a></li>
   </ul>
 </details>
@@ -69,7 +69,8 @@
 <details>
 <summary>Database</summary>
   <ul>
-    <li><a href="https://firebase.google.com/">Firebase</a></li>
+    <li><a href="https://www.mongodb.com/">MongoDB</a></li>
+    <li><a href="https://mongoosejs.com/">Mongoose</a></li>
   </ul>
 </details>
 
@@ -105,9 +106,11 @@
 
 To run this project, you will need to add the following environment variables to your .env file
 
-`API_KEY`
+`PORT`
 
-`ANOTHER_API_KEY`
+`HOST`
+
+`HOST_URL`
 
 <!-- Getting Started -->
 
@@ -175,11 +178,10 @@ function App() {
 
 - [ ] Initial set up
   - [ ] Initialize dependencies and dev environment
-- [ ] Firestore set up
-  - [ ] Set up Firestore
-  - [ ] Set up cloud database
-  - [ ] Set up auth
-  - [ ] Integrate Stripe
+- [ ] Database Set up
+- [ ] Security set up
+  - [ ] Local strategy
+  - [ ] Oauth
 - [ ] Controllers set up
 - [ ] Models set up
 - [ ] Views set up
