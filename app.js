@@ -8,8 +8,22 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const helmet = require("helmet");
+const compression = require("compression");
+const { MongoClient, ServerApiVersion } = require("mongodb");
+const mongoose = require("mongoose");
 
-// Routers
+// Database Connection
+//! const mongoDB = process.env.MONGODB_URI;
+const mongoDB = process.env.MONGODB_TEST_URI;
+mongoose.connect(mongoDB, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "MongoDB connection error:"));
+
+// Routing
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 
@@ -29,6 +43,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+// Routes
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 

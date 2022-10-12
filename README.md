@@ -177,14 +177,32 @@ function App() {
 ## :compass: Roadmap
 
 - [ ] Initial set up
-  - [ ] Initialize dependencies and dev environment
-- [ ] Database Set up
+  - [x] Initialize dependencies and dev environment
+- [ ] Database set up
+  - [x] MoongoDB server creation
+  - [x] Connect to database
+  - [ ] Database Schema set up
+    - [ ] User Schema
+      - [ ] Determine region enumerations
+    - [ ] Artist Schema
+    - [ ] Artist Page Schema
+    - [ ] Post Schema
+    - [ ] Membership Schema
 - [ ] Security set up
-  - [ ] Local strategy
-  - [ ] Oauth
+  - [ ] Local Strategy
+  - [ ] Oauth Strategy
 - [ ] Controllers set up
-- [ ] Models set up
+- [ ] Stripe set up
 - [ ] Views set up
+  - [ ] Header (no user)
+  - [ ] Sidebar (user)
+  - [ ] Landing Page
+  - [ ] Search page
+  - [ ] Artist page
+  - [ ] Become creator page
+  - [ ] Creator Options
+    - [ ] Edit page
+    - [ ] Analytics
 - [ ] Aesthetics
 
 <!-- FAQ -->
