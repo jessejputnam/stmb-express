@@ -30,10 +30,24 @@ const UserSchema = new Schema(
       firstname: { String },
       lastname: { String },
       //! Fix regions to be specific -- ask Ed for guidance
-      region: {}
+      region: { String }
     }
   },
   { timestamps: true }
 );
+
+UserSchema.plugin(uniqueValidator, { message: "is already taken" });
+
+UserSchema.pre("save", function (next) {
+  if (!this.isModified("password")) {
+    return next();
+  }
+  this.password = bcrypt.hashSync(this.password, 10);
+  next();
+});
+
+UserSchema.methods.comparePassword = function (plaintext, callback) {
+  return callback(null, bcrypt.compareSync(plaintext, this.password));
+};
 
 module.exports = mongoose.model("User", UserSchema);
