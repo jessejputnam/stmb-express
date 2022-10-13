@@ -5,18 +5,6 @@ const Schema = mongoose.Schema;
 const uniqueValidator = require("mongoose-unique-validator");
 const bcrypt = require("bcryptjs");
 
-// Email Validation Schema for User model
-const Email = new Schema({
-  address: {
-    type: String,
-    lowercase: true,
-    required: [true, "can't be blank"],
-    match: [/\S+@\S+\.\S+/, "is invalid"],
-    index: true
-  },
-  validated: { type: Boolean, default: false }
-});
-
 // USER MODEL
 const UserSchema = new Schema(
   {
@@ -24,20 +12,17 @@ const UserSchema = new Schema(
       type: String,
       lowercase: true,
       unique: true,
-      required: [true, "can't be blank"],
-      match: [/^[a-zA-Z0-9]+$/, "is invalid"],
+      required: [true, "Email cannot be empty"],
+      match: [/\S+@\S+\.\S+/, "Must be valid email"],
       index: true
     },
     password: { type: String, required: true },
-    email: { type: Email, required: true },
 
-    subscriptions: [{ type: Schema.Types.ObjectId, ref: "" }],
+    firstname: { type: String, maxLength: 30, required: true },
+    lastname: { type: String, maxLength: 30, required: true },
+    region: { type: String, required: true },
 
-    profile: {
-      firstname: { type: String, maxLength: 30, required: true },
-      lastname: { type: String, maxLength: 30, required: true },
-      region: { type: String, required: true }
-    }
+    subscriptions: [{ type: Schema.Types.ObjectId, ref: "Artist" }]
   },
   { timestamps: true }
 );
@@ -48,7 +33,7 @@ UserSchema.pre("save", function (next) {
   if (!this.isModified("password")) {
     return next();
   }
-  this.password = bcrypt.hashSync(this.password, process.env.SALT_VALUE);
+  this.password = bcrypt.hashSync(this.password, 10);
   next();
 });
 

@@ -1,0 +1,35 @@
+extends layout  
+
+block content 
+  if errors 
+    ul 
+      for error in errors 
+        li!= error.msg
+
+  if error 
+    li= error 
+
+  form.form-wrapper(method='POST' action='') 
+    h2(style="text-align:center")= title
+    div.form-control 
+      label(for="username" style="margin-left:15px") Email
+      input#username(type="email" name="username" required='true' placeholder='person@email.com')
+    div.form-control 
+      label(for="firstName" style="margin-left:15px") First Name
+      input#firstName(type="text" name="firstName" required='true' placeholder='Chris')
+    div.form-control 
+      label(for="lastName" style="margin-left:15px") Last Name
+      input#lastName(type="text" name="lastName"  required='true' placeholder='Person')
+    div.form-control 
+      label(for="region" style="margin-left:15px") Region
+      input#region(type="text" name="region"  required='true' placeholder='Country or State')
+    div.form-control 
+      label(for="password" style="margin-left:15px") Password 
+      span(style="font-size:.6rem;margin-left:15px;margin-top:-10px") ⌞ Must have one of each uppercase, lowercase, number, symbol - minimum length of 8
+      input#password(type="password" name="password"  required='true' placeholder='********' min-length="8" title="Must contain at least one  number, one symbol, one uppercase and lowercase letter, and at least 8 or more characters")
+    div.form-control 
+      label(for="passConfirm" style="margin-left:15px") Confirm Password
+      input#passConfirm(type="password" name="passConfirm"  required='true' placeholder='********')
+    div.form-control-btns 
+      a(href="/") Cancel
+      button.btn(type="submit") Submit

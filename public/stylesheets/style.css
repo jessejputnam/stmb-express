@@ -1,8 +1,50 @@
+/* TABLE OF CONTENTS */
+/* 
+
+  # Formatting
+    ## Forms
+  # Header
+  # Sidebar
+  # Footer
+  # Main
+    ## Register
+
+*/
+
+/* ##################### # FORMATTING ################## */
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  box-sizing: border-box;
 }
 
 a {
-  color: #00B7FF;
+  color: #00b7ff;
 }
+
+/* ########### ## FORMS ############ */
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  width: 600px;
+  margin: 0 auto;
+}
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+  row-gap: 7px;
+}
+
+.form-control > input {
+  padding: 5px;
+}
+
+/* ##################### # HEADER ##################### */
+
+/* #################### # SIDEBAR ##################### */
+
+/* #################### # FOOTER ###################### */
+
+/* ##################### # MAIN ####################### */
+
+/*  ########## ## REGISTER ############ */

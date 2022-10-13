@@ -176,6 +176,10 @@ function App() {
 
 ## :compass: Roadmap
 
+- Check-ins/Reminders:
+
+  - [ ] Figure out region list
+
 - [ ] Initial set up
 
   - [x] Initialize dependencies and dev environment

@@ -8,8 +8,9 @@ html(lang='en')
     script(type="module" src="/javascripts/script.js" defer)
   
   body
-    div 
-      div.header-wrapper 
+    if !currentUser
+      header 
+        a(href="/register") Register
 
     main     
       block content
