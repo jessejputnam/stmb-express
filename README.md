@@ -184,12 +184,12 @@ function App() {
 
   - [x] MoongoDB server creation
   - [x] Connect to database
-  - [ ] Database Schema set up
+  - [x] Database Schema set up
     - [x] User Model
     - [x] Artist Model
     - [x] Artist Page Model
     - [x] Post Model
-    - [ ] Membership Model
+    - [x] Membership Model
     - [x] Genre Model
 
 - [ ] Security set up
