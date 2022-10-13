@@ -10,7 +10,7 @@ const PageSchema = new Schema({
   pageInfo: {
     title: { type: String, maxLength: 50, required: true },
     genre: { type: Schema.Types.ObjectId, ref: "Genre", required: true },
-    region: { type: Schema.Types.ObjectId, ref: "Region", required: true },
+    region: { type: String, required: true },
     description: { type: String, required: true },
     socials: {
       facebook: { type: String },

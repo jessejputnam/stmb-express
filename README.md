@@ -190,7 +190,6 @@ function App() {
     - [x] Artist Page Model
     - [ ] Post Model
     - [ ] Membership Model
-    - [ ] Region Model
     - [ ] Genre Model
 
 - [ ] Controllers set up

@@ -36,7 +36,7 @@ const UserSchema = new Schema(
     profile: {
       firstname: { type: String, maxLength: 30, required: true },
       lastname: { type: String, maxLength: 30, required: true },
-      region: { type: Schema.Types.ObjectId, ref: "Region" }
+      region: { type: String, required: true }
     }
   },
   { timestamps: true }
