@@ -180,7 +180,7 @@ function App() {
 
   - [x] Initialize dependencies and dev environment
 
-- [ ] Database set up
+- [x] Database set up
 
   - [x] MoongoDB server creation
   - [x] Connect to database
