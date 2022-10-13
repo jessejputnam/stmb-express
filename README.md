@@ -188,9 +188,15 @@ function App() {
     - [x] User Model
     - [x] Artist Model
     - [x] Artist Page Model
-    - [ ] Post Model
+    - [x] Post Model
     - [ ] Membership Model
     - [x] Genre Model
+
+- [ ] Security set up
+
+  - [ ] Local Strategy
+    - [ ] Session cookie set up
+  - [ ] Oauth Strategy (?)
 
 - [ ] Controllers set up
 
@@ -218,11 +224,6 @@ function App() {
   - [ ] Banner images
   - [ ] Profile images
 
-- [ ] Security set up
-
-  - [ ] Local Strategy
-  - [ ] Oauth Strategy (?)
-
 - [ ] Stripe set up
 
   - [ ] Connect stripe
@@ -232,6 +233,7 @@ function App() {
   - [ ] Subscription logic
 
 - [ ] Views set up
+
   - [ ] Header (no user)
   - [ ] Sidebar (user)
   - [ ] Landing Page
@@ -241,6 +243,7 @@ function App() {
   - [ ] Creator Options
     - [ ] Edit page
     - [ ] Analytics
+
 - [ ] Aesthetics
 
 <!-- FAQ -->

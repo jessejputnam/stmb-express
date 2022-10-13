@@ -12,14 +12,14 @@ const PageSchema = new Schema({
     genre: { type: Schema.Types.ObjectId, ref: "Genre", required: true },
     region: { type: String, required: true },
     description: { type: String, required: true },
-    socials: {
+    socialUrls: {
       facebook: { type: String },
       instagram: { type: String },
       twitter: { type: String },
       website: { type: String }
     },
 
-    images: {
+    imgUrls: {
       banner: { type: String, default: "images/banner-placeholder" },
       avatar: { type: String, default: "images/avatar-placeholder.svg" }
     },
