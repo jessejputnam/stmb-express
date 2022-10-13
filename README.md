@@ -177,22 +177,61 @@ function App() {
 ## :compass: Roadmap
 
 - [ ] Initial set up
+
   - [x] Initialize dependencies and dev environment
+
 - [ ] Database set up
+
   - [x] MoongoDB server creation
   - [x] Connect to database
   - [ ] Database Schema set up
-    - [ ] User Schema
-      - [ ] Determine region enumerations
-    - [ ] Artist Schema
-    - [ ] Artist Page Schema
-    - [ ] Post Schema
-    - [ ] Membership Schema
-- [ ] Security set up
-  - [ ] Local Strategy
-  - [ ] Oauth Strategy
+    - [x] User Model
+    - [x] Artist Model
+    - [x] Artist Page Model
+    - [ ] Post Model
+    - [ ] Membership Model
+    - [ ] Region Model
+    - [ ] Genre Model
+
 - [ ] Controllers set up
+
+  - [ ] Auth
+    - [ ] Register user
+      - [ ] Email verification
+    - [ ] Login
+  - Artist
+    - [ ] Artist sign up
+    - [ ] Connecting Stripe account
+      - [ ] Onbaording
+  - [ ] Page
+    - [ ] Page creation
+    - [ ] Page editing
+    - [ ] Page deleting
+    - [ ] Page viewing
+    - [ ] Posts
+  - [ ] Search
+    - [ ] By name
+    - [ ] By genre
+    - [ ] By region
+
+- [ ] File Storage Set up
+
+  - [ ] Banner images
+  - [ ] Profile images
+
+- [ ] Security set up
+
+  - [ ] Local Strategy
+  - [ ] Oauth Strategy (?)
+
 - [ ] Stripe set up
+
+  - [ ] Connect stripe
+  - [ ] Stripe users
+  - [ ] Stripe accounts
+  - [ ] Marketplace onboarding
+  - [ ] Subscription logic
+
 - [ ] Views set up
   - [ ] Header (no user)
   - [ ] Sidebar (user)
