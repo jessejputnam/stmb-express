@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const uniqueValidator = require("mongoose-unique-validator");
 const bcrypt = require("bcryptjs");
 
+// Email Validation Schema for User model
 const Email = new Schema({
   address: {
     type: String,
@@ -16,6 +17,7 @@ const Email = new Schema({
   validated: { type: Boolean, default: false }
 });
 
+// USER MODEL
 const UserSchema = new Schema(
   {
     username: {
@@ -28,11 +30,13 @@ const UserSchema = new Schema(
     },
     password: { type: String, required: true },
     email: { type: Email, required: true },
+
+    subscriptions: [{ type: Schema.Types.ObjectId, ref: "" }],
+
     profile: {
-      firstname: { String },
-      lastname: { String },
-      //! Fix regions to be specific -- ask Ed for guidance
-      region: { String }
+      firstname: { type: String, maxLength: 30, required: true },
+      lastname: { type: String, maxLength: 30, required: true },
+      region: { type: Schema.Types.ObjectId, ref: "Region" }
     }
   },
   { timestamps: true }
