@@ -5,6 +5,12 @@ const { body, validationResult } = require("express-validator");
 
 const User = require("../models/user");
 
+// Display correct page on index GET
+exports.index_get = (req, res, next) => {
+  if (!req.currentUser) res.render("index", { title: "Smash the Motherboard" });
+  else res.redirect("/home");
+};
+
 // Display sign up on GET
 exports.signup_get = (req, res, next) => {
   res.render("sign-up", { title: "STMB Register" });
@@ -82,7 +88,7 @@ exports.login_get = (req, res, next) => {
 
 // Handle login on POST
 exports.login_post = passport.authenticate("local", {
-  successRedirect: "/",
+  successRedirect: "/home",
   failureRedirect: "/login",
   failureFlash: true
 });

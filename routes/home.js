@@ -4,8 +4,8 @@ const express = require("express");
 const router = express.Router();
 
 /* GET users listing. */
-router.get("/profile", function (req, res, next) {
-  res.render("user_profile", { title: "User Profile" });
+router.get("/", function (req, res, next) {
+  res.render("home", { title: "Home" });
 });
 
 module.exports = router;

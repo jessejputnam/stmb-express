@@ -1,7 +1,15 @@
 extends layout
 
-block content
-  h1= title
-  p Welcome to #{title}
-  p This page is public 
-  a(href="/users/profile") Profile
+block landing 
+  header
+        p 
+          a(href="/register") Register
+        p 
+          a(href="/login") Login
+  main 
+    h1= title 
+
+    p Smash the Motherboard is an independent creator economy marketplace.
+
+  footer
+    div.footer-wrapper

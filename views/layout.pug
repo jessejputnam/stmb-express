@@ -7,16 +7,27 @@ html(lang='en')
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(type="module" src="/javascripts/script.js" defer)
   
-  body
-    if !currentUser
-      header
-        p 
-          a(href="/register") Register
-        p 
-          a(href="/login") Login
+  body 
+    if !currentUser 
+      block landing
+      block login
+      block register
 
-    main     
-      block content
+    else  
+      div.page-wrapper 
+        div.sidebar 
+          nav.nav-bar 
+            ul 
+              li 
+                a(href="/home") Home 
+              li 
+                a(href="/search") Search 
+              li 
+                a(href="/settings") Settings 
+              form(method="POST" action="/logout") 
+                button.btn.btn-secondary(type="submit") Logout
+                
 
-    footer
-      div.footer-wrapper
+
+        main.main
+          block content

@@ -6,9 +6,7 @@ const router = express.Router();
 const auth_controller = require("../controllers/authController");
 
 // GET request for landing page.
-router.get("/", function (req, res, next) {
-  res.render("index", { title: "Smash the Motherboard" });
-});
+router.get("/", auth_controller.index_get);
 
 // GET request for register
 router.get("/register", auth_controller.signup_get);
