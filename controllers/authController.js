@@ -7,8 +7,7 @@ const User = require("../models/user");
 
 // Display correct page on index GET
 exports.index_get = (req, res, next) => {
-  if (!req.currentUser) res.render("index", { title: "Smash the Motherboard" });
-  else res.redirect("/home");
+  res.render("index", { title: "Smash the Motherboard" });
 };
 
 // Display sign up on GET
@@ -50,8 +49,9 @@ exports.sign_up_post = [
 
     try {
       // Check if user exists
-      const found_user = await User.find({ email: req.body.email });
+      const found_user = await User.find({ username: req.body.username });
       if (found_user.length > 0) {
+        console.log(found_user);
         return res.render("sign-up", {
           title: "STMB Register",
           error: "Email is already in use"
@@ -60,6 +60,7 @@ exports.sign_up_post = [
 
       // Continue registration
       const user = new User({
+        artist: null,
         username: req.body.username,
         password: req.body.password,
         firstname: req.body.firstName,
@@ -94,7 +95,7 @@ exports.login_post = passport.authenticate("local", {
 });
 
 // Handle logout on POST
-exports.logout_post = (req, res, next) => {
+exports.logout_get = (req, res, next) => {
   req.logout((err) => {
     if (err) return next(err);
     res.redirect("/");

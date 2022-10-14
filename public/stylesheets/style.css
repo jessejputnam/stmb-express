@@ -3,16 +3,17 @@
 
   # Formatting
     ## Forms
-  # Header
+  # Landing Page
   # Sidebar
-  # Footer
   # Main
     ## Register
 
 */
 
 /* ##################### # FORMATTING ################## */
-body {
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -39,12 +40,25 @@ a {
   padding: 5px;
 }
 
-/* ##################### # HEADER ##################### */
+/* #################### # LANDING PAGE ################ */
 
 /* #################### # SIDEBAR ##################### */
-
-/* #################### # FOOTER ###################### */
+.sidebar {
+  padding: 20px;
+  width: 15%;
+  box-shadow: 1px 0 3px 0 rgba(0, 0, 0, 0.543);
+  height: 100vh;
+}
 
 /* ##################### # MAIN ####################### */
+.app-wrapper {
+  display: flex;
+  flex-direction: row;
+}
 
-/*  ########## ## REGISTER ############ */
+.main-wrapper {
+  width: 85%;
+  padding: 20px;
+  overflow-y: auto;
+  height: 100vh;
+}

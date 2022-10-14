@@ -8,6 +8,7 @@ const bcrypt = require("bcryptjs");
 // USER MODEL
 const UserSchema = new Schema(
   {
+    artist: { type: Schema.Types.ObjectId, ref: "Artist" },
     username: {
       type: String,
       lowercase: true,

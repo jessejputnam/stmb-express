@@ -5,6 +5,7 @@ const router = express.Router();
 
 const auth_controller = require("../controllers/authController");
 
+// Middleware to check if user already logged in
 const authCheck = (req, res, next) => {
   if (!req.user) {
     res.redirect("/");
@@ -18,7 +19,7 @@ router.get("/", authCheck, function (req, res, next) {
   res.render("home", { title: "Home" });
 });
 
-// POST request for logout
-router.post("/home/logout", auth_controller.logout_post);
+// GET request for logout
+router.get("/logout", auth_controller.logout_get);
 
 module.exports = router;

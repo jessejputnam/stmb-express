@@ -12,7 +12,7 @@ html(lang='en')
       block noUser
 
     else  
-      div.page-wrapper 
+      div.app-wrapper 
         div.sidebar 
           nav.nav-bar 
             ul 
@@ -22,10 +22,20 @@ html(lang='en')
                 a(href="/search") Search 
               li 
                 a(href="/settings") Settings 
-              form(method="POST" action="/home/logout") 
-                button.btn.btn-secondary(type="submit") Logout
+              li 
+                a(href="home/logout") Logout
+              if !currentUser.artist
+                li 
+                  a(href="/register-artist") 
+              if currentUser.artist 
+                hr 
+                hr 
+                li 
+                  a(href="/artist/edit-page") Edit Page 
+                li 
+                  a(href="/artist/analytics") Analytics 
                 
 
 
-        main.main
+        main.main-wrapper
           block content
