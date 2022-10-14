@@ -209,7 +209,7 @@ function App() {
       - [ ] Email verification
     - [x] Login
   - Artist
-    - [ ] Artist sign up
+    - [x] Artist sign up
     - [ ] Connecting Stripe account
       - [ ] Onboarding
   - [ ] Page
