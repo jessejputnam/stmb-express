@@ -23,13 +23,14 @@ html(lang='en')
               li 
                 a(href="/settings") Settings 
               li 
-                a(href="home/logout") Logout
+                a(href="/logout") Logout
               if !currentUser.artist
+                hr(style='margin:10px')
                 li 
-                  a(href="/register-artist") 
+                  a(href="/creator-signup") Become Creator
               if currentUser.artist 
-                hr 
-                hr 
+                hr(style='margin:10px')
+                hr(style='margin:10px')
                 li 
                   a(href="/artist/edit-page") Edit Page 
                 li 

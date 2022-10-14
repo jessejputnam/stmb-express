@@ -5,7 +5,13 @@ const Schema = mongoose.Schema;
 
 const ArtistSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: "User", required: true },
-  page: { type: Schema.Types.ObjectId, ref: "Page", required: true },
+  page: {
+    type: Schema.Types.ObjectId,
+    ref: "Page",
+    default: null
+  },
+  genre: { type: Schema.Types.ObjectId, ref: "Genre", required: true },
+
   subscibers: [{ type: Schema.Types.ObjectId, ref: "User" }]
 });
 

@@ -1,0 +1,28 @@
+extends layout 
+
+block content
+  if errors 
+    ul 
+      for error in errors 
+        li!= error.msg
+
+  h1= title 
+
+  form.form-wrapper(method='POST' action='') 
+    h2(style="text-align:center")= title
+    div.form-control 
+      label(for="projectName" style="margin-left:15px") Project Name
+      input#projectName(type="text" name="projectName" required='true')
+    div.form-control 
+      label(for="genre" style="margin-left:15px") Genre
+      select#genre(name="genre")
+        option(value="" disabled hidden selected)
+        each genre in genres 
+          option(value=genre._id ) !{`${genre.type[0].toUpperCase()}${genre.type.slice(1)}`}
+    div.form-control 
+      label(for="desc" style="margin-left:15px") Description
+      textarea#desc(type="text" name="desc" cols="30" rows="10" placeholder="Briefly describe your project") 
+    div.form-control-btns 
+      a(href="/") Cancel
+      button.btn(type="submit") Submit
+    

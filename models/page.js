@@ -10,7 +10,7 @@ const PageSchema = new Schema({
   pageInfo: {
     title: { type: String, maxLength: 50, required: true },
     genre: { type: Schema.Types.ObjectId, ref: "Genre", required: true },
-    region: { type: String, required: true },
+    region: { type: String },
     description: { type: String, required: true },
     socialUrls: {
       facebook: { type: String },
@@ -25,13 +25,12 @@ const PageSchema = new Schema({
     },
 
     tiers: {
-      top: { type: Schema.Types.ObjectId, ref: "Membership", required: true },
+      top: { type: Schema.Types.ObjectId, ref: "Membership" },
       middle: {
         type: Schema.Types.ObjectId,
-        ref: "Membership",
-        required: true
+        ref: "Membership"
       },
-      bottom: { type: Schema.Types.ObjectId, ref: "Membership", required: true }
+      bottom: { type: Schema.Types.ObjectId, ref: "Membership" }
     },
 
     posts: [{ type: Schema.Types.ObjectId, ref: "Post" }]

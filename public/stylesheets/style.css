@@ -36,7 +36,9 @@ a {
   row-gap: 7px;
 }
 
-.form-control > input {
+.form-control > input,
+select,
+textarea {
   padding: 5px;
 }
 
