@@ -198,20 +198,20 @@ function App() {
 
 - [ ] Security set up
 
-  - [ ] Local Strategy
-    - [ ] Session cookie set up
+  - [x] Local Strategy
+    - [x] Session cookie set up
   - [ ] Oauth Strategy (?)
 
 - [ ] Controllers set up
 
   - [ ] Auth
-    - [ ] Register user
+    - [x] Register user
       - [ ] Email verification
     - [ ] Login
   - Artist
     - [ ] Artist sign up
     - [ ] Connecting Stripe account
-      - [ ] Onbaording
+      - [ ] Onboarding
   - [ ] Page
     - [ ] Page creation
     - [ ] Page editing
@@ -247,8 +247,6 @@ function App() {
   - [ ] Creator Options
     - [ ] Edit page
     - [ ] Analytics
-
-- [ ] Aesthetics
 
 <!-- FAQ -->
 

@@ -5,12 +5,12 @@ const { body, validationResult } = require("express-validator");
 
 const User = require("../models/user");
 
-// Display sign up form on GET
+// Display sign up on GET
 exports.signup_get = (req, res, next) => {
   res.render("sign-up", { title: "STMB Register" });
 };
 
-// Handle sign up form on POST
+// Handle sign up on POST
 exports.sign_up_post = [
   // Validate and sanitize fields
   body("username", "Must be a valid email address")
@@ -74,3 +74,15 @@ exports.sign_up_post = [
     }
   }
 ];
+
+// Handle login on GET
+exports.login_get = (req, res, next) => {
+  res.render("log-in", { title: "STMB Log In", errors: req.flash("error") });
+};
+
+// Handle login on POST
+exports.login_post = passport.authenticate("local", {
+  successRedirect: "/",
+  failureRedirect: "/login",
+  failureFlash: true
+});
