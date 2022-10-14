@@ -207,7 +207,7 @@ function App() {
   - [ ] Auth
     - [x] Register user
       - [ ] Email verification
-    - [ ] Login
+    - [x] Login
   - Artist
     - [ ] Artist sign up
     - [ ] Connecting Stripe account
