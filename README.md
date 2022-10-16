@@ -200,6 +200,7 @@ function App() {
 
   - [x] Local Strategy
     - [x] Session cookie set up
+    - [ ] Set session signout timer
   - [ ] Oauth Strategy (?)
 
 - [ ] Controllers set up

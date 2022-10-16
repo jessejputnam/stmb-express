@@ -8,8 +8,9 @@ html(lang='en')
     script(type="module" src="/javascripts/script.js" defer)
   
   body 
-    if !currentUser 
-      block noUser
+    if !currentUser
+      div.landingPage 
+        block noUser
 
     else  
       div.app-wrapper 

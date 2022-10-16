@@ -43,6 +43,9 @@ textarea {
 }
 
 /* #################### # LANDING PAGE ################ */
+.landingPage {
+  padding: 20px;
+}
 
 /* #################### # SIDEBAR ##################### */
 .sidebar {
