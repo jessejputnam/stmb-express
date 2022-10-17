@@ -12,7 +12,10 @@ exports.become_creator_get = (req, res, next) => {
     if (err) return next(err);
 
     // Successful, so render
-    res.render("become-creator", { title: "Become Creator", genres: genres });
+    res.render("form-become-creator", {
+      title: "Become Creator",
+      genres: genres
+    });
   });
 };
 
@@ -46,7 +49,7 @@ exports.become_creator_post = [
         if (err) return next(err);
 
         // Successful, so render
-        res.render("become-creator", {
+        res.render("form-become-creator", {
           title: "Become Creator",
           genres: genres,
           errors: errors.array()

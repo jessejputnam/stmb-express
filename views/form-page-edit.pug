@@ -1,0 +1,8 @@
+extends layout 
+
+if !currentUser.creator.page
+  form(method="POST" action="/create-page") 
+    button.btn.btn-primary(type="submit") Start a Page 
+
+else 
+  form(method="PUT" action="") 

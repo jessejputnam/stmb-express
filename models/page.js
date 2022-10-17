@@ -4,9 +4,6 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const PageSchema = new Schema({
-  creator: { type: Schema.Types.ObjectId, ref: "Creator", required: true },
-  user: { type: Schema.Types.ObjectId, ref: "User", required: true },
-
   pageInfo: {
     title: { type: String, maxLength: 50, required: true },
     genre: { type: Schema.Types.ObjectId, ref: "Genre", required: true },
@@ -38,7 +35,7 @@ const PageSchema = new Schema({
 });
 
 PageSchema.virtual("url").get(function () {
-  return `/creators/${this._id}`;
+  return `/${this.creator._id}`;
 });
 
 module.exports = mongoose.model("Page", PageSchema);

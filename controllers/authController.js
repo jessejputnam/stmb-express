@@ -12,7 +12,7 @@ exports.index_get = (req, res, next) => {
 
 // Display sign up on GET
 exports.signup_get = (req, res, next) => {
-  res.render("sign-up", { title: "STMB Register" });
+  res.render("form-sign-up", { title: "STMB Register" });
 };
 
 // Handle sign up on POST
@@ -44,7 +44,10 @@ exports.sign_up_post = [
 
     if (!errors.isEmpty()) {
       // There are errors, rerender
-      res.render("sign-up", { title: "STMB Register", errors: errors.array() });
+      res.render("form-sign-up", {
+        title: "STMB Register",
+        errors: errors.array()
+      });
     }
 
     try {
@@ -52,7 +55,7 @@ exports.sign_up_post = [
       const found_user = await User.find({ username: req.body.username });
       if (found_user.length > 0) {
         console.log(found_user);
-        return res.render("sign-up", {
+        return res.render("form-sign-up", {
           title: "STMB Register",
           error: "Email is already in use"
         });
@@ -86,7 +89,10 @@ exports.sign_up_post = [
 
 // Handle login on GET
 exports.login_get = (req, res, next) => {
-  res.render("log-in", { title: "STMB Log In", errors: req.flash("error") });
+  res.render("form-log-in", {
+    title: "STMB Log In",
+    errors: req.flash("error")
+  });
 };
 
 // Handle login on POST

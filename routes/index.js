@@ -5,6 +5,7 @@ const router = express.Router();
 
 const auth_controller = require("../controllers/authController");
 const creator_controller = require("../controllers/creatorController");
+const page_controller = require("../controllers/pageController");
 
 // Middleware to check for user
 const authCheck = (req, res, next) => {
@@ -26,7 +27,7 @@ const authCheckFalse = (req, res, next) => {
 
 // GET request for user home
 router.get("/home", authCheckFalse, function (req, res, next) {
-  res.render("home", { title: "Home" });
+  res.render("user-home", { title: "Home" });
 });
 
 /* -------------------- Landing Page ------------------ */
@@ -63,5 +64,18 @@ router.post(
   authCheckFalse,
   creator_controller.become_creator_post
 );
+
+/* -------------------- Page Views ------------------ */
+// GET request for view page
+router.get("/:id", (req, res) => {
+  res.send("page view not set up yet");
+});
+
+// GET request for edit page
+router.get("/:id/edit", page_controller.edit_page_get);
+
+// POST request for create page
+
+// PUT request for edit page
 
 module.exports = router;

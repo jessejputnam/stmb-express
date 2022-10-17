@@ -25,17 +25,19 @@ html(lang='en')
                 a(href="/settings") Settings 
               li 
                 a(href="/logout") Logout
-              if !currentUser.artist
+              if !currentUser.creator
                 hr(style='margin:10px')
                 li 
                   a(href="/creator-signup") Become Creator
-              if currentUser.artist 
+              if currentUser.creator 
                 hr(style='margin:10px')
                 hr(style='margin:10px')
                 li 
-                  a(href="/artist/edit-page") Edit Page 
+                  a(href=`/${currentUser.creator._id}`) View Page 
                 li 
-                  a(href="/artist/analytics") Analytics 
+                  a(href=`/${currentUser.creator._id}/edit`) Edit Page 
+                li 
+                  a(href="/analytics") Analytics 
                 
 
 
