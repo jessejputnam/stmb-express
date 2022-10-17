@@ -3,27 +3,12 @@
 const express = require("express");
 const router = express.Router();
 
+const authCheckFalse = require("../middlewares/authCheckFalse");
+const authCheck = require("../middlewares/authCheck");
+
 const auth_controller = require("../controllers/authController");
 const creator_controller = require("../controllers/creatorController");
 const page_controller = require("../controllers/pageController");
-
-// Middleware to check for user
-const authCheck = (req, res, next) => {
-  if (req.user) {
-    res.redirect("/home");
-  } else {
-    next();
-  }
-};
-
-// Middleware to check for no user
-const authCheckFalse = (req, res, next) => {
-  if (!req.user) {
-    res.redirect("/");
-  } else {
-    next();
-  }
-};
 
 // GET request for user home
 router.get("/home", authCheckFalse, function (req, res, next) {
@@ -72,7 +57,7 @@ router.get("/:id", (req, res) => {
 });
 
 // GET request for edit page
-router.get("/:id/edit", page_controller.edit_page_get);
+router.get("/:id/edit", authCheckFalse, page_controller.edit_page_get);
 
 // POST request for create page
 

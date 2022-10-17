@@ -16,6 +16,7 @@ exports.edit_page_get = async (req, res, next) => {
 
   try {
     const page = await Page.findById(req.params.id);
+    console.log(page);
 
     res.render("form-page-edit", {
       page: page
@@ -28,11 +29,15 @@ exports.edit_page_get = async (req, res, next) => {
 // Handle create page on POST
 exports.create_page_post = (req, res, next) => {
   const page = new Page({
-    creator: req.user.creator,
-    pageInfo: {
-      title: req.user.creator.title,
-      genre: req.user.creator.genre,
-      region: req.user.region
-    }
+    url: `/${req.user._id}`,
+    title: req.user.creator.name,
+    genre: req.user.creator.genre,
+    region: req.user.region
+  });
+
+  page.save((err) => {
+    if (err) return next(err);
+
+    res.redirect(page.url);
   });
 };
