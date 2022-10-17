@@ -52,14 +52,13 @@ router.post(
 
 /* -------------------- Page Views ------------------ */
 // GET request for view page
-router.get("/:id", (req, res) => {
-  res.send("page view not set up yet");
-});
+// router.get("/:id", page_controller);
 
 // GET request for edit page
 router.get("/:id/edit", authCheckFalse, page_controller.edit_page_get);
 
 // POST request for create page
+router.post("/create-page", authCheckFalse, page_controller.create_page_post);
 
 // PUT request for edit page
 

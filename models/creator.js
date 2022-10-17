@@ -5,7 +5,8 @@ const Schema = mongoose.Schema;
 
 const CreatorSchema = new Schema({
   name: { type: String, required: true, maxLength: 75 },
-  genre: { type: Schema.Types.ObjectId, ref: "Genre", required: true }
+  genre: { type: Schema.Types.ObjectId, ref: "Genre", required: true },
+  page: { type: Schema.Types.ObjectId, ref: "Page", default: null }
 });
 
 module.exports = mongoose.model("Creator", CreatorSchema);

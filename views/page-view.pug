@@ -1,4 +1,37 @@
 extends layout 
 
 block content 
+  div.page-banner
+    img(src=page.imgUrls.banner, alt="Banner image")
+  div.page-title
+    div.page-avatar-wrapper 
+      img(src=page.imgUrls.avatar, alt="Avatar image")
+    h1= title 
   
+  div.page-about
+    p= page.region
+    p= page.description 
+
+  div.page-tiers-container 
+    if page.tiers
+      each tier in page.tiers   
+        div.tier-wrapper 
+          h3= tier.title 
+          p= `$${tier.price}`
+          p= tier.description
+          ul 
+            each reward in tier.rewards   
+              li= reward
+
+
+  div.page-posts-container 
+    if page.posts.length 
+      each post in page.posts 
+        div.post-wrapper 
+          div.post-img-container 
+            img(src=post.image, alt="Post image")
+          div.post-header 
+            p= timestamp
+            h3= title 
+          div.post-text 
+            p= post.text

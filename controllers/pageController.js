@@ -8,36 +8,64 @@ const Creator = require("../models/creator");
 const Genre = require("../models/genre");
 const Page = require("../models/page");
 
+// Display page of GET
+exports.page_get = (req, res, next) => {
+  Creator.findById(req.params.id);
+};
+
 // Display edit page on GET
 exports.edit_page_get = async (req, res, next) => {
-  // Check if user has permission to edit
-  if (req.user.creator._id.toString() !== req.params.id)
-    res.redirect(`/${req.params.id}`);
-
   try {
     const page = await Page.findById(req.params.id);
-    console.log(page);
 
-    res.render("form-page-edit", {
-      page: page
-    });
+    if (!page) {
+      const err = new Error("Page does not exist");
+      err.status = 404;
+      return next(err);
+    } else {
+      // Check if user has permission to edit
+      if (req.user.creator._id.toString() !== page.creatorId)
+        res.redirect(`/${req.params.id}`);
+
+      // Successful, so render
+      res.render("form-page-edit", {
+        title: "Edit Page",
+        page: page
+      });
+    }
   } catch (err) {
     return next(err);
   }
 };
 
 // Handle create page on POST
-exports.create_page_post = (req, res, next) => {
-  const page = new Page({
-    url: `/${req.user._id}`,
-    title: req.user.creator.name,
-    genre: req.user.creator.genre,
-    region: req.user.region
-  });
+exports.create_page_post = async (req, res, next) => {
+  try {
+    const creator = await Creator.findById(req.user.creator);
+    const genre = await Genre.findById(creator.genre);
+    console.log(genre);
 
-  page.save((err) => {
-    if (err) return next(err);
+    const page = new Page({
+      url: `/${creator._id}`,
+      title: creator.name,
+      genre: creator.genre,
+      region: req.user.region
+    });
 
-    res.redirect(page.url);
-  });
+    page.save((err) => {
+      if (err) return next(err);
+
+      // Update creator obj to point to page
+      creator.page = page;
+      creator.save((err) => {
+        if (err) return next(err);
+        res.redirect(page.url);
+      });
+    });
+  } catch (err) {
+    return next(err);
+  }
 };
+
+// Handle edit page on PUT
+exports.edit_page_put = (req, res, next) => {};

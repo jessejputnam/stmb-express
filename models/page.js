@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const PageSchema = new Schema({
-  url: { type: String, required: true },
+  creatorId: { type: String, required: true },
   title: { type: String, maxLength: 50, required: true },
   genre: { type: Schema.Types.ObjectId, ref: "Genre", required: true },
   region: { type: String, required: true },
@@ -14,6 +14,8 @@ const PageSchema = new Schema({
     instagramHandle: { type: String },
     twitterHandle: { type: String }
   },
+
+  posts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
 
   imgUrls: {
     banner: { type: String, default: "images/banner-placeholder" },
@@ -26,10 +28,12 @@ const PageSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: "Membership"
     },
-    bottom: { type: Schema.Types.ObjectId, ref: "Membership" },
-
-    posts: [{ type: Schema.Types.ObjectId, ref: "Post" }]
+    bottom: { type: Schema.Types.ObjectId, ref: "Membership" }
   }
+});
+
+PageSchema.virtual("url").get(function () {
+  return `/${this._id}`;
 });
 
 module.exports = mongoose.model("Page", PageSchema);
