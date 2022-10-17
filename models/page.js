@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const PageSchema = new Schema({
-  artist: { type: Schema.Types.ObjectId, ref: "Artist", required: true },
+  creator: { type: Schema.Types.ObjectId, ref: "Creator", required: true },
   user: { type: Schema.Types.ObjectId, ref: "User", required: true },
 
   pageInfo: {
@@ -38,7 +38,7 @@ const PageSchema = new Schema({
 });
 
 PageSchema.virtual("url").get(function () {
-  return `/artists/${this._id}`;
+  return `/creators/${this._id}`;
 });
 
 module.exports = mongoose.model("Page", PageSchema);

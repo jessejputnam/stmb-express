@@ -190,8 +190,8 @@ function App() {
   - [x] Connect to database
   - [x] Database Schema set up
     - [x] User Model
-    - [x] Artist Model
-    - [x] Artist Page Model
+    - [x] Creator Model
+    - [x] Creator Page Model
     - [x] Post Model
     - [x] Membership Model
     - [x] Genre Model
@@ -200,7 +200,7 @@ function App() {
 
   - [x] Local Strategy
     - [x] Session cookie set up
-    - [ ] Set session signout timer
+    - [x] Set 24hr session signout timer
   - [ ] Oauth Strategy (?)
 
 - [ ] Controllers set up
@@ -209,8 +209,9 @@ function App() {
     - [x] Register user
       - [ ] Email verification
     - [x] Login
-  - Artist
-    - [x] Artist sign up
+  - [ ] Creator
+    - [x] Creator sign up
+      - [ ] Info box for if genre not found, contact admin
     - [ ] Connecting Stripe account
       - [ ] Onboarding
   - [ ] Page
@@ -243,7 +244,7 @@ function App() {
   - [ ] Sidebar (user)
   - [ ] Landing Page
   - [ ] Search page
-  - [ ] Artist page
+  - [ ] Creator page
   - [ ] Become creator page
   - [ ] Creator Options
     - [ ] Edit page

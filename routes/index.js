@@ -4,7 +4,7 @@ const express = require("express");
 const router = express.Router();
 
 const auth_controller = require("../controllers/authController");
-const artist_controller = require("../controllers/artistController");
+const creator_controller = require("../controllers/creatorController");
 
 // Middleware to check for user
 const authCheck = (req, res, next) => {
@@ -54,14 +54,14 @@ router.get("/logout", auth_controller.logout_get);
 router.get(
   "/creator-signup",
   authCheckFalse,
-  artist_controller.become_creator_get
+  creator_controller.become_creator_get
 );
 
 // POST request for become creator
 router.post(
   "/creator-signup",
   authCheckFalse,
-  artist_controller.become_creator_post
+  creator_controller.become_creator_post
 );
 
 module.exports = router;

@@ -60,7 +60,7 @@ exports.sign_up_post = [
 
       // Continue registration
       const user = new User({
-        artist: null,
+        creator: null,
         username: req.body.username,
         password: req.body.password,
         firstname: req.body.firstName,

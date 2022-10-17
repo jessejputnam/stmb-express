@@ -2,7 +2,7 @@ const { body, validationResult } = require("express-validator");
 const async = require("async");
 
 const User = require("../models/user");
-const Artist = require("../models/artist");
+const Creator = require("../models/creator");
 const Genre = require("../models/genre");
 const Page = require("../models/page");
 
@@ -12,7 +12,7 @@ exports.become_creator_get = (req, res, next) => {
     if (err) return next(err);
 
     // Successful, so render
-    res.render("become-artist", { title: "Become Creator", genres: genres });
+    res.render("become-creator", { title: "Become Creator", genres: genres });
   });
 };
 
@@ -33,7 +33,7 @@ exports.become_creator_post = [
   async (req, res, next) => {
     const errors = validationResult(req);
 
-    const artist = new Artist({
+    const creator = new Creator({
       name: req.body.projectName,
       user: req.user._id,
       page: null,
@@ -46,7 +46,7 @@ exports.become_creator_post = [
         if (err) return next(err);
 
         // Successful, so render
-        res.render("become-artist", {
+        res.render("become-creator", {
           title: "Become Creator",
           genres: genres,
           errors: errors.array()
@@ -55,21 +55,21 @@ exports.become_creator_post = [
       return;
     }
 
-    // Check if user already has artist page
-    if (req.user.artist) {
+    // Check if user already has creator page
+    if (req.user.creator) {
       alert(
-        "There is already an artist account associated with this email address"
+        "There is already a Creator account associated with this email address"
       );
       res.redirect("/home");
     }
 
-    // Data is valid. Save Artist and update user
-    artist.save((err) => {
+    // Data is valid. Save Creator and update user
+    creator.save((err) => {
       if (err) return next(err);
       // Successful, save id to user
       User.findByIdAndUpdate(
         req.user._id,
-        { artist: artist._id },
+        { creator: creator._id },
         (err, theuser) => {
           if (err) return next(err);
           else res.redirect("/home");
