@@ -87,33 +87,6 @@ exports.create_page_post = (req, res, next) => {
       });
     }
   );
-
-  //////////////////////////////
-  // try {
-  //   const creator = await Creator.findById(req.user.creator);
-  //   const genre = await Genre.findById(creator.genre);
-  //   console.log(genre);
-
-  //   const page = new Page({
-  //     creatorId: creator._id,
-  //     title: creator.name,
-  //     genre: creator.genre,
-  //     region: req.user.region
-  //   });
-
-  //   page.save((err) => {
-  //     if (err) return next(err);
-
-  //     // Update creator obj to point to page
-  //     creator.page = page;
-  //     creator.save((err) => {
-  //       if (err) return next(err);
-  //       res.redirect(page.url);
-  //     });
-  //   });
-  // } catch (err) {
-  //   return next(err);
-  // }
 };
 
 // Handle edit page on PUT
