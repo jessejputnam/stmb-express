@@ -9,8 +9,16 @@ html(lang='en')
   
   body 
     if !currentUser
-      div.landingPage 
+      header.no-auth-header
+        p 
+          a(href="/") Home
+        p 
+          a(href="/register") Register
+        p 
+          a(href="/login") Login
+      div
         block noUser
+        block content
 
     else  
       div.app-wrapper 
@@ -33,10 +41,10 @@ html(lang='en')
                 hr(style='margin:10px')
                 hr(style='margin:10px')
                 li 
-                  a(href=`/${currentUser.creator._id}`) View Page 
-                if currentUser.page 
+                  a(href=`/${currentUser.pageId}`) View Page 
+                if currentUser.pageId 
                   li 
-                    a(href=`/${currentUser.creator._id}/edit`) Edit Page
+                    a(href=`/${currentUser.pageId}/edit`) Edit Page
                   li 
                     a(href="/analytics") Analytics 
                 else 

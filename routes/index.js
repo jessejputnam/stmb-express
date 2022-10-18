@@ -52,7 +52,7 @@ router.post(
 
 /* -------------------- Page Views ------------------ */
 // GET request for view page
-// router.get("/:id", page_controller);
+router.get("/:id", page_controller.page_get);
 
 // GET request for edit page
 router.get("/:id/edit", authCheckFalse, page_controller.edit_page_get);

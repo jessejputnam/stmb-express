@@ -9,7 +9,7 @@ const bcrypt = require("bcryptjs");
 const UserSchema = new Schema(
   {
     creator: { type: Schema.Types.ObjectId, ref: "Creator" },
-    page: { type: Boolean, required: true, default: false },
+    pageId: { type: String, required: true, default: null },
     username: {
       type: String,
       lowercase: true,

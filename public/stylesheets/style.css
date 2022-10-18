@@ -3,10 +3,11 @@
 
   # Formatting
     ## Forms
+  # No Auth Header
   # Landing Page
   # Sidebar
   # Main
-    ## Register
+    ## Page View
 
 */
 
@@ -41,9 +42,18 @@ select,
 textarea {
   padding: 5px;
 }
+/* #################### # NO AUTH HEADER ##################### */
+
+.no-auth-header {
+  display: flex;
+  align-items: center;
+  column-gap: 15px;
+  height: 50px;
+  box-shadow: -3px 0px 3px 0 rgba(0, 0, 0, 0.455);
+}
 
 /* #################### # LANDING PAGE ################ */
-.landingPage {
+.landing-page {
   padding: 20px;
 }
 
@@ -63,7 +73,54 @@ textarea {
 
 .main-wrapper {
   width: 85%;
-  padding: 20px;
   overflow-y: auto;
   height: 100vh;
+}
+
+/* ########### ## PAGE VIEW ############ */
+.page-view-wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 25px;
+  justify-content: space-between;
+}
+
+.page-banner {
+  position: relative;
+}
+
+.page-banner > img {
+  object-fit: cover;
+  width: 100%;
+  height: clamp(100px, 25vw, 400px);
+}
+
+.page-avatar-wrapper > img {
+  height: 100px;
+}
+
+.page-about {
+  /* margin-top: 20px; */
+}
+
+.page-tiers-container {
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.tiers-wrapper {
+  min-height: 100px;
+  border: solid 1px black;
+}
+
+.page-posts-container {
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.posts-wrapper {
+  min-height: 100px;
+  border: solid 1px black;
 }

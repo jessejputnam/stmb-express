@@ -8,9 +8,25 @@ const Creator = require("../models/creator");
 const Genre = require("../models/genre");
 const Page = require("../models/page");
 
-// Display page of GET
+// Display page on GET
 exports.page_get = (req, res, next) => {
-  Creator.findById(req.params.id);
+  //? Will need to change to handle posts / membership tiers
+  Page.findById(req.params.id)
+    .populate("genre")
+    .exec((err, page) => {
+      if (err) return next(err);
+      if (!page) {
+        // No results
+        const err = new Error("Page not found");
+        err.status = 404;
+        return next(err);
+      }
+      // Successful, so render
+      res.render("page-view", {
+        title: page.title,
+        page: page
+      });
+    });
 };
 
 // Display edit page on GET
@@ -78,7 +94,7 @@ exports.create_page_post = (req, res, next) => {
         results.creator.save((err) => {
           if (err) return next(err);
 
-          results.user.page = true;
+          results.user.pageId = page._id;
           results.user.save((err) => {
             if (err) return next(err);
             res.redirect(page.url);
