@@ -215,10 +215,10 @@ function App() {
     - [ ] Connecting Stripe account
       - [ ] Onboarding
   - [ ] Page
-    - [ ] Page creation
+    - [x] Page creation
     - [ ] Page editing
     - [ ] Page deleting
-    - [ ] Page viewing
+    - [x] Page viewing
     - [ ] Posts
   - [ ] Search
     - [ ] By name
