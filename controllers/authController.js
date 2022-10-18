@@ -54,7 +54,6 @@ exports.sign_up_post = [
       // Check if user exists
       const found_user = await User.find({ username: req.body.username });
       if (found_user.length > 0) {
-        console.log(found_user);
         return res.render("form-sign-up", {
           title: "STMB Register",
           error: "Email is already in use"

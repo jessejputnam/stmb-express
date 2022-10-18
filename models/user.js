@@ -9,6 +9,7 @@ const bcrypt = require("bcryptjs");
 const UserSchema = new Schema(
   {
     creator: { type: Schema.Types.ObjectId, ref: "Creator" },
+    page: { type: Boolean, required: true, default: false },
     username: {
       type: String,
       lowercase: true,
@@ -23,7 +24,14 @@ const UserSchema = new Schema(
     lastname: { type: String, maxLength: 30, required: true },
     region: { type: String, required: true },
 
-    subscriptions: [{ type: Schema.Types.ObjectId, ref: "Membership" }]
+    subscriptions: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Membership",
+        required: true,
+        default: null
+      }
+    ]
   },
   { timestamps: true }
 );

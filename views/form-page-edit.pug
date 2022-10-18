@@ -1,13 +1,11 @@
 extends layout 
 
 block content 
-  if !currentUser.creator.page
-    form(method="POST" action="/create-page") 
-      button.btn.btn-primary(type="submit") Start a Page 
-
-  else 
-    form.form-wrapper(method="PUT" action="") 
-      h2(style="text-align:center")= title
+  form.form-wrapper(method="PUT" action="") 
+    h2(style="text-align:center")= title
+      div.form-control 
+        label(for="desc" style="margin-left:15px") Description
+        textarea#desc(type="text" name="desc" cols="30" rows="10" placeholder="Briefly describe your project") 
 
 
 

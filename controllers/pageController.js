@@ -39,32 +39,81 @@ exports.edit_page_get = async (req, res, next) => {
 };
 
 // Handle create page on POST
-exports.create_page_post = async (req, res, next) => {
-  try {
-    const creator = await Creator.findById(req.user.creator);
-    const genre = await Genre.findById(creator.genre);
-    console.log(genre);
-
-    const page = new Page({
-      url: `/${creator._id}`,
-      title: creator.name,
-      genre: creator.genre,
-      region: req.user.region
-    });
-
-    page.save((err) => {
+exports.create_page_post = (req, res, next) => {
+  async.parallel(
+    {
+      user(callback) {
+        User.findById(req.user._id).exec(callback);
+      },
+      creator(callback) {
+        Creator.findById(req.user.creator._id).populate("genre").exec(callback);
+      }
+    },
+    (err, results) => {
       if (err) return next(err);
+      if (!results.user) {
+        const err = new Error("User not found");
+        err.status = 404;
+        return next(err);
+      }
+      if (!results.creator) {
+        const err = new Error("Creator not found");
+        err.status = 404;
+        return next(err);
+      }
 
-      // Update creator obj to point to page
-      creator.page = page;
-      creator.save((err) => {
-        if (err) return next(err);
-        res.redirect(page.url);
+      // Successful, make new page
+      const page = new Page({
+        creatorId: results.creator._id,
+        title: results.creator.name,
+        genre: results.creator.genre,
+        region: results.user.region
       });
-    });
-  } catch (err) {
-    return next(err);
-  }
+
+      page.save((err) => {
+        if (err) return next(err);
+
+        // Update creator obj to point to page
+        results.creator.page = page;
+        results.creator.save((err) => {
+          if (err) return next(err);
+
+          results.user.page = true;
+          results.user.save((err) => {
+            if (err) return next(err);
+            res.redirect(page.url);
+          });
+        });
+      });
+    }
+  );
+
+  //////////////////////////////
+  // try {
+  //   const creator = await Creator.findById(req.user.creator);
+  //   const genre = await Genre.findById(creator.genre);
+  //   console.log(genre);
+
+  //   const page = new Page({
+  //     creatorId: creator._id,
+  //     title: creator.name,
+  //     genre: creator.genre,
+  //     region: req.user.region
+  //   });
+
+  //   page.save((err) => {
+  //     if (err) return next(err);
+
+  //     // Update creator obj to point to page
+  //     creator.page = page;
+  //     creator.save((err) => {
+  //       if (err) return next(err);
+  //       res.redirect(page.url);
+  //     });
+  //   });
+  // } catch (err) {
+  //   return next(err);
+  // }
 };
 
 // Handle edit page on PUT

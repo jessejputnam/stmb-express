@@ -4,7 +4,6 @@ const async = require("async");
 const User = require("../models/user");
 const Creator = require("../models/creator");
 const Genre = require("../models/genre");
-const Page = require("../models/page");
 
 // Display become creator on GET
 exports.become_creator_get = (req, res, next) => {
@@ -27,13 +26,8 @@ exports.become_creator_post = [
     .isLength({ min: 1 })
     .escape(),
   body("genre", "Genre is required").trim().isLength({ min: 1 }).escape(),
-  body("desc", "Decription should be less than 500 characters")
-    .trim()
-    .isLength({ min: 1 })
-    .isLength({ max: 500 })
-    .escape(),
 
-  async (req, res, next) => {
+  (req, res, next) => {
     const errors = validationResult(req);
 
     const creator = new Creator({

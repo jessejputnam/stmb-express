@@ -34,10 +34,15 @@ html(lang='en')
                 hr(style='margin:10px')
                 li 
                   a(href=`/${currentUser.creator._id}`) View Page 
-                li 
-                  a(href=`/${currentUser.creator._id}/edit`) Edit Page 
-                li 
-                  a(href="/analytics") Analytics 
+                if currentUser.page 
+                  li 
+                    a(href=`/${currentUser.creator._id}/edit`) Edit Page
+                  li 
+                    a(href="/analytics") Analytics 
+                else 
+                  form(method="POST" action="/create-page") 
+                    button.btn.btn-secondary(type="submit") Create Page
+
                 
 
 
