@@ -179,6 +179,7 @@ function App() {
 - Check-ins/Reminders:
 
   - [ ] Figure out region list
+  - [ ] Determine sanitize and validate reqs on page/user/creator/membership
 
 - [ ] Initial set up
 

@@ -12,6 +12,12 @@ block content
     div.page-about
       p= page.region
       p= page.description 
+      if page.socialUrls.facebookHandle
+        p= "www.facebook.com/" + page.socialUrls.facebookHandle
+      if page.socialUrls.instagramHandle 
+        p= "www.instagram.com/" + page.socialUrls.instagramHandle
+      if page.socialUrls.twitterHandle
+        p= "www.twitter.com/" + page.socialUrls.twitterHandle
 
     div.page-tiers-container 
       h3 Membership Tiers

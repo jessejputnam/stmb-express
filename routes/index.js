@@ -51,15 +51,16 @@ router.post(
 );
 
 /* -------------------- Page Views ------------------ */
+// POST request for create page
+router.post("/create-page", authCheckFalse, page_controller.create_page_post);
+
 // GET request for view page
 router.get("/:id", page_controller.page_get);
 
 // GET request for edit page
 router.get("/:id/edit", authCheckFalse, page_controller.edit_page_get);
 
-// POST request for create page
-router.post("/create-page", authCheckFalse, page_controller.create_page_post);
-
-// PUT request for edit page
+// POST request for edit page
+router.post("/:id/edit", authCheckFalse, page_controller.edit_page_post);
 
 module.exports = router;

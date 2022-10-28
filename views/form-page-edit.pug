@@ -1,11 +1,30 @@
 extends layout 
 
 block content 
-  form.form-wrapper(method="PUT" action="") 
+  form.form-wrapper(method="POST" action="") 
     h2(style="text-align:center")= title
-      div.form-control 
-        label(for="desc" style="margin-left:15px") Description
-        textarea#desc(type="text" name="desc" cols="30" rows="10" placeholder="Briefly describe your project") 
+    div.form-control 
+      label(for="desc") Description
+      textarea#desc(type="text" name="desc" cols="30" rows="10" placeholder="Briefly describe your project")= page.description
+    div 
+      h3 Social Handles
+      div.form-control
+        label(for="facebookHandle") Facebook
+        input#facebookHandle(type="text" name="facebookHandle" value=page.socialUrls.facebookHandle)
+      div.form-control
+        label(for="instaHandle") Instagram
+        input#instaHandle(type="text" name="instaHandle" value=page.socialUrls.instagramHandle)
+      div.form-control
+        label(for="twitterHandle") Twitter
+        input#twitterHandle(type="text" name="twitterHandle" value=page.socialUrls.twitterHandle)
+    div.form-control
+      label(for="bannerImg") Banner Image
+      input#bannerImg(type="text" name="bannerImg")
+    div.form-control
+      label(for="bannerImg") Profile Image
+      input#profileImg(type="text" name="profileImg")
+    button.btn.btn-secondary(type="submit") Submit
+
 
 
 
