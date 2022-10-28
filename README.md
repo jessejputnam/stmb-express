@@ -218,6 +218,9 @@ function App() {
   - [ ] Page
     - [x] Page creation
     - [ ] Page editing
+      - [ ] Images
+      - [x] Description/handles
+    - [ ] Membership creation
     - [ ] Page deleting
     - [x] Page viewing
     - [ ] Posts
