@@ -1,0 +1,17 @@
+extends layout 
+
+block content 
+  h1= title 
+
+  if !page.tiers.length
+    p No memberships yet added
+  each membership in memberships 
+    div
+      p= membership.title
+      p= "$" + membership.price.toFixed(2)
+      p= membership.desc 
+      ul 
+      each reward in rewards
+        li= reward
+
+

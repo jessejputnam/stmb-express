@@ -9,6 +9,7 @@ const authCheck = require("../middlewares/authCheck");
 const auth_controller = require("../controllers/authController");
 const creator_controller = require("../controllers/creatorController");
 const page_controller = require("../controllers/pageController");
+const memberships_controller = require("../controllers/membershipController");
 
 // GET request for user home
 router.get("/home", authCheckFalse, function (req, res, next) {
@@ -49,6 +50,10 @@ router.post(
   authCheckFalse,
   creator_controller.become_creator_post
 );
+
+/* ----------------- Membership Page --------------- */
+// GET quest for memberships page
+router.get("/memberships", memberships_controller.display_memberships_get);
 
 /* -------------------- Page Views ------------------ */
 // POST request for create page

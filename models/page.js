@@ -23,14 +23,7 @@ const PageSchema = new Schema(
       avatar: { type: String, default: "images/avatar-placeholder.svg" }
     },
 
-    tiers: {
-      top: { type: Schema.Types.ObjectId, ref: "Membership" },
-      middle: {
-        type: Schema.Types.ObjectId,
-        ref: "Membership"
-      },
-      bottom: { type: Schema.Types.ObjectId, ref: "Membership" }
-    }
+    tiers: [{ type: Schema.Types.ObjectId, ref: "Membership" }]
   },
   { timestamps: true }
 );
