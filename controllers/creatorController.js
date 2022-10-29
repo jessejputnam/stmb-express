@@ -1,14 +1,16 @@
 const { body, validationResult } = require("express-validator");
-const async = require("async");
 
 const User = require("../models/user");
-const Creator = require("../models/creator");
 const Genre = require("../models/genre");
 
 // Display become creator on GET
 exports.become_creator_get = (req, res, next) => {
   Genre.find({}, "type").exec((err, genres) => {
     if (err) return next(err);
+
+    if (req.user.creator) {
+      return res.redirect("/home");
+    }
 
     // Successful, so render
     res.render("form-become-creator", {
@@ -29,20 +31,15 @@ exports.become_creator_post = [
 
   (req, res, next) => {
     const errors = validationResult(req);
-
-    const creator = new Creator({
-      name: req.body.projectName,
-      user: req.user._id,
-      page: null,
-      genre: req.body.genre
-    });
+    if (req.user.creator) {
+      return res.redirect("/home");
+    }
 
     if (!errors.isEmpty()) {
       // There are errors, rerender
       Genre.find({}, "type").exec((err, genres) => {
         if (err) return next(err);
 
-        // Successful, so render
         res.render("form-become-creator", {
           title: "Become Creator",
           genres: genres,
@@ -52,26 +49,21 @@ exports.become_creator_post = [
       return;
     }
 
-    // Check if user already has creator page
-    if (req.user.creator) {
-      alert(
-        "There is already a Creator account associated with this email address"
-      );
-      res.redirect("/home");
-    }
-
-    // Data is valid. Save Creator and update user
-    creator.save((err) => {
+    User.findById(req.user._id, (err, result) => {
       if (err) return next(err);
-      // Successful, save id to user
-      User.findByIdAndUpdate(
-        req.user._id,
-        { creator: creator._id },
-        (err, theuser) => {
-          if (err) return next(err);
-          else res.redirect("/home");
-        }
-      );
+
+      const user = result;
+
+      user.creator = {};
+      user.creator.name = req.body.projectName;
+      user.creator.genre = req.body.genre;
+      console.log("TESTING POST", result.creator);
+
+      result.save((err, theuser) => {
+        if (err) return next(err);
+        console.log(theuser);
+        res.redirect("/home");
+      });
     });
   }
 ];

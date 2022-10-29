@@ -62,12 +62,16 @@ exports.sign_up_post = [
 
       // Continue registration
       const user = new User({
-        creator: null,
         username: req.body.username,
         password: req.body.password,
         firstname: req.body.firstName,
         lastname: req.body.lastName,
-        region: req.body.region
+        region: req.body.region,
+        creator: {
+          name: null,
+          genre: null,
+          page: null
+        }
       });
 
       user.save((err) => {

@@ -8,13 +8,6 @@ const bcrypt = require("bcryptjs");
 // USER MODEL
 const UserSchema = new Schema(
   {
-    creator: { type: Schema.Types.ObjectId, ref: "Creator" },
-    pageId: {
-      type: Schema.Types.ObjectId,
-      ref: "Page",
-      required: true,
-      default: null
-    },
     username: {
       type: String,
       lowercase: true,
@@ -24,7 +17,6 @@ const UserSchema = new Schema(
       index: true
     },
     password: { type: String, required: true },
-
     firstname: { type: String, maxLength: 30, required: true },
     lastname: { type: String, maxLength: 30, required: true },
     region: { type: String, required: true },
@@ -36,7 +28,13 @@ const UserSchema = new Schema(
         required: true,
         default: null
       }
-    ]
+    ],
+
+    creator: {
+      name: String,
+      genre: { type: Schema.Types.ObjectId, ref: "Genre" },
+      page: { type: Schema.Types.ObjectId, ref: "Page" }
+    }
   },
   { timestamps: true }
 );
