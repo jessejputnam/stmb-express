@@ -51,10 +51,6 @@ router.post(
   creator_controller.become_creator_post
 );
 
-/* ----------------- Membership Page --------------- */
-// GET quest for memberships page
-router.get("/memberships", memberships_controller.display_memberships_get);
-
 /* -------------------- Page Views ------------------ */
 // POST request for create page
 router.post("/create-page", authCheckFalse, page_controller.create_page_post);
@@ -67,5 +63,12 @@ router.get("/:id/edit", authCheckFalse, page_controller.edit_page_get);
 
 // POST request for edit page
 router.post("/:id/edit", authCheckFalse, page_controller.edit_page_post);
+
+/* ----------------- Membership Page --------------- */
+// GET quest for memberships page
+router.get("/:id/memberships", memberships_controller.display_memberships_get);
+
+// GET quest for add memberships page
+router.get("/:id/add-membership", memberships_controller.add_membership_get);
 
 module.exports = router;

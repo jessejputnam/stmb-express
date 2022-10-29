@@ -3,8 +3,11 @@ extends layout
 block content 
   h1= title 
 
-  if !page.tiers.length
+  if !memberships.length
     p No memberships yet added
+
+  a(href=`/${currentUser.pageId}/add-membership`) Add Membership
+
   each membership in memberships 
     div
       p= membership.title

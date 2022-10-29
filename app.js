@@ -6,6 +6,7 @@ const createError = require("http-errors");
 const mongoose = require("mongoose");
 const express = require("express");
 const session = require("express-session");
+const MongoDBStore = require("connect-mongodb-session")(session);
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -36,6 +37,15 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 const indexRouter = require("./routes/index");
 
 const app = express();
+const sessionStore = new MongoDBStore({
+  uri: process.env.MONGODB_URI,
+  collection: "mySessions",
+  databaseName: "test-db"
+});
+sessionStore.on(
+  "error",
+  console.error.bind(console, "MongoDB Session Storage connection error")
+);
 
 app.use(helmet());
 
@@ -77,8 +87,10 @@ passport.deserializeUser(function (id, done) {
 
 app.use(
   session({
-    name: "session",
-    expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+    cookie: {
+      maxAge: 24 * 60 * 60 * 1000
+    },
+    store: sessionStore,
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true

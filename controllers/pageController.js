@@ -172,12 +172,10 @@ exports.edit_page_post = [
         return next(err);
       }
 
-      console.log(page);
       page.description = req.body.desc;
       page.socialUrls.facebookHandle = req.body.facebookHandle;
       page.socialUrls.instagramHandle = req.body.instaHandle;
       page.socialUrls.twitterHandle = req.body.twitterHandle;
-      console.log(page);
 
       page.save((err) => {
         if (err) return next(err);

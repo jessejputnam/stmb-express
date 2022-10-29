@@ -70,8 +70,6 @@ exports.sign_up_post = [
         region: req.body.region
       });
 
-      console.log(user._id);
-
       user.save((err) => {
         if (err) {
           return next(err);
