@@ -48,7 +48,7 @@ exports.add_membership_get = (req, res, next) => {
     return res.redirect(`/${req.params.id}`);
   }
 
-  res.render("form-add-membership", {
+  res.render("form-membership-add", {
     title: "Add Membership"
   });
 };

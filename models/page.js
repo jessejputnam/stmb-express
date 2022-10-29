@@ -16,8 +16,6 @@ const PageSchema = new Schema(
       twitterHandle: { type: String }
     },
 
-    posts: [{ type: Schema.Types.ObjectId, ref: "Post" }],
-
     imgUrls: {
       banner: { type: String, default: "images/banner-placeholder.jpeg" },
       avatar: { type: String, default: "images/avatar-placeholder.svg" }

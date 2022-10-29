@@ -6,27 +6,56 @@ const async = require("async");
 const User = require("../models/user");
 const Genre = require("../models/genre");
 const Page = require("../models/page");
+const Post = require("../models/post");
 
 // Display page on GET
 exports.page_get = (req, res, next) => {
-  //? Will need to change to handle posts / membership tiers
-  Page.findById(req.params.id)
-    .populate("genre")
-    .populate("tiers")
-    .exec((err, page) => {
+  async.parallel(
+    {
+      page(callback) {
+        Page.findById(req.params.id)
+          .populate("genre")
+          .populate("tiers")
+          .exec(callback);
+      },
+      posts(callback) {
+        Post.find({ pageId: req.params.id }).exec(callback);
+      }
+    },
+    (err, results) => {
       if (err) return next(err);
-      if (!page) {
-        // No results
+
+      if (!results.page) {
         const err = new Error("Page not found");
         err.status = 404;
         return next(err);
       }
+
       // Successful, so render
       res.render("page-view", {
-        title: page.title,
-        page: page
+        title: results.page.title,
+        page: results.page,
+        posts: results.posts
       });
-    });
+    }
+  );
+  // Page.findById(req.params.id)
+  //   .populate("genre")
+  //   .populate("tiers")
+  //   .exec((err, page) => {
+  //     if (err) return next(err);
+  //     if (!page) {
+  //       // No results
+  //       const err = new Error("Page not found");
+  //       err.status = 404;
+  //       return next(err);
+  //     }
+  //     // Successful, so render
+  //     res.render("page-view", {
+  //       title: page.title,
+  //       page: page
+  //     });
+  //   });
 };
 
 // Handle create page on POST

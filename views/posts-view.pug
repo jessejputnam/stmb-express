@@ -1,0 +1,16 @@
+extends layout 
+
+block content 
+  h1= title 
+
+  div 
+    a(href=`/${currentUser.creator.page._id}/add-post`) Add Post
+
+  if !posts.length
+    div
+      em No posts yet
+  else 
+    each post in posts 
+      div 
+        h4= post.title 
+        p= post.text

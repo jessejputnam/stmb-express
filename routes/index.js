@@ -10,6 +10,7 @@ const auth_controller = require("../controllers/authController");
 const creator_controller = require("../controllers/creatorController");
 const page_controller = require("../controllers/pageController");
 const memberships_controller = require("../controllers/membershipController");
+const post_controller = require("../controllers/postController");
 
 // GET request for user home
 router.get("/home", authCheckFalse, function (req, res, next) {
@@ -79,10 +80,21 @@ router.get(
   memberships_controller.add_membership_get
 );
 
+// POST request for add membership
 router.post(
   "/:id/add-membership",
   authCheckFalse,
   memberships_controller.add_membership_post
 );
+
+/* ----------------- Posts Page --------------- */
+// GET request for display all creator's posts
+router.get("/:id/posts", post_controller.posts_display_get);
+
+// GET request for add post
+router.get("/:id/add-post", authCheckFalse, post_controller.add_post_get);
+
+// POST request for add post
+router.post("/:id/add-post", authCheckFalse, post_controller.add_post_post);
 
 module.exports = router;

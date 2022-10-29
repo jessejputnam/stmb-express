@@ -191,7 +191,6 @@ function App() {
   - [x] Connect to database
   - [x] Database Schema set up
     - [x] User Model
-    - [x] Creator Model
     - [x] Creator Page Model
     - [x] Post Model
     - [x] Membership Model
@@ -200,9 +199,10 @@ function App() {
 - [ ] Security set up
 
   - [x] Local Strategy
+  - [ ] Session storage
     - [x] Session cookie set up
     - [x] Set 24hr session signout timer
-  - [ ] Oauth Strategy (?)
+    - [x] Set up session storage
 
 - [ ] Controllers set up
 
@@ -220,10 +220,16 @@ function App() {
     - [ ] Page editing
       - [ ] Images
       - [x] Description/handles
-    - [ ] Membership creation
+    - [x] Membership creation
     - [ ] Page deleting
     - [x] Page viewing
+      - [ ] Hidden/Visible aspects based on whether its your page
     - [ ] Posts
+      - [ ] Posts viewing
+      - [ ] Adding posts
+      - [ ] Adding images to posts
+      - [ ] Editing posts
+      - [ ] Deleting posts
   - [ ] Search
     - [ ] By name
     - [ ] By genre

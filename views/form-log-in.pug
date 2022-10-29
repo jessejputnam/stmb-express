@@ -5,6 +5,8 @@ block noUser
     ul
       for error of errors
         li= errors
+  if error 
+    p= error
 
   form.form-wrapper(method='POST' action='') 
     h2(style='text-align:center')= title 

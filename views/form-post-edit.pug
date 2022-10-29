@@ -1,0 +1,25 @@
+extends layout 
+
+block content 
+  h1= title 
+
+  if errors 
+    ul 
+      for error in errors 
+        li!= error.msg
+
+  form.form-wrapper(method='POST' action='') 
+    input#userId(type="hidden" name="userId" value=currentUser._id required="true")
+
+    div.form-control 
+      label(for="title" style="margin-left:15px") Post Title
+      input#title(type="text" name="title" required='true')
+
+    div.form-control 
+      label(for="text" style="margin-left:15px") Text
+      input#text(type="text" name="text" required="true")
+  
+    div.form-control-btns 
+      a(href="/home") Cancel
+      button.btn(type="submit") Submit
+    
