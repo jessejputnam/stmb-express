@@ -59,17 +59,27 @@ exports.add_membership_post = [
   body("title", "Tier title required").trim().isLength({ min: 1 }).escape(),
   body("price", "Price is required").trim().isDecimal({ min: 0.01 }),
   body("desc", "Decription is required").trim().isLength({ min: 1 }).escape(),
-  body("rewards", "Rewards must be specified").trim().isLength({ min: 1 }),
+  body("rewards", "Rewards must be specified")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
 
   (req, res, next) => {
+    const userPageId = req.user.creator.page.toString();
+
     // User artist id does not match page's artist id
-    if (req.user.pageId._id.toString() !== req.params.id) {
+    if (userPageId !== req.params.id) {
       return res.redirect(`/${req.params.id}`);
     }
 
     User.findById(req.user._id)
-      .populate("page")
-      .populate("creator")
+      .populate({
+        path: "creator",
+        populate: {
+          path: "page",
+          model: "Page"
+        }
+      })
       .exec((err, result) => {
         if (err) return next(err);
         if (!result) {
@@ -80,7 +90,7 @@ exports.add_membership_post = [
 
         const user = result;
         const creator = user.creator;
-        const page = user.page;
+        const page = creator.page;
 
         const membership = new Membership({
           creator: creator,
@@ -88,11 +98,19 @@ exports.add_membership_post = [
           price: req.body.price,
           title: req.body.title,
           imgUrl: req.body.imgUrl || null,
-          description: req.body.desc
+          description: req.body.desc,
+          rewards: req.body.rewards.split("||").map((reward) => reward.trim())
         });
 
         membership.save((err) => {
           if (err) return next(err);
+
+          page.tiers.push(membership);
+          page.save((err) => {
+            if (err) return next(err);
+
+            return res.redirect(`/${page._id}/memberships`);
+          });
         });
       });
   }

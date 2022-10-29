@@ -17,14 +17,14 @@ block content
 
     div.form-control 
       label(for="price" style="margin-left:15px") Price
-      input#price(type="number" name="price" require="true" min="0.01")
+      input#price(type="number" name="price" require="true" step="0.01" min="0.01")
 
     div.form-control 
       label(for="desc" style="margin-left:15px") Description
-      input#desc(type="number" name="desc" require="true")
+      input#desc(type="text" name="desc" require="true")
 
     div.form-control 
-      label(for="rewards" style="margin-left:15px") Rewards (separate rewards by //)
+      label(for="rewards" style="margin-left:15px") Rewards (separate rewards by ||)
       input#rewards(type="text" name="rewards" require="true")
   
     div.form-control-btns 

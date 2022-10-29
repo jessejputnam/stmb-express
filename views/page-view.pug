@@ -23,14 +23,22 @@ block content
       h3 Membership Tiers
       div.tiers-wrapper
         if page.tiers.length > 0
-          each tier in page.tiers   
+          each membership in page.tiers   
             div.tier-wrapper 
-              h3= tier.title 
-              p= `$${tier.price}`
-              p= tier.description
+              h3= membership.title 
+              p= `$${membership.price}`
+              p= membership.desc
               ul 
-                each reward in tier.rewards   
+                each reward in membership.rewards   
                   li= reward
+              if String(currentUser._id) === String(page.user._id)
+                em Your Page
+              else 
+                form(method="POST" action=`/${page._id}/subscribe`) 
+                  input#userId(type="hidden" name="userId" required="true" value=currentUser._id)
+                  input#creatorId(type="hidden" name="creatorId" required="true" value=page.user._id)
+                  button.btn.btn-secondary(type="submit") Subscribe
+              
 
 
     div.page-posts-container 

@@ -79,4 +79,10 @@ router.get(
   memberships_controller.add_membership_get
 );
 
+router.post(
+  "/:id/add-membership",
+  authCheckFalse,
+  memberships_controller.add_membership_post
+);
+
 module.exports = router;

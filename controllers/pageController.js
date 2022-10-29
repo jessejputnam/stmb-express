@@ -12,6 +12,7 @@ exports.page_get = (req, res, next) => {
   //? Will need to change to handle posts / membership tiers
   Page.findById(req.params.id)
     .populate("genre")
+    .populate("tiers")
     .exec((err, page) => {
       if (err) return next(err);
       if (!page) {
@@ -63,7 +64,7 @@ exports.create_page_post = (req, res, next) => {
 };
 
 // Display edit page on GET
-exports.edit_page_get = async (req, res, next) => {
+exports.edit_page_get = (req, res, next) => {
   Page.findById(req.params.id)
     .populate("genre")
     .populate("tiers")
@@ -129,6 +130,7 @@ exports.edit_page_post = [
           page: page,
           errors: errors
         });
+        return;
       }
 
       page.description = req.body.desc;

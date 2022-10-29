@@ -8,7 +8,7 @@ exports.become_creator_get = (req, res, next) => {
   Genre.find({}, "type").exec((err, genres) => {
     if (err) return next(err);
 
-    if (req.user.creator) {
+    if (req.user.creator.name) {
       return res.redirect("/home");
     }
 
@@ -31,7 +31,7 @@ exports.become_creator_post = [
 
   (req, res, next) => {
     const errors = validationResult(req);
-    if (req.user.creator) {
+    if (req.user.creator.name) {
       return res.redirect("/home");
     }
 
@@ -57,11 +57,9 @@ exports.become_creator_post = [
       user.creator = {};
       user.creator.name = req.body.projectName;
       user.creator.genre = req.body.genre;
-      console.log("TESTING POST", result.creator);
 
       result.save((err, theuser) => {
         if (err) return next(err);
-        console.log(theuser);
         res.redirect("/home");
       });
     });

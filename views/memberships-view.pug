@@ -14,7 +14,7 @@ block content
       p= "$" + membership.price.toFixed(2)
       p= membership.desc 
       ul 
-      each reward in rewards
-        li= reward
+        each reward in membership.rewards
+          li= "- " + reward
 
 
