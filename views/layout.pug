@@ -33,25 +33,27 @@ html(lang='en')
                 a(href="/settings") Settings 
               li 
                 a(href="/logout") Logout
-              if !currentUser.creator
-                hr(style='margin:10px')
-                li 
-                  a(href="/creator-signup") Become Creator
-              if currentUser.creator 
-                hr(style='margin:10px')
-                hr(style='margin:10px')
-                li 
-                  a(href=`/${currentUser.pageId}`) View Page 
-                if currentUser.pageId 
+              - console.log(currentUser)
+
+              if currentUser.creator.name
+                if currentUser.creator.page
+                  hr(style='margin:10px')
+                  hr(style='margin:10px')
                   li 
-                    a(href=`/${currentUser.pageId}/edit`) Edit Page
+                    a(href=`/${currentUser.creator.page}`) View Page 
                   li 
-                    a(href=`/${currentUser.pageId}/memberships`) Memberships
+                    a(href=`/${currentUser.creator.page}/edit`) Edit Page
+                  li 
+                    a(href=`/${currentUser.creator.page}/memberships`) Memberships
                   li 
                     a(href="/analytics") Analytics 
                 else 
                   form(method="POST" action="/create-page") 
                     button.btn.btn-secondary(type="submit") Create Page
+              else 
+                hr(style='margin:10px')
+                li 
+                  a(href="/creator-signup") Become Creator
 
                 
 

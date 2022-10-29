@@ -66,12 +66,7 @@ exports.sign_up_post = [
         password: req.body.password,
         firstname: req.body.firstName,
         lastname: req.body.lastName,
-        region: req.body.region,
-        creator: {
-          name: null,
-          genre: null,
-          page: null
-        }
+        region: req.body.region
       });
 
       user.save((err) => {

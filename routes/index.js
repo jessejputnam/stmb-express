@@ -65,10 +65,18 @@ router.get("/:id/edit", authCheckFalse, page_controller.edit_page_get);
 router.post("/:id/edit", authCheckFalse, page_controller.edit_page_post);
 
 /* ----------------- Membership Page --------------- */
-// GET quest for memberships page
-router.get("/:id/memberships", memberships_controller.display_memberships_get);
+// GET quest for view memberships page
+router.get(
+  "/:id/memberships",
+  authCheckFalse,
+  memberships_controller.display_memberships_get
+);
 
 // GET quest for add memberships page
-router.get("/:id/add-membership", memberships_controller.add_membership_get);
+router.get(
+  "/:id/add-membership",
+  authCheckFalse,
+  memberships_controller.add_membership_get
+);
 
 module.exports = router;

@@ -10,12 +10,14 @@ const Membership = require("../models/membership");
 
 // Display memberships page on GET
 exports.display_memberships_get = (req, res, next) => {
+  const userPageId = req.user.creator.page.toString();
+
   // User artist id does not match page's artist id
-  if (req.user.pageId._id.toString() !== req.params.id) {
+  if (userPageId !== req.params.id) {
     return res.redirect(`/${req.params.id}`);
   }
 
-  Page.findById(req.user.pageId)
+  Page.findById(req.user.creator.page)
     .populate("tiers")
     .exec((err, result) => {
       if (err) return next(err);
@@ -39,8 +41,10 @@ exports.display_memberships_get = (req, res, next) => {
 };
 
 exports.add_membership_get = (req, res, next) => {
+  const userPageId = req.user.creator.page.toString();
+
   // User artist id does not match page's artist id
-  if (req.user.pageId._id.toString() !== req.params.id) {
+  if (userPageId !== req.params.id) {
     return res.redirect(`/${req.params.id}`);
   }
 

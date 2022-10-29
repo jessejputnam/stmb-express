@@ -6,7 +6,7 @@ block content
   if !memberships.length
     p No memberships yet added
 
-  a(href=`/${currentUser.pageId}/add-membership`) Add Membership
+  a(href=`/${currentUser.creator.page}/add-membership`) Add Membership
 
   each membership in memberships 
     div
