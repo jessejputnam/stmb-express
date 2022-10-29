@@ -225,8 +225,8 @@ function App() {
     - [x] Page viewing
       - [ ] Hidden/Visible aspects based on whether its your page
     - [ ] Posts
-      - [ ] Posts viewing
-      - [ ] Adding posts
+      - [x] Posts viewing
+      - [x] Adding posts
       - [ ] Adding images to posts
       - [ ] Editing posts
       - [ ] Deleting posts
