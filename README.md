@@ -181,7 +181,7 @@ function App() {
   - [ ] Figure out region list
   - [ ] Determine sanitize and validate reqs on page/user/creator/membership
 
-- [ ] Initial set up
+- [x] Initial set up
 
   - [x] Initialize dependencies and dev environment
 
@@ -196,10 +196,12 @@ function App() {
     - [x] Membership Model
     - [x] Genre Model
 
-- [ ] Security set up
+- [x] Security set up
 
   - [x] Local Strategy
-  - [ ] Session storage
+  - [x] Email verification
+  - [x] Set up session storage
+  - [x] Session storage
     - [x] Session cookie set up
     - [x] Set 24hr session signout timer
     - [x] Set up session storage
