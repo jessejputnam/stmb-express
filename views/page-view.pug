@@ -12,12 +12,16 @@ block content
     div.page-about
       p= page.region
       p= page.description 
-      if page.socialUrls.facebookHandle
-        p= "www.facebook.com/" + page.socialUrls.facebookHandle
-      if page.socialUrls.instagramHandle 
-        p= "www.instagram.com/" + page.socialUrls.instagramHandle
-      if page.socialUrls.twitterHandle
-        p= "www.twitter.com/" + page.socialUrls.twitterHandle
+      ul
+        if page.socialUrls.facebookHandle
+          li 
+            a(href=`https://www.facebook.com/${page.socialUrls.facebookHandle}` target="_blank" rel="noreferrer") Facebook
+        if page.socialUrls.instagramHandle 
+          li
+            a(href=`https://www.instagram.com/${page.socialUrls.instagramHandle}` target="_blank" rel="noreferrer") Instagram
+        if page.socialUrls.twitterHandle
+        li
+          a(href=`https://www.twitter.com/${page.socialUrls.twitterHandle}` target="_blank" rel="noreferrer") Twitter
 
     div.page-tiers-container 
       h3 Membership Tiers

@@ -171,7 +171,7 @@ exports.verify_email_get = async (req, res, next) => {
       user.save((err) => {
         if (err) return next(err);
 
-        return res.redirect("/home");
+        return res.redirect("/login");
       });
     });
   } catch (err) {
