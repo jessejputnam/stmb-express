@@ -312,3 +312,9 @@ exports.reset_password_post = async (req, res, next) => {
     if (err) return next(err);
   }
 };
+
+// ################### SETTINGS ##################
+
+exports.display_settings_get = (req, res, next) => {
+  res.render("settings");
+};

@@ -1,0 +1,10 @@
+extends layout 
+
+block content  
+  h1 Settings
+
+  div   
+    p Reset Password 
+    form(method="POST" action="/recover") 
+      input#email(type="hidden" name="email" required="true" value=currentUser.username)
+      button.btn.btn-primary(type="submit") Reset Password

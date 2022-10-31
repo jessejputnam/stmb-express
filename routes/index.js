@@ -61,6 +61,14 @@ router.get("/reset/:token", auth_controller.reset_password_get);
 router.post("/reset/:token", auth_controller.reset_password_post);
 
 /* -------------------- Become Creator ------------------ */
+router.get(
+  "/settings",
+  authCheckFalse,
+  isVerifiedCheck,
+  auth_controller.display_settings_get
+);
+
+/* -------------------- Become Creator ------------------ */
 // GET request for become creator
 router.get(
   "/creator-signup",
