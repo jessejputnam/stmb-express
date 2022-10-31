@@ -19,7 +19,9 @@ exports.page_get = (req, res, next) => {
           .exec(callback);
       },
       posts(callback) {
-        Post.find({ pageId: req.params.id }).exec(callback);
+        Post.find({ pageId: req.params.id })
+          .sort({ timestamp: "desc" })
+          .exec(callback);
       }
     },
     (err, results) => {

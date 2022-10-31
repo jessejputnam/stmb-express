@@ -4,6 +4,9 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const uniqueValidator = require("mongoose-unique-validator");
 const bcrypt = require("bcryptjs");
+const crypto = require("crypto");
+
+const Token = require("../models/token");
 
 // USER MODEL
 const UserSchema = new Schema(
@@ -20,6 +23,9 @@ const UserSchema = new Schema(
     firstname: { type: String, maxLength: 30, required: true },
     lastname: { type: String, maxLength: 30, required: true },
     region: { type: String, required: true },
+    isVerified: { type: Boolean, default: false },
+    resetPasswordToken: { type: String, required: false },
+    resetPasswordExpires: { type: Date, required: false },
 
     subscriptions: [
       {
@@ -49,8 +55,22 @@ UserSchema.pre("save", function (next) {
   next();
 });
 
-UserSchema.methods.comparePassword = function (plaintext, callback) {
+UserSchema.methods.comparePassword = function (plaintext) {
   return bcrypt.compareSync(plaintext, this.password);
+};
+
+UserSchema.methods.generatePasswordReset = function () {
+  this.resetPasswordToken = crypto.randomBytes(20).toString("hex");
+  this.resetPasswordExpires = Date.now() + 3600000; // expires in an hour
+};
+
+UserSchema.methods.generateVerificationToken = function () {
+  const payload = {
+    userId: this._id,
+    token: crypto.randomBytes(20).toString("hex")
+  };
+
+  return new Token(payload);
 };
 
 module.exports = mongoose.model("User", UserSchema);

@@ -12,16 +12,18 @@ exports.posts_display_get = (req, res, next) => {
     return res.redirect("/home");
   }
 
-  Post.find({ user: req.user }, (err, results) => {
-    if (err) return next(err);
+  Post.find({ user: req.user })
+    .sort({ timestamp: "desc" })
+    .exec((err, results) => {
+      if (err) return next(err);
 
-    const posts = results;
+      const posts = results;
 
-    res.render("posts-view", {
-      title: "Posts",
-      posts: posts
+      res.render("posts-view", {
+        title: "Posts",
+        posts: posts
+      });
     });
-  });
 };
 
 // Handle add post on GET
@@ -60,6 +62,7 @@ exports.add_post_post = [
 
     const post = new Post({
       user: userId,
+      pageId: userPageId,
       title: req.body.title,
       text: req.body.text
     });

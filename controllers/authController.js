@@ -4,11 +4,21 @@ const passport = require("passport");
 const { body, validationResult } = require("express-validator");
 
 const User = require("../models/user");
+const Token = require("../models/token");
+
+const sendEmail = require("../utils/sendEmail");
+const sendVerificationEmail = require("../utils/sendVerificationEmail");
+const { MongoCursorInUseError } = require("mongodb");
+
+// ######################################################
+// ######################################################
 
 // Display correct page on index GET
 exports.index_get = (req, res, next) => {
   res.render("index", { title: "Smash the Motherboard" });
 };
+
+// ################# REGISTERING ##################
 
 // Display sign up on GET
 exports.signup_get = (req, res, next) => {
@@ -69,10 +79,12 @@ exports.sign_up_post = [
         region: req.body.region
       });
 
-      user.save((err) => {
+      user.save(async (err, theuser) => {
         if (err) {
           return next(err);
         }
+
+        await sendVerificationEmail(theuser, req, res);
 
         // Successful, redirect to login
         res.redirect("/login");
@@ -82,6 +94,8 @@ exports.sign_up_post = [
     }
   }
 ];
+
+// ################ LOGGING IN ##################
 
 // Handle login on GET
 exports.login_get = (req, res, next) => {
@@ -102,6 +116,189 @@ exports.login_post = passport.authenticate("local", {
 exports.logout_get = (req, res, next) => {
   req.logout((err) => {
     if (err) return next(err);
-    res.redirect("/");
+
+    req.session.destroy((err) => {
+      if (err) return next(err);
+      res.redirect("/");
+    });
   });
+};
+
+// ########### EMAIL VERIFICATION ############
+
+// Handle verify email on GET
+exports.verify_email_get = async (req, res, next) => {
+  if (!req.params.token) {
+    const err = new Error("Unable to find a user for this token");
+    err.status = 404;
+    return next(err);
+  }
+
+  try {
+    // Find a matching token
+    const token = await Token.findOne({ token: req.params.token });
+
+    if (!token) {
+      const err = new Error(
+        "Unable to find a valid token. Your token may have expired"
+      );
+      err.status = 404;
+      return next(err);
+    }
+
+    // Token found; look for matching user
+    User.findOne({ _id: token.userId }, (err, user) => {
+      if (!user) {
+        const err = new Error("Unable to find a user for this token");
+        err.status = 404;
+        return next(err);
+      }
+
+      if (user.isVerified) {
+        const err = new Error("This user is already verified");
+        err.status = 400;
+        return next(err);
+      }
+
+      // Verify and save user
+      user.isVerified = true;
+      user.save((err) => {
+        if (err) return next(err);
+
+        return res.redirect("/home");
+      });
+    });
+  } catch (err) {
+    if (err) return next(err);
+  }
+};
+
+// Handle resend token on POST
+exports.resend_token_post = async (req, res, next) => {
+  try {
+    const email = req.body.email;
+    const user = await User.findOne({ username: email });
+
+    if (!user) {
+      const err = new Error(
+        `The email address ${email} is not associated with any account`
+      );
+      err.status = 404;
+      return next(err);
+    }
+
+    if (user.isVerified) {
+      const err = new Error("This user is already verified");
+      err.status = 400;
+      return next(err);
+    }
+
+    await sendVerificationEmail(user, req, res);
+  } catch (err) {
+    if (err) return next(err);
+  }
+};
+
+// ########### PASSWORD RESET/RECOVER ############
+
+// Handle send password reset email on POST
+exports.send_reset_email_post = async (req, res, next) => {
+  try {
+    const email = req.body.email;
+
+    const user = await User.findOne({ username: email });
+
+    if (!user) {
+      const err = `The email address ${email} is not associated with any account`;
+      err.status = 404;
+      return next(err);
+    }
+
+    // Generate and set password reset token
+    user.generatePasswordReset();
+
+    // Save the updated user object
+    await user.save();
+
+    // Send email
+    const subject = "Password change request";
+    const to = user.username;
+    const from = process.env.FROM_EMAIL;
+    const link = `https://${req.headers.host}/reset-password/${user.resetPasswordToken}`;
+    const html = `
+      <p>Hi ${user.firstname}</p>
+      <p>Please click on the following <a href="${link}">link</a> to reset your password.</p> 
+      <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>
+      `;
+
+    await sendEmail({ to, from, subject, html });
+  } catch (err) {
+    if (err) return next(err);
+  }
+};
+
+// Handle validate reset token and display reset view on POST
+exports.validate_token_reset_post = async (req, res, next) => {
+  try {
+    const token = req.params.token;
+
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() }
+    });
+
+    if (!user) {
+      const err = "Password reset token is invalid or has exprired.";
+      err.status = 401;
+      return next(err);
+    }
+
+    return res.render("form-password-reset", {
+      user: user
+    });
+  } catch (err) {
+    if (err) return next(err);
+  }
+};
+
+// Handle reset password on POST
+exports.reset_password_post = async (req, res, next) => {
+  try {
+    const token = req.params.token;
+
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() }
+    });
+
+    if (!user) {
+      const err = "Password reset token is invalid or has exprired.";
+      err.status = 401;
+      return next(err);
+    }
+
+    // Set new password
+    user.password = req.body.password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    user.isVerified = true;
+
+    await user.save();
+
+    const subject = "Your password has been changed";
+    const to = user.username;
+    const from = process.env.FROM_EMAIL;
+    const html = `
+      <p>Hi ${user.firstname}</p>
+      <p>This is a confirmation that the password for your account ${user.username} has just been changed.</p>
+    `;
+
+    await sendEmail({ to, from, subject, html });
+
+    return res.redirect("success-message", {
+      message: "Your password has been updated"
+    });
+  } catch (err) {
+    if (err) return next(err);
+  }
 };

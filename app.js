@@ -42,6 +42,7 @@ const sessionStore = new MongoDBStore({
   collection: "mySessions",
   databaseName: "test-db"
 });
+
 sessionStore.on(
   "error",
   console.error.bind(console, "MongoDB Session Storage connection error")
@@ -88,10 +89,14 @@ passport.deserializeUser(function (id, done) {
 app.use(
   session({
     cookie: {
-      maxAge: 24 * 60 * 60 * 1000
+      maxAge: 24 * 60 * 60 * 1000,
+      httpOnly: true,
+      // secure: true
+      sameSite: true
     },
     store: sessionStore,
     secret: process.env.SESSION_SECRET,
+    name: "session-id",
     resave: false,
     saveUninitialized: true
   })
