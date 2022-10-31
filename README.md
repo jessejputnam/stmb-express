@@ -208,8 +208,10 @@ function App() {
 
   - [ ] Auth
     - [x] Register user
-      - [ ] Email verification
+      - [x] Email verification
     - [x] Login
+    - [x] Reset password
+    - [x] Email verification
   - [ ] Creator
     - [x] Creator sign up
       - [ ] Info box for if genre not found, contact admin
