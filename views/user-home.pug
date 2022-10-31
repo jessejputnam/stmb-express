@@ -8,3 +8,8 @@ block content
   p Creator: #{currentUser.creator ? currentUser.creator.name : null}
   p Page: #{currentUser.creator.page}
   p Region: #{currentUser.region}
+
+  if !currentUser.isVerified 
+    form(method="POST" action="/verify/resend") 
+      input#email(type="hidden" name="email" required="true" value=currentUser.username)
+      button.btn.btn-primary(type="submit") Resend Verification Email

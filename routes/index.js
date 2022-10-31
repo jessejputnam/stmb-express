@@ -19,7 +19,9 @@ router.get("/home", authCheckFalse, function (req, res, next) {
 });
 
 router.get("/not-verified", (req, res, next) => {
-  res.render("success-message", { message: "Please check email and verify." });
+  res.render("success-message", {
+    message: "Please check email and verify."
+  });
 });
 
 /* -------------------- Landing Page ------------------ */
@@ -43,7 +45,20 @@ router.post("/login", auth_controller.login_post);
 router.get("/logout", auth_controller.logout_get);
 
 /* --------------- Verification Routes --------------- */
+// GET request for verifying user from email link
 router.get("/verify/:token", auth_controller.verify_email_get);
+
+// POST request for resending verification token
+router.post("/verify/resend", auth_controller.resend_token_post);
+
+// POST request to email token resetting password
+router.post("/recover", auth_controller.send_reset_email_post);
+
+// POST request for validating token and seeing reset view
+router.get("/reset/:token", auth_controller.reset_password_get);
+
+// POST request for resetting password
+router.post("/reset/:token", auth_controller.reset_password_post);
 
 /* -------------------- Become Creator ------------------ */
 // GET request for become creator

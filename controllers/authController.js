@@ -230,21 +230,25 @@ exports.send_reset_email_post = async (req, res, next) => {
     const subject = "Password change request";
     const to = user.username;
     const from = process.env.FROM_EMAIL;
-    const link = `https://${req.headers.host}/reset-password/${user.resetPasswordToken}`;
+    //! Change to secure for production
+    const link = `http://${req.headers.host}/reset/${user.resetPasswordToken}`;
+    // const link = `https://${req.headers.host}/reset-password/${user.resetPasswordToken}`;
     const html = `
       <p>Hi ${user.firstname}</p>
       <p>Please click on the following <a href="${link}">link</a> to reset your password.</p> 
       <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>
       `;
 
+    console.log("TESTING:", link);
     await sendEmail({ to, from, subject, html });
+    return res.redirect("/home");
   } catch (err) {
     if (err) return next(err);
   }
 };
 
 // Handle validate reset token and display reset view on POST
-exports.validate_token_reset_post = async (req, res, next) => {
+exports.reset_password_get = async (req, res, next) => {
   try {
     const token = req.params.token;
 
@@ -301,7 +305,7 @@ exports.reset_password_post = async (req, res, next) => {
 
     await sendEmail({ to, from, subject, html });
 
-    return res.redirect("success-message", {
+    return res.render("success-message", {
       message: "Your password has been updated"
     });
   } catch (err) {

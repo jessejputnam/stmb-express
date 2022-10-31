@@ -12,7 +12,9 @@ async function sendVerificationEmail(user, req, next) {
     const subject = "Account Verification Token";
     const to = user.username;
     const from = process.env.FROM_EMAIL;
+    //! Change to secure on production
     const link = "http://" + req.headers.host + "/verify/" + token.token;
+    // const link = "https://" + req.headers.host + "/verify/" + token.token;
     let html = `
       <p>Hi ${user.firstname}<p><br><p>Please click on the following <a href="${link}">link</a> to verify your account.</p><br>
       <p>If you did not request this, please ignore this email.</p>`;

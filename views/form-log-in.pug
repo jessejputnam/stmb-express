@@ -1,10 +1,14 @@
 extends layout 
 
 block noUser
-  if errors 
+  if errors.length > 0
     ul
       for error of errors
         li= errors
+    p Problems remembering password?
+    form(method="POST" action="/recover") 
+      input#email(type="text" name="email" required="true")
+      button.btn.btn-primary(type="submit") Reset Password
   if error 
     p= error
 
