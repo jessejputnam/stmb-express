@@ -8,21 +8,20 @@ const Token = require("../models/token");
 
 const sendEmail = require("../utils/sendEmail");
 const sendVerificationEmail = require("../utils/sendVerificationEmail");
-const { MongoCursorInUseError } = require("mongodb");
 
 // ######################################################
 // ######################################################
 
 // Display correct page on index GET
 exports.index_get = (req, res, next) => {
-  res.render("index", { title: "Smash the Motherboard" });
+  return res.render("index", { title: "Smash the Motherboard" });
 };
 
 // ################# REGISTERING ##################
 
 // Display sign up on GET
 exports.signup_get = (req, res, next) => {
-  res.render("form-sign-up", { title: "STMB Register" });
+  return res.render("form-sign-up", { title: "STMB Register" });
 };
 
 // Handle sign up on POST
@@ -54,7 +53,7 @@ exports.sign_up_post = [
 
     if (!errors.isEmpty()) {
       // There are errors, rerender
-      res.render("form-sign-up", {
+      return res.render("form-sign-up", {
         title: "STMB Register",
         errors: errors.array()
       });
@@ -84,10 +83,15 @@ exports.sign_up_post = [
           return next(err);
         }
 
-        await sendVerificationEmail(theuser, req, res);
+        await sendVerificationEmail(theuser, req, next);
 
-        // Successful, redirect to login
-        res.redirect("/login");
+        // Successful, redirect to verification reminder
+        return res.render("success-message", {
+          message:
+            "A verification email has been sent to " +
+            user.username +
+            ". Please follow link to sign in."
+        });
       });
     } catch (err) {
       return next(err);
@@ -148,6 +152,8 @@ exports.verify_email_get = async (req, res, next) => {
 
     // Token found; look for matching user
     User.findOne({ _id: token.userId }, (err, user) => {
+      if (err) return next(err);
+
       if (!user) {
         const err = new Error("Unable to find a user for this token");
         err.status = 404;
