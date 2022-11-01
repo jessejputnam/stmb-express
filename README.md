@@ -255,7 +255,13 @@ function App() {
 
   - [x] Connect stripe
   - [ ] Stripe accounts
-    - [x] Creator account onboarding
+    - [ ] Creator account onboarding
+      - [x] Stripe connect create account
+      - [x] Account Link between STMB database and Stripe database
+      - [x] Handle success
+      - [ ] Handle refresh
+        - [ ] Refresh using accountID in creator obj
+      - [ ] Handle complete stripe account/payment_intent ready
     - [ ] Stripe users
   - [ ] Subscription logic
   - [ ] Set up webhooks to listen for Stripe account changes
