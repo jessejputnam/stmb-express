@@ -253,10 +253,10 @@ function App() {
 
 - [ ] Stripe set up
 
-  - [ ] Connect stripe
-  - [ ] Stripe users
+  - [x] Connect stripe
   - [ ] Stripe accounts
-  - [ ] Marketplace onboarding
+    - [x] Creator account onboarding
+    - [ ] Stripe users
   - [ ] Subscription logic
   - [ ] Set up webhooks to listen for Stripe account changes
 

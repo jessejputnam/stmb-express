@@ -12,6 +12,7 @@ const creator_controller = require("../controllers/creatorController");
 const page_controller = require("../controllers/pageController");
 const memberships_controller = require("../controllers/membershipController");
 const post_controller = require("../controllers/postController");
+const stripe_controller = require("../controllers/stripeController");
 
 const countryNames = require("../utils/countryNames");
 
@@ -90,8 +91,20 @@ router.post(
   creator_controller.become_creator_post
 );
 
-// GET request for Stripe signup
-router.get("/connect-stripe", (req, res) => {});
+// GET request for Stripe creator onboarding
+router.get(
+  "/onboard-user",
+  authCheckFalse,
+  isVerifiedCheck,
+  stripe_controller.stripe_onboard_get
+);
+
+// GET request for refresh_url from accountLink
+router.get("/onboard-user/refresh", stripe_controller.stripe_onboard_refresh);
+
+router.get("/onboard-user/success", (req, res, next) => {
+  res.render("success-onboarding");
+});
 
 /* -------------------- Page Views ------------------ */
 // POST request for create page

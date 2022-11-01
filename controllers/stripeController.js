@@ -2,8 +2,8 @@
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST_KEY);
 
-// Handle onboarding creator on POST
-exports.stripe_onboard_post = async (req, res, next) => {
+// Handle onboarding creator on GET
+exports.stripe_onboard_get = async (req, res, next) => {
   try {
     const account = await stripe.accounts.create({
       type: "standard",
@@ -31,7 +31,7 @@ exports.stripe_onboard_post = async (req, res, next) => {
 };
 
 // Handle onboaring refresh on GET
-exports.stripe_onboarding_refresh = async (req, res, next) => {
+exports.stripe_onboard_refresh = async (req, res, next) => {
   if (!req.session.accountID) {
     return res.redirect("/home");
   }
@@ -44,7 +44,7 @@ exports.stripe_onboarding_refresh = async (req, res, next) => {
       type: "account_onboarding",
       account: accountID,
       refresh_url: `${origin}/onboard-user/refresh`,
-      return_url: `${origin}/home`
+      return_url: `${origin}/onboard-user/success`
     });
 
     res.redirect(303, accountLink.url);
