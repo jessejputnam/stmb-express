@@ -48,14 +48,17 @@ html(lang='en')
                   li 
                     a(href="/analytics") Analytics 
                 else 
-                  if currentUser.creator.stripeId
+                  if currentUser.creator.onboardComplete
                     hr(style='margin:10px')
                     form(method="POST" action="/create-page") 
                       button.btn.btn-secondary(type="submit") Create Page
                   else 
                     hr(style='margin:10px')
                     li 
-                      a(href="/onboard-user") Connect to Stripe
+                      if !currentUser.creator.stripeId
+                        a(href="/onboard-user") Connect to Stripe
+                      else 
+                        a(href="/onboard-user/refresh") Continue Conecting to Stripe
 
               else 
                 hr(style='margin:10px')

@@ -57,6 +57,7 @@ exports.become_creator_post = [
       user.creator = {};
       user.creator.name = req.body.projectName;
       user.creator.genre = req.body.genre;
+      user.creator.onboardComplete = false;
 
       result.save((err, theuser) => {
         if (err) return next(err);

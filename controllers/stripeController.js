@@ -1,5 +1,7 @@
 "use strict";
 
+const User = require("../models/user");
+
 const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST_KEY);
 
 // Handle onboarding creator on GET
@@ -14,7 +16,9 @@ exports.stripe_onboard_get = async (req, res, next) => {
       }
     });
 
-    req.session.accountID = account.id;
+    const user = await User.findByIdAndUpdate(req.user._id, {
+      "creator.stripeId": account.id
+    });
 
     const accountLink = await stripe.accountLinks.create({
       account: account.id,
@@ -32,12 +36,14 @@ exports.stripe_onboard_get = async (req, res, next) => {
 
 // Handle onboaring refresh on GET
 exports.stripe_onboard_refresh = async (req, res, next) => {
-  if (!req.session.accountID) {
-    return res.redirect("/home");
+  if (!req.user.creator.stripeId) {
+    const err = new Error("No account ID found for Stripe onboarding.");
+    err.status = 404;
+    return next(err);
   }
 
   try {
-    const { accountID } = req.session;
+    const accountID = req.user.creator.stripeId;
     const origin = `${req.secure ? "https://" : "http://"}${req.headers.host}`;
 
     const accountLink = await stripe.accountLinks.create({
@@ -47,7 +53,7 @@ exports.stripe_onboard_refresh = async (req, res, next) => {
       return_url: `${origin}/onboard-user/success`
     });
 
-    res.redirect(303, accountLink.url);
+    return res.redirect(303, accountLink.url);
   } catch (err) {
     return next(err);
   }

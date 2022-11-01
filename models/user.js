@@ -40,7 +40,8 @@ const UserSchema = new Schema(
       name: String,
       genre: { type: Schema.Types.ObjectId, ref: "Genre" },
       page: { type: Schema.Types.ObjectId, ref: "Page" },
-      stripeId: { type: String }
+      stripeId: { type: String },
+      onboardComplete: { type: Boolean }
     }
   },
   { timestamps: true }
