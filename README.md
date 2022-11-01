@@ -187,6 +187,7 @@ function App() {
   - [ ] Replace env email to stmb email
   - [ ] Replace MONGODB_TEST_URI at production
   - [ ] Replace Stripe secret key to production
+  - [ ] Format emails and wording/branding
 
 - [x] Initial set up
 
