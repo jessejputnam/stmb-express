@@ -180,6 +180,13 @@ function App() {
 
   - [ ] Figure out region list
   - [ ] Determine sanitize and validate reqs on page/user/creator/membership
+  - [ ] Replace all instances of HTTP to HTTPS prior to production
+    - [ ] stripeController.js
+    - [ ] authController.js
+    - [ ] app.js (app.use(session){...})
+  - [ ] Replace env email to stmb email
+  - [ ] Replace MONGODB_TEST_URI at production
+  - [ ] Replace Stripe secret key to production
 
 - [x] Initial set up
 
@@ -251,6 +258,7 @@ function App() {
   - [ ] Stripe accounts
   - [ ] Marketplace onboarding
   - [ ] Subscription logic
+  - [ ] Set up webhooks to listen for Stripe account changes
 
 - [ ] Views set up
 

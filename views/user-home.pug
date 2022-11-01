@@ -7,7 +7,7 @@ block content
   p(style="margin-bottom:20px")= currentUser.username
   p Creator: #{currentUser.creator ? currentUser.creator.name : null}
   p Page: #{currentUser.creator.page}
-  p Region: #{currentUser.region}
+  p Region: #{country_names[currentUser.region]}
 
   if !currentUser.isVerified 
     form(method="POST" action="/verify/resend") 

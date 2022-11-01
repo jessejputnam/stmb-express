@@ -13,9 +13,14 @@ const page_controller = require("../controllers/pageController");
 const memberships_controller = require("../controllers/membershipController");
 const post_controller = require("../controllers/postController");
 
+const countryNames = require("../utils/countryNames");
+
+// #####################################################
+// #####################################################
+
 // GET request for user home
 router.get("/home", authCheckFalse, function (req, res, next) {
-  res.render("user-home", { title: "Home" });
+  res.render("user-home", { title: "Home", country_names: countryNames });
 });
 
 router.get("/not-verified", (req, res, next) => {
@@ -84,6 +89,9 @@ router.post(
   isVerifiedCheck,
   creator_controller.become_creator_post
 );
+
+// GET request for Stripe signup
+router.get("/connect-stripe", (req, res) => {});
 
 /* -------------------- Page Views ------------------ */
 // POST request for create page

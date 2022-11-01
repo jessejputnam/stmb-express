@@ -22,7 +22,13 @@ block noUser
       input#lastName(type="text" name="lastName"  required='true' placeholder='Person')
     div.form-control 
       label(for="region" style="margin-left:15px") Region
-      input#region(type="text" name="region"  required='true' placeholder='Country or State')
+      select#region(name="region" required="true")
+        option(value="" selected disabled) Choose Country
+        each code, country in country_list 
+          - console.log(countrycountry)
+          option(value=code)= country
+      //- label(for="region" style="margin-left:15px") Region
+      //- input#region(type="text" name="region"  required='true' placeholder='Country or State')
     div.form-control 
       label(for="password" style="margin-left:15px") Password 
       span(style="font-size:.6rem;margin-left:15px;margin-top:-10px") ⌞ Must have one of each uppercase, lowercase, number, symbol - minimum length of 8

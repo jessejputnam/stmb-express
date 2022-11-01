@@ -39,7 +39,8 @@ const UserSchema = new Schema(
     creator: {
       name: String,
       genre: { type: Schema.Types.ObjectId, ref: "Genre" },
-      page: { type: Schema.Types.ObjectId, ref: "Page" }
+      page: { type: Schema.Types.ObjectId, ref: "Page" },
+      stripeId: { type: String }
     }
   },
   { timestamps: true }

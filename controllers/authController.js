@@ -9,6 +9,8 @@ const Token = require("../models/token");
 const sendEmail = require("../utils/sendEmail");
 const sendVerificationEmail = require("../utils/sendVerificationEmail");
 
+const countryCodes = require("../utils/countryCodes");
+
 // ######################################################
 // ######################################################
 
@@ -21,7 +23,12 @@ exports.index_get = (req, res, next) => {
 
 // Display sign up on GET
 exports.signup_get = (req, res, next) => {
-  return res.render("form-sign-up", { title: "STMB Register" });
+  // const countries = [];
+
+  return res.render("form-sign-up", {
+    title: "STMB Register",
+    country_list: countryCodes
+  });
 };
 
 // Handle sign up on POST
@@ -200,6 +207,7 @@ exports.resend_token_post = async (req, res, next) => {
     }
 
     await sendVerificationEmail(user, req, res);
+    return res.redirect("/home");
   } catch (err) {
     if (err) return next(err);
   }

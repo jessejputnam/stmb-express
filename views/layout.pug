@@ -37,7 +37,6 @@ html(lang='en')
               if currentUser.creator.name
                 if currentUser.creator.page
                   hr(style='margin:10px')
-                  hr(style='margin:10px')
                   li 
                     a(href=`/${currentUser.creator.page}`) View Page 
                   li 
@@ -49,8 +48,15 @@ html(lang='en')
                   li 
                     a(href="/analytics") Analytics 
                 else 
-                  form(method="POST" action="/create-page") 
-                    button.btn.btn-secondary(type="submit") Create Page
+                  if currentUser.creator.stripeId
+                    hr(style='margin:10px')
+                    form(method="POST" action="/create-page") 
+                      button.btn.btn-secondary(type="submit") Create Page
+                  else 
+                    hr(style='margin:10px')
+                    li 
+                      a(href="/connect-stripe") Connect to Stripe
+
               else 
                 hr(style='margin:10px')
                 li 
