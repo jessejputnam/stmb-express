@@ -23,8 +23,6 @@ exports.index_get = (req, res, next) => {
 
 // Display sign up on GET
 exports.signup_get = (req, res, next) => {
-  // const countries = [];
-
   return res.render("form-sign-up", {
     title: "STMB Register",
     country_list: countryCodes
@@ -38,7 +36,7 @@ exports.sign_up_post = [
     .trim()
     .isLength({ min: 1 })
     .isEmail()
-    .normalizeEmail()
+    .normalizeEmail({ gmail_remove_dots: false })
     .escape(),
   body("firstName", "First name is required").trim().isLength({ min: 1 }),
   body("lastName", "Last name is required").trim().isLength({ min: 1 }),
@@ -247,7 +245,6 @@ exports.send_reset_email_post = async (req, res, next) => {
       <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>
       `;
 
-    console.log("TESTING:", link);
     await sendEmail({ to, from, subject, html });
     return res.redirect("/home");
   } catch (err) {
