@@ -36,7 +36,6 @@ exports.sign_up_post = [
     .trim()
     .isLength({ min: 1 })
     .isEmail()
-    .normalizeEmail({ gmail_remove_dots: false })
     .escape(),
   body("firstName", "First name is required").trim().isLength({ min: 1 }),
   body("lastName", "Last name is required").trim().isLength({ min: 1 }),
