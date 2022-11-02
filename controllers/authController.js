@@ -15,7 +15,12 @@ const countryCodes = require("../utils/countryCodes");
 // ######################################################
 
 // Display correct page on index GET
-exports.index_get = (req, res, next) => {
+exports.index_get = async (req, res, next) => {
+  const stripe = require("stripe")(
+    "sk_test_51LTPNTGgdtm8Y5856tABXqKjUyCeeGeIJ7qimz4ZfUxOWFMT4oi9YZOwt3ANd80pEZjVxQmwbtmqhzn4MtytARpY00OfTrReQY"
+  );
+
+  await stripe.accounts.del("acct_1LziPu2fFTB8Bjsi");
   return res.render("index", { title: "Smash the Motherboard" });
 };
 

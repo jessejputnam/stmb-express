@@ -20,7 +20,7 @@ const countryNames = require("../utils/countryNames");
 // #####################################################
 
 // GET request for user home
-router.get("/home", authCheckFalse, function (req, res, next) {
+router.get("/home", authCheckFalse, async function (req, res, next) {
   res.render("user-home", { title: "Home", country_names: countryNames });
 });
 

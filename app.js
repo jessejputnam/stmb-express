@@ -35,6 +35,7 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 // Routing
 const indexRouter = require("./routes/index");
+const webhookRouter = require("./routes/webhook");
 
 const app = express();
 const sessionStore = new MongoDBStore({
@@ -58,9 +59,25 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(cors());
 // Use JSON for all non-webhook routes
+const setupForStripeWebhooks = {
+  // Because Stripe needs the raw body, we compute it but only when hitting the Stripe callback URL.
+  verify: function (req, res, buf) {
+    var url = req.originalUrl;
+    if (url.startsWith("/webhooks")) {
+      req.rawBody = buf.toString();
+    }
+  }
+};
+
 app.use((req, res, next) => {
-  if (req.originalUrl === "/webhook") {
+  if (
+    req.originalUrl === "/webhook/connect" ||
+    req.originalUrl === "/webhook"
+  ) {
+    // next();
+    bodyParser.raw({ type: "application/json" });
     next();
+    // (req, res, next);
   } else {
     bodyParser.json()(req, res, next);
   }
@@ -124,6 +141,8 @@ app.use(function (req, res, next) {
 app.use(express.urlencoded({ extended: false }));
 
 // ------------ Routes --------------- //
+app.use("/webhook", webhookRouter);
+// app.use("/webhook", express.raw({ type: "application/json" }), webhookRouter);
 app.use("/", indexRouter);
 
 // catch 404 and forward to error handler

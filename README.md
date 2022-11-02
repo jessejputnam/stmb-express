@@ -180,14 +180,18 @@ function App() {
 
   - [ ] Figure out region list
   - [ ] Determine sanitize and validate reqs on page/user/creator/membership
-  - [ ] Replace all instances of HTTP to HTTPS prior to production
+  - [ ] Format emails and wording/branding
+
+- Before Going Live
+
+  - [ ] Create production Stripe webhook endpoints
+  - [ ] Replace all instances of HTTP to HTTPS
     - [ ] stripeController.js
     - [ ] authController.js
     - [ ] app.js (app.use(session){...})
   - [ ] Replace env email to stmb email
-  - [ ] Replace MONGODB_TEST_URI at production
-  - [ ] Replace Stripe secret key to production
-  - [ ] Format emails and wording/branding
+  - [ ] Replace MONGODB_TEST_URI
+  - [ ] Replace Stripe secret key
 
 - [x] Initial set up
 
@@ -266,6 +270,17 @@ function App() {
     - [ ] Stripe users
   - [ ] Subscription logic
   - [ ] Set up webhooks to listen for Stripe account changes
+    - [ ] Account Deauthorized
+    - [ ] Account updated
+    - [ ] External Account updated
+    - [ ] Balance available
+    - [ ] Payment intent succeeded
+    - [ ] Payout Failed
+    - Maybes...
+      - [ ] Customer subscription created
+      - [ ] Customer subscription deleted
+      - [ ] Customer subscription updated
+      - [ ]
 
 - [ ] Views set up
 

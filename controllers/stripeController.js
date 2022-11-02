@@ -2,12 +2,12 @@
 
 const User = require("../models/user");
 
-const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST_KEY);
+const Stripe = require("stripe")(process.env.STRIPE_SECRET_TEST_KEY);
 
 // Handle onboarding creator on GET
 exports.stripe_onboard_get = async (req, res, next) => {
   try {
-    const account = await stripe.accounts.create({
+    const account = await Stripe.accounts.create({
       type: "standard",
       email: req.user.username,
       country: req.user.region,
@@ -20,7 +20,7 @@ exports.stripe_onboard_get = async (req, res, next) => {
       "creator.stripeId": account.id
     });
 
-    const accountLink = await stripe.accountLinks.create({
+    const accountLink = await Stripe.accountLinks.create({
       account: account.id,
       //! change to https for production
       refresh_url: `http://${req.headers.host}/onboard-user/refresh`,
@@ -46,7 +46,7 @@ exports.stripe_onboard_refresh = async (req, res, next) => {
     const accountID = req.user.creator.stripeId;
     const origin = `${req.secure ? "https://" : "http://"}${req.headers.host}`;
 
-    const accountLink = await stripe.accountLinks.create({
+    const accountLink = await Stripe.accountLinks.create({
       type: "account_onboarding",
       account: accountID,
       refresh_url: `${origin}/onboard-user/refresh`,
