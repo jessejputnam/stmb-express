@@ -66,7 +66,7 @@ router.get("/reset/:token", auth_controller.reset_password_get);
 // POST request for resetting password
 router.post("/reset/:token", auth_controller.reset_password_post);
 
-/* -------------------- Become Creator ------------------ */
+/* ------------------ Settings Routes ---------------- */
 router.get(
   "/settings",
   authCheckFalse,
@@ -74,7 +74,7 @@ router.get(
   auth_controller.display_settings_get
 );
 
-/* -------------------- Become Creator ------------------ */
+/* ------------------ Creator Routes ----------------- */
 // GET request for become creator
 router.get(
   "/creator-signup",
@@ -91,6 +91,8 @@ router.post(
   creator_controller.become_creator_post
 );
 
+/* ------------------ Stripe Routes ----------------- */
+
 // GET request for Stripe creator onboarding
 router.get(
   "/onboard-user",
@@ -106,7 +108,7 @@ router.get("/onboard-user/success", (req, res, next) => {
   res.render("success-onboarding");
 });
 
-/* -------------------- Page Views ------------------ */
+/* -------------------- Page Routes ------------------ */
 // POST request for create page
 router.post(
   "/create-page",
@@ -134,7 +136,7 @@ router.post(
   page_controller.edit_page_post
 );
 
-/* ----------------- Membership Page --------------- */
+/* ----------------- Membership Routes --------------- */
 // GET quest for view memberships page
 router.get(
   "/:id/memberships",
@@ -159,7 +161,7 @@ router.post(
   memberships_controller.add_membership_post
 );
 
-/* ----------------- Posts Page --------------- */
+/* ----------------- Posts Routes --------------- */
 // GET request for display all creator's posts
 router.get(
   "/:id/posts",

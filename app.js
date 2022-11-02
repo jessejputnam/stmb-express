@@ -57,7 +57,14 @@ app.set("view engine", "pug");
 app.use(logger("dev"));
 app.use(express.json());
 app.use(cors());
-app.use(bodyParser.json());
+// Use JSON for all non-webhook routes
+app.use((req, res, next) => {
+  if (req.originalUrl === "/webhook") {
+    next();
+  } else {
+    bodyParser.json()(req, res, next);
+  }
+});
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
