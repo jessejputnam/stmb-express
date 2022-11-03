@@ -229,8 +229,8 @@ function App() {
   - [ ] Creator
     - [x] Creator sign up
       - [ ] Info box for if genre not found, contact admin
-    - [ ] Connecting Stripe account
-      - [ ] Onboarding
+    - [x] Connecting Stripe account
+      - [x] Onboarding
   - [ ] Page
     - [x] Page creation
     - [ ] Page editing
@@ -264,14 +264,15 @@ function App() {
       - [x] Stripe connect create account
       - [x] Account Link between STMB database and Stripe database
       - [x] Handle success
-      - [ ] Handle refresh
-        - [ ] Refresh using accountID in creator obj
+      - [x] Handle refresh
+        - [x] Refresh using accountID in creator obj
       - [ ] Handle complete stripe account/payment_intent ready
     - [ ] Stripe users
   - [ ] Subscription logic
   - [ ] Set up webhooks to listen for Stripe account changes
     - [ ] Account Deauthorized
     - [ ] Account updated
+      - [x] Check for Stripe authorized for payment reciept
     - [ ] External Account updated
     - [ ] Balance available
     - [ ] Payment intent succeeded
