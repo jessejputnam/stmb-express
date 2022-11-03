@@ -13,6 +13,9 @@ exports.stripe_onboard_get = async (req, res, next) => {
       country: req.user.region,
       business_profile: {
         name: req.user.creator.name
+      },
+      metadata: {
+        onboardComplete: false
       }
     });
 

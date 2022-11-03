@@ -41,23 +41,6 @@ exports.page_get = (req, res, next) => {
       });
     }
   );
-  // Page.findById(req.params.id)
-  //   .populate("genre")
-  //   .populate("tiers")
-  //   .exec((err, page) => {
-  //     if (err) return next(err);
-  //     if (!page) {
-  //       // No results
-  //       const err = new Error("Page not found");
-  //       err.status = 404;
-  //       return next(err);
-  //     }
-  //     // Successful, so render
-  //     res.render("page-view", {
-  //       title: page.title,
-  //       page: page
-  //     });
-  //   });
 };
 
 // Handle create page on POST

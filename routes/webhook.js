@@ -42,19 +42,21 @@ router.post("/connect", (req, res, next) => {
   switch (event.type) {
     case "account.updated":
       const account = event.data.object;
-      console.log(account.details_submitted);
 
-      // Update user to reflect completed onboarding
-      User.findOne({ username: account.email }, (err, user) => {
-        if (err) return next(err);
-        if (account.details_submitted) {
+      // Once onboard is complete, update user obj
+      if (!account.metadata.onboardComplete && account.details_submitted) {
+        account.metadata.onboardComplete = true;
+
+        User.findOne({ username: account.email }, (err, user) => {
+          if (err) return next(err);
           user.creator.onboardComplete = true;
 
           user.save((err) => {
             if (err) return next(err);
           });
-        }
-      });
+        });
+      }
+
       break;
     case "account.application.deauthorized":
       const application = event.data.object;
