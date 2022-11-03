@@ -18,12 +18,10 @@ const logger = require("morgan");
 const helmet = require("helmet");
 const compression = require("compression");
 
-const User = require("./models/user");
-
 const passport = require("./middlewares/passport");
 
 // Database Connection
-/////////////////////////////// UPDATE
+//! UPDATE TO NON-TEST DATABSE AT PRODUCTION
 // const mongoDB = process.env.MONGODB_URI;
 const mongoDB = process.env.MONGODB_TEST_URI;
 mongoose.connect(mongoDB, {
