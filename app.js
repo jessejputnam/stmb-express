@@ -56,32 +56,19 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
 app.use(logger("dev"));
-app.use(express.json());
-app.use(cors());
-// Use JSON for all non-webhook routes
-const setupForStripeWebhooks = {
-  // Because Stripe needs the raw body, we compute it but only when hitting the Stripe callback URL.
-  verify: function (req, res, buf) {
-    var url = req.originalUrl;
-    if (url.startsWith("/webhooks")) {
-      req.rawBody = buf.toString();
-    }
-  }
-};
 
-app.use((req, res, next) => {
-  if (
-    req.originalUrl === "/webhook/connect" ||
-    req.originalUrl === "/webhook"
-  ) {
-    // next();
-    bodyParser.raw({ type: "application/json" });
-    next();
-    // (req, res, next);
-  } else {
-    bodyParser.json()(req, res, next);
-  }
-});
+// Use raw header for webhooks
+app.use(
+  "/webhook",
+  bodyParser.raw({ type: "application/json" }),
+  webhookRouter
+);
+
+// User json parsing for rest
+app.use(express.json());
+
+app.use(cors());
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -141,7 +128,7 @@ app.use(function (req, res, next) {
 app.use(express.urlencoded({ extended: false }));
 
 // ------------ Routes --------------- //
-app.use("/webhook", webhookRouter);
+// app.use("/webhook", webhookRouter);
 // app.use("/webhook", express.raw({ type: "application/json" }), webhookRouter);
 app.use("/", indexRouter);
 

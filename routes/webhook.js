@@ -8,6 +8,8 @@ const authCheckFalse = require("../middlewares/authCheckFalse");
 const authCheck = require("../middlewares/authCheck");
 const isVerifiedCheck = require("../middlewares/isVerifiedCheck");
 
+const User = require("../models/user");
+
 const webhook_controller = require("../controllers/webhookController");
 
 const Stripe = require("stripe")(process.env.STRIPE_SECRET_TEST_KEY);
@@ -22,19 +24,17 @@ const Stripe = require("stripe")(process.env.STRIPE_SECRET_TEST_KEY);
 const endpointSecret =
   "whsec_e2070f0395fb379a063a351bf8d45d4f86969e7b51c69237b8f1b8763e72f789";
 
-router.post("/connect", (request, response) => {
-  console.log(request.headers);
-  const sig = request.headers["stripe-signature"];
+router.post("/connect", (req, res, next) => {
+  // console.log("REQUEST HEADERS", req.headers);
+  const sig = req.headers["stripe-signature"];
   // console.log("webbook.js:SIG", sig);
 
   let event;
 
   try {
-    console.log("check");
-    event = Stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+    event = Stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
   } catch (err) {
-    console.error(err.message);
-    response.status(400).send(`Webhook Error: ${err.message}`);
+    res.status(400).send(`Webhook Error: ${err.message}`);
     return;
   }
 
@@ -42,8 +42,19 @@ router.post("/connect", (request, response) => {
   switch (event.type) {
     case "account.updated":
       const account = event.data.object;
-      // Then define and call a function to handle the event account.updated
-      console.log("ACCOUNT UPDATE", account);
+      console.log(account.details_submitted);
+
+      // Update user to reflect completed onboarding
+      User.findOne({ username: account.email }, (err, user) => {
+        if (err) return next(err);
+        if (account.details_submitted) {
+          user.creator.onboardComplete = true;
+
+          user.save((err) => {
+            if (err) return next(err);
+          });
+        }
+      });
       break;
     case "account.application.deauthorized":
       const application = event.data.object;
@@ -71,7 +82,7 @@ router.post("/connect", (request, response) => {
   }
 
   // Return a 200 response to acknowledge receipt of the event
-  response.send();
+  res.status(200).send("Successful update");
 });
 
 module.exports = router;
