@@ -176,7 +176,7 @@ function App() {
 
 ## :compass: Roadmap
 
-### Check-ins/Reminders:
+#### Check-ins/Reminders:
 
 - [ ] Figure out region list
 - [ ] Determine sanitize and validate reqs on page/user/creator/membership
