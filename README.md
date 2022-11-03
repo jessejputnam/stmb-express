@@ -176,22 +176,24 @@ function App() {
 
 ## :compass: Roadmap
 
-- Check-ins/Reminders:
+### Check-ins/Reminders:
 
-  - [ ] Figure out region list
-  - [ ] Determine sanitize and validate reqs on page/user/creator/membership
-  - [ ] Format emails and wording/branding
+- [ ] Figure out region list
+- [ ] Determine sanitize and validate reqs on page/user/creator/membership
+- [ ] Format emails and wording/branding
 
-- Before Going Live
+#### Before Going Live:
 
-  - [ ] Create production Stripe webhook endpoints
-  - [ ] Replace all instances of HTTP to HTTPS
-    - [ ] stripeController.js
-    - [ ] authController.js
-    - [ ] app.js (app.use(session){...})
-  - [ ] Replace env email to stmb email
-  - [ ] Replace MONGODB_TEST_URI
-  - [ ] Replace Stripe secret key
+- [ ] Create production Stripe webhook endpoints
+- [ ] Replace all instances of HTTP to HTTPS
+  - [ ] stripeController.js
+  - [ ] authController.js
+  - [ ] app.js (app.use(session){...})
+- [ ] Replace env email to stmb email
+- [ ] Replace MONGODB_TEST_URI
+- [ ] Replace Stripe secret key
+
+### Checklist
 
 - [x] Initial set up
 
@@ -220,7 +222,7 @@ function App() {
 
 - [ ] Controllers set up
 
-  - [ ] Auth
+  - [x] Auth
     - [x] Register user
       - [x] Email verification
     - [x] Login
