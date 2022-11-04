@@ -1,10 +1,16 @@
 "use strict";
 
 const { body, validationResult } = require("express-validator");
+const Stripe = require("stripe")(process.env.STRIPE_SECRET_TEST_KEY);
 
 const User = require("../models/user");
 const Page = require("../models/page");
 const Membership = require("../models/membership");
+
+const getCurrencyCode = require("../utils/getCurrencyCode");
+
+// #######################################################
+// #######################################################
 
 // Display memberships page on GET
 exports.display_memberships_get = async (req, res, next) => {
@@ -98,14 +104,35 @@ exports.add_membership_post = [
         return next(err);
       }
 
+      // Make app obj
       const membership = new Membership({
         creator: user,
+        stripePriceId: null,
         price: req.body.price,
         title: req.body.title,
         imgUrl: req.body.imgUrl || null,
         description: req.body.desc,
         rewards: req.body.rewards.split("||").map((reward) => reward.trim())
       });
+
+      // Make Stripe obj
+      const product = await Stripe.products.create({
+        name: req.body.title,
+        metadata: {
+          membershipId: membership._id
+        }
+      });
+
+      const price = await Stripe.prices.create({
+        product: product.id,
+        unit_amount: membership.price,
+        currency: getCurrencyCode[user.region],
+        recurring: {
+          interval: "month"
+        }
+      });
+
+      membership.stripePriceId = price.id;
 
       await membership.save();
 
