@@ -222,32 +222,35 @@ function App() {
 
 - [ ] Controllers set up
 
-  - [x] Auth
+  - [ ] Auth
+    - [ ] Delete User account - [remove subs]
     - [x] Register user
       - [x] Email verification
     - [x] Login
     - [x] Reset password
     - [x] Email verification
   - [ ] Creator
+    - [ ] Delete creator account
     - [x] Creator sign up
       - [ ] Info box for if genre not found, contact admin
     - [x] Connecting Stripe account
       - [x] Onboarding
   - [ ] Page
-    - [x] Page creation
+    - [ ] Page deleting
+    - [ ] Page deletion
+    - [x] Page viewing
+      - [ ] Hidden/Visible aspects based on whether its your page
     - [ ] Page editing
       - [ ] Images
       - [x] Description/handles
-    - [x] Membership creation
-    - [ ] Page deleting
-    - [x] Page viewing
-      - [ ] Hidden/Visible aspects based on whether its your page
     - [ ] Posts
       - [x] Posts viewing
       - [x] Adding posts
       - [ ] Adding images to posts
       - [ ] Editing posts
       - [ ] Deleting posts
+    - [x] Membership creation
+    - [x] Page creation
   - [ ] Search
     - [ ] By name
     - [ ] By genre
