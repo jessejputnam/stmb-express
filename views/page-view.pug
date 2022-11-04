@@ -27,12 +27,10 @@ block content
       h3 Membership Tiers
       div.tiers-wrapper
         if page.tiers.length > 0
-        
-          - page.tiers.sort((a, b) => {
-            return a.price - b.price;
-          })
 
-          each membership in page.tiers   
+          - const tiers = page.tiers.sort((a, b) => a.price - b.price)
+
+          each membership in tiers   
             div.tier-wrapper 
               h3= membership.title 
               p= `$${membership.price}`

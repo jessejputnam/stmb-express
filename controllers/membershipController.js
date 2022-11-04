@@ -71,8 +71,6 @@ exports.add_membership_post = [
       return res.redirect(`/${req.params.id}`);
     }
 
-    console.log("MEMBSHIP CHECK 1");
-
     try {
       const user = await User.findById(req.user._id)
         .populate({

@@ -8,6 +8,8 @@ block content
 
   a(href=`/${currentUser.creator.page}/add-membership`) Add Membership
 
+  - memberships.sort((a, b) => a.price - b.price)
+
   each membership in memberships 
     div
       p= membership.title
