@@ -27,6 +27,7 @@ const UserSchema = new Schema(
     resetPasswordToken: { type: String, required: false },
     resetPasswordExpires: { type: Date, required: false },
 
+    stripeId: { type: String, default: null },
     subscriptions: [
       {
         type: Schema.Types.ObjectId,

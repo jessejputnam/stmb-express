@@ -8,35 +8,30 @@ const Page = require("../models/page");
 const Membership = require("../models/membership");
 
 // Display memberships page on GET
-exports.display_memberships_get = (req, res, next) => {
-  const userPageId = req.user.creator.page.toString();
+exports.display_memberships_get = async (req, res, next) => {
+  const userPageId = req.user.creator.page._id;
 
   // User artist id does not match page's artist id
-  if (userPageId !== req.params.id) {
+  if (String(userPageId) !== req.params.id) {
     return res.redirect(`/${req.params.id}`);
   }
 
-  Page.findById(req.user.creator.page)
-    .populate("tiers")
-    .exec((err, result) => {
-      if (err) return next(err);
+  try {
+    const page = await Page.findById(userPageId).populate("tiers").exec();
 
-      const page = result;
+    if (!page) {
+      const err = new Error("Page does not exist");
+      err.status = 404;
+      return next(err);
+    }
 
-      // Page not found
-      if (!page) {
-        const err = new Error("Page does not exist");
-        err.status = 404;
-        return next(err);
-      }
-
-      const memberships = page.tiers;
-
-      res.render("memberships-view", {
-        title: "Memberships",
-        memberships: memberships
-      });
+    return res.render("memberships-view", {
+      title: "Memberships",
+      memberships: page.tiers
     });
+  } catch (err) {
+    return next(err);
+  }
 };
 
 exports.add_membership_get = (req, res, next) => {

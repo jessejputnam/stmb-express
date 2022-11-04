@@ -3,6 +3,9 @@
 const express = require("express");
 const router = express.Router();
 
+//! FOR DELETING EXCESS TEST ACCOUNTS
+// const Stripe = require("stripe")(process.env.STRIPE_SECRET_TEST_KEY);
+
 const authCheckFalse = require("../middlewares/authCheckFalse");
 const authCheck = require("../middlewares/authCheck");
 const isVerifiedCheck = require("../middlewares/isVerifiedCheck");
@@ -21,6 +24,9 @@ const countryNames = require("../utils/countryNames");
 
 // GET request for user home
 router.get("/home", authCheckFalse, async function (req, res, next) {
+  //! FOR DELETING EXCESS TEST ACCOUNTS
+  // await Stripe.accounts.del("acct_1Lzj2oGh5AIIHXsJ");
+
   res.render("user-home", { title: "Home", country_names: countryNames });
 });
 

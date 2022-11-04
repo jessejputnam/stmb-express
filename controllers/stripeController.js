@@ -4,6 +4,10 @@ const User = require("../models/user");
 
 const Stripe = require("stripe")(process.env.STRIPE_SECRET_TEST_KEY);
 
+// ###########################################################
+// Creator Accounts
+// ###########################################################
+
 // Handle onboarding creator on GET
 exports.stripe_onboard_get = async (req, res, next) => {
   try {
@@ -57,6 +61,29 @@ exports.stripe_onboard_refresh = async (req, res, next) => {
     });
 
     return res.redirect(303, accountLink.url);
+  } catch (err) {
+    return next(err);
+  }
+};
+
+// ###########################################################
+// User Accounts
+// ###########################################################
+
+// Handle add subscription on POST
+exports.add_subscription_post = async (req, res, next) => {
+  const user = req.user;
+
+  try {
+    if (!user.stripeId) {
+      const customer = await Stripe.customers.create({
+        email: user.username,
+        name: `${user.firstname} ${user.lastname}`,
+        metadata: {
+          appId: user._id
+        }
+      });
+    }
   } catch (err) {
     return next(err);
   }

@@ -255,7 +255,7 @@ function App() {
     - [x] Create membership
     - [ ] Edit membership
     - [ ] Delete membership
-      - [ ] Stripe ties to subs
+      - [ ] Delete stripe priceID in Stripe as well
   - [ ] Subscriptions
     - [ ] Create subscriptions
       - [ ] Tie to stripe
