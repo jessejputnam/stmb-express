@@ -72,8 +72,7 @@ exports.stripe_onboard_refresh = async (req, res, next) => {
 
 // Handle add subscription on POST
 exports.add_subscription_post = async (req, res, next) => {
-  const user = req.user;
-
+  const user = await User.findById(req.user._id);
   try {
     if (!user.stripeId) {
       const customer = await Stripe.customers.create({
@@ -83,7 +82,16 @@ exports.add_subscription_post = async (req, res, next) => {
           appId: user._id
         }
       });
+
+      user.stripeId = customer.id;
+      await user.save();
     }
+
+    const subscription = await Stripe.subscriptions.create({
+      customer: user.stripeId,
+      items: [{ price: "{{PRICE}}" }],
+      expand: ["latest_invoice.payment_intent"]
+    });
   } catch (err) {
     return next(err);
   }

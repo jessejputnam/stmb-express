@@ -116,21 +116,27 @@ exports.add_membership_post = [
       });
 
       // Make Stripe obj
-      const product = await Stripe.products.create({
-        name: req.body.title,
-        metadata: {
-          membershipId: membership._id
-        }
-      });
+      const product = await Stripe.products.create(
+        {
+          name: req.body.title,
+          metadata: {
+            membershipId: membership._id
+          }
+        },
+        { stripeAccount: user.creator.stripeId }
+      );
 
-      const price = await Stripe.prices.create({
-        product: product.id,
-        unit_amount: membership.price,
-        currency: getCurrencyCode[user.region],
-        recurring: {
-          interval: "month"
-        }
-      });
+      const price = await Stripe.prices.create(
+        {
+          product: product.id,
+          unit_amount: membership.price,
+          currency: getCurrencyCode[user.region],
+          recurring: {
+            interval: "month"
+          }
+        },
+        { stripeAccount: user.creator.stripeId }
+      );
 
       membership.stripePriceId = price.id;
 

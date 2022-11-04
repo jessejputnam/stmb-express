@@ -253,11 +253,12 @@ function App() {
     - [x] Page creation
   - [ ] Memberships
     - [x] Create membership
+      - [x] Create Stripe product and price
     - [ ] Edit membership
     - [ ] Delete membership
       - [ ] Delete stripe priceID in Stripe as well
   - [ ] Subscriptions
-    - [ ] Create subscriptions
+    - [x] Create subscriptions
       - [ ] Tie to stripe
     - [ ] Edit subscriptions
     - [ ] Delete subscriptions
