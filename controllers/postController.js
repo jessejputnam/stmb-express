@@ -7,23 +7,23 @@ const Page = require("../models/page");
 const Post = require("../models/post");
 
 // Handle display posts on GET
-exports.posts_display_get = (req, res, next) => {
+exports.posts_display_get = async (req, res, next) => {
   if (String(req.user.creator.page._id) !== req.params.id) {
     return res.redirect("/home");
   }
 
-  Post.find({ user: req.user })
-    .sort({ timestamp: "desc" })
-    .exec((err, results) => {
-      if (err) return next(err);
+  try {
+    const posts = await Post.find({ user: req.user })
+      .sort({ timestamp: "desc" })
+      .exec();
 
-      const posts = results;
-
-      res.render("posts-view", {
-        title: "Posts",
-        posts: posts
-      });
+    return res.render("posts-view", {
+      title: "Posts",
+      posts: posts
     });
+  } catch (err) {
+    return next(err);
+  }
 };
 
 // Handle add post on GET

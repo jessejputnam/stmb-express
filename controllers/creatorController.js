@@ -6,20 +6,22 @@ const User = require("../models/user");
 const Genre = require("../models/genre");
 
 // Display become creator on GET
-exports.become_creator_get = (req, res, next) => {
-  Genre.find({}, "type").exec((err, genres) => {
-    if (err) return next(err);
+exports.become_creator_get = async (req, res, next) => {
+  try {
+    const genres = await Genre.find({}, "type").exec();
 
     if (req.user.creator.name) {
       return res.redirect("/home");
     }
 
     // Successful, so render
-    res.render("form-become-creator", {
+    return res.render("form-become-creator", {
       title: "Become Creator",
       genres: genres
     });
-  });
+  } catch (err) {
+    return next(err);
+  }
 };
 
 // Handle become creator on POST
@@ -31,40 +33,34 @@ exports.become_creator_post = [
     .escape(),
   body("genre", "Genre is required").trim().isLength({ min: 1 }).escape(),
 
-  (req, res, next) => {
+  async (req, res, next) => {
     const errors = validationResult(req);
     if (req.user.creator.name) {
       return res.redirect("/home");
     }
 
-    if (!errors.isEmpty()) {
-      // There are errors, rerender
-      Genre.find({}, "type").exec((err, genres) => {
-        if (err) return next(err);
+    try {
+      if (!errors.isEmpty()) {
+        // There are errors, rerender
+        const genres = await Genre.find({}, "type").exec();
 
-        res.render("form-become-creator", {
+        // Successful, so render
+        return res.render("form-become-creator", {
           title: "Become Creator",
-          genres: genres,
-          errors: errors.array()
+          genres: genres
         });
-      });
-      return;
-    }
+      }
 
-    User.findById(req.user._id, (err, result) => {
-      if (err) return next(err);
-
-      const user = result;
-
+      const user = await User.findById(req.user._id);
       user.creator = {};
       user.creator.name = req.body.projectName;
       user.creator.genre = req.body.genre;
       user.creator.onboardComplete = false;
 
-      result.save((err, theuser) => {
-        if (err) return next(err);
-        res.redirect("/home");
-      });
-    });
+      user.save();
+      return res.redirect("/home");
+    } catch (err) {
+      return next(err);
+    }
   }
 ];

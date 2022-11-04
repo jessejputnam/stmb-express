@@ -15,7 +15,7 @@ const countryCodes = require("../utils/countryCodes");
 // ######################################################
 
 // Display correct page on index GET
-exports.index_get = async (req, res, next) => {
+exports.index_get = (req, res, next) => {
   return res.render("index", { title: "Smash the Motherboard" });
 };
 
@@ -151,29 +151,24 @@ exports.verify_email_get = async (req, res, next) => {
     }
 
     // Token found; look for matching user
-    User.findOne({ _id: token.userId }, (err, user) => {
-      if (err) return next(err);
+    const user = await User.findOne({ _id: token.userId });
 
-      if (!user) {
-        const err = new Error("Unable to find a user for this token");
-        err.status = 404;
-        return next(err);
-      }
+    if (!user) {
+      const err = new Error("Unable to find a user for this token");
+      err.status = 404;
+      return next(err);
+    }
 
-      if (user.isVerified) {
-        const err = new Error("This user is already verified");
-        err.status = 400;
-        return next(err);
-      }
+    if (user.isVerified) {
+      const err = new Error("This user is already verified");
+      err.status = 400;
+      return next(err);
+    }
 
-      // Verify and save user
-      user.isVerified = true;
-      user.save((err) => {
-        if (err) return next(err);
-
-        return res.redirect("/login");
-      });
-    });
+    // Verify and save user
+    user.isVerified = true;
+    await user.save();
+    return res.redirect("/login");
   } catch (err) {
     if (err) return next(err);
   }
