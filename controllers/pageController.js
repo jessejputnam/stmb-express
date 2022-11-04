@@ -8,38 +8,32 @@ const Page = require("../models/page");
 const Post = require("../models/post");
 
 // Display page on GET
-exports.page_get = (req, res, next) => {
-  async.parallel(
-    {
-      page(callback) {
-        Page.findById(req.params.id)
-          .populate("genre")
-          .populate("tiers")
-          .exec(callback);
-      },
-      posts(callback) {
-        Post.find({ pageId: req.params.id })
-          .sort({ timestamp: "desc" })
-          .exec(callback);
-      }
-    },
-    (err, results) => {
-      if (err) return next(err);
+exports.page_get = async (req, res, next) => {
+  try {
+    const page = await Page.findById(req.params.id)
+      .populate("genre")
+      .populate("tiers")
+      .exec();
 
-      if (!results.page) {
-        const err = new Error("Page not found");
-        err.status = 404;
-        return next(err);
-      }
+    const posts = await Post.find({ pageId: req.params.id })
+      .sort({ timestamp: "desc" })
+      .exec();
 
-      // Successful, so render
-      res.render("page-view", {
-        title: results.page.title,
-        page: results.page,
-        posts: results.posts
-      });
+    if (!page) {
+      const err = new Error("Page not found");
+      err.status = 404;
+      return next(err);
     }
-  );
+
+    // Successful, so render
+    return res.render("page-view", {
+      title: page.title,
+      page: page,
+      posts: posts
+    });
+  } catch (err) {
+    return next(err);
+  }
 };
 
 // Handle create page on POST

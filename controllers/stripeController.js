@@ -51,6 +51,7 @@ exports.stripe_onboard_refresh = async (req, res, next) => {
 
   try {
     const accountID = req.user.creator.stripeId;
+    //! change to https ONLY for production
     const origin = `${req.secure ? "https://" : "http://"}${req.headers.host}`;
 
     const accountLink = await Stripe.accountLinks.create({
@@ -72,26 +73,46 @@ exports.stripe_onboard_refresh = async (req, res, next) => {
 
 // Handle add subscription on POST
 exports.add_subscription_post = async (req, res, next) => {
-  const user = await User.findById(req.user._id);
   try {
+    const priceId = req.body.priceId;
+    const creatorId = req.body.creatorId;
+
+    const user = await User.findById(req.user._id);
+    const creator = await User.findById(creatorId);
+
+    // If current user does not already have stripe acct
     if (!user.stripeId) {
-      const customer = await Stripe.customers.create({
-        email: user.username,
-        name: `${user.firstname} ${user.lastname}`,
-        metadata: {
-          appId: user._id
-        }
-      });
+      const customer = await Stripe.customers.create(
+        {
+          email: user.username,
+          name: `${user.firstname} ${user.lastname}`,
+          metadata: {
+            appId: user._id
+          }
+        },
+        { stripeAccount: creator.creator.stripeId }
+      );
 
       user.stripeId = customer.id;
       await user.save();
     }
 
-    const subscription = await Stripe.subscriptions.create({
-      customer: user.stripeId,
-      items: [{ price: "{{PRICE}}" }],
-      expand: ["latest_invoice.payment_intent"]
-    });
+    const session = await Stripe.checkout.sessions.create(
+      {
+        mode: "subscription",
+        line_items: [
+          {
+            price: priceId,
+            quantity: 1
+          }
+        ],
+
+        //! change to https for production
+        success_url: `http://${req.headers.host}/${creator.creator.page}/success`,
+        cancel_url: `http://${req.headers.host}/${creator.creator.page}/cancel`
+      },
+      { stripeAccount: creator.creator.stripeId }
+    );
   } catch (err) {
     return next(err);
   }

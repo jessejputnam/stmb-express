@@ -259,7 +259,7 @@ function App() {
       - [ ] Delete stripe priceID in Stripe as well
   - [ ] Subscriptions
     - [x] Create subscriptions
-      - [ ] Tie to stripe
+      - [x] Tie to stripe
     - [ ] Edit subscriptions
     - [ ] Delete subscriptions
   - [ ] Search
@@ -285,16 +285,19 @@ function App() {
       - [ ] Handle complete stripe account/payment_intent ready
     - [ ] Stripe users
   - [ ] Subscription logic
-  - [ ] Set up webhooks to listen for Stripe account changes
-    - [ ] Account Deauthorized
-    - [ ] Account updated
-      - [x] Check for Stripe authorized for payment reciept
-    - [ ] External Account updated
-    - [ ] Balance available
-    - [ ] Payment intent succeeded
-    - [ ] Payout Failed
-    - Maybes...
-      - [ ] Customer subscription created
+  - [ ] Set up webhooks to listen for changes
+    - [ ] Connected Accounts
+      - [ ] Account Deauthorized
+      - [ ] Account updated
+        - [x] Check for Stripe authorized for payment reciept
+      - [ ] External Account updated
+      - [ ] Balance available
+      - [ ] Payment intent succeeded
+      - [ ] Payout Failed
+    - [ ] Users
+      - [ ] checkout.session.completed (on subbing)
+      - [ ] invoice.paid (on monthly renewal)
+        - [ ] invoice.payment_failed (on failure)
       - [ ] Customer subscription deleted
       - [ ] Customer subscription updated
       - [ ]
