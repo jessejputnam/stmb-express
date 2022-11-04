@@ -82,20 +82,16 @@ exports.sign_up_post = [
         region: req.body.region
       });
 
-      user.save(async (err, theuser) => {
-        if (err) {
-          return next(err);
-        }
+      await user.save();
 
-        await sendVerificationEmail(theuser, req, next);
+      await sendVerificationEmail(user, req, next);
 
-        // Successful, redirect to verification reminder
-        return res.render("success-message", {
-          message:
-            "A verification email has been sent to " +
-            user.username +
-            ". Please follow link to sign in."
-        });
+      // Successful, redirect to verification reminder
+      return res.render("success-message", {
+        message:
+          "A verification email has been sent to " +
+          user.username +
+          ". Please follow link to sign in."
       });
     } catch (err) {
       return next(err);

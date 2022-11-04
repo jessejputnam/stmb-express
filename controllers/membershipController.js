@@ -1,7 +1,6 @@
 "use strict";
 
 const { body, validationResult } = require("express-validator");
-const async = require("async");
 
 const User = require("../models/user");
 const Page = require("../models/page");
@@ -59,11 +58,19 @@ exports.add_membership_post = [
     .escape(),
 
   async (req, res, next) => {
+    const errors = validationResult(req);
+
     const userPageId = req.user.creator.page.toString();
 
     // User artist id does not match page's artist id
     if (userPageId !== req.params.id) {
       return res.redirect(`/${req.params.id}`);
+    }
+
+    if (!errors.isEmpty) {
+      return res.render("form-membership-add", {
+        title: "Add Membership"
+      });
     }
 
     try {
