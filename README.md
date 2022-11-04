@@ -251,6 +251,16 @@ function App() {
       - [ ] Deleting posts
     - [x] Membership creation
     - [x] Page creation
+  - [ ] Memberships
+    - [x] Create membership
+    - [ ] Edit membership
+    - [ ] Delete membership
+      - [ ] Stripe ties to subs
+  - [ ] Subscriptions
+    - [ ] Create subscriptions
+      - [ ] Tie to stripe
+    - [ ] Edit subscriptions
+    - [ ] Delete subscriptions
   - [ ] Search
     - [ ] By name
     - [ ] By genre
