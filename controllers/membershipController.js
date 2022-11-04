@@ -63,7 +63,7 @@ exports.add_membership_post = [
     .isLength({ min: 1 })
     .escape(),
 
-  (req, res, next) => {
+  async (req, res, next) => {
     const userPageId = req.user.creator.page.toString();
 
     // User artist id does not match page's artist id
@@ -71,46 +71,51 @@ exports.add_membership_post = [
       return res.redirect(`/${req.params.id}`);
     }
 
-    User.findById(req.user._id)
-      .populate({
-        path: "creator",
-        populate: {
-          path: "page",
-          model: "Page"
-        }
-      })
-      .exec((err, result) => {
-        if (err) return next(err);
-        if (!result) {
-          const err = new Error("User not found");
-          err.status = 404;
-          return next(err);
-        }
+    console.log("MEMBSHIP CHECK 1");
 
-        const user = result;
-        const creator = user.creator;
-        const page = creator.page;
+    try {
+      const user = await User.findById(req.user._id)
+        .populate({
+          path: "creator",
+          populate: {
+            path: "page",
+            model: "Page"
+          }
+        })
+        .exec();
 
-        const membership = new Membership({
-          creator: creator,
-          page: page,
-          price: req.body.price,
-          title: req.body.title,
-          imgUrl: req.body.imgUrl || null,
-          description: req.body.desc,
-          rewards: req.body.rewards.split("||").map((reward) => reward.trim())
-        });
+      if (!user) {
+        const err = new Error("User not found");
+        err.status = 404;
+        return next(err);
+      }
 
-        membership.save((err) => {
-          if (err) return next(err);
+      const page = user.creator.page;
 
-          page.tiers.push(membership);
-          page.save((err) => {
-            if (err) return next(err);
+      if (page.tiers.length > 2) {
+        const err = new Error("Tier list exceeds 3 memberships");
+        err.status = 405;
+        return next(err);
+      }
 
-            return res.redirect(`/${page._id}/memberships`);
-          });
-        });
+      const membership = new Membership({
+        creator: user,
+        price: req.body.price,
+        title: req.body.title,
+        imgUrl: req.body.imgUrl || null,
+        description: req.body.desc,
+        rewards: req.body.rewards.split("||").map((reward) => reward.trim())
       });
+
+      await membership.save();
+
+      page.tiers.push(membership._id);
+
+      await page.save();
+
+      return res.redirect(`/${page._id}/memberships`);
+    } catch (err) {
+      return next(err);
+    }
   }
 ];
