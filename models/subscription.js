@@ -18,3 +18,5 @@ const SubscriptionSchema = new Schema(
 );
 
 module.exports = mongoose.model("Subscription", SubscriptionSchema);
+
+//! HOW TO MAKE SUBS BE UNIQUE FOR CUSTOMER/CREATOR TIE, SUB GETS ONE MEMBERSHIP?

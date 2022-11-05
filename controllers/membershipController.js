@@ -108,7 +108,6 @@ exports.add_membership_post = [
       const membership = new Membership({
         creator: user,
         stripePriceId: null,
-        price: req.body.price,
         title: req.body.title,
         imgUrl: req.body.imgUrl || null,
         description: req.body.desc,
@@ -129,7 +128,7 @@ exports.add_membership_post = [
       const price = await Stripe.prices.create(
         {
           product: product.id,
-          unit_amount: membership.price * 100,
+          unit_amount: req.body.price * 100,
           currency: getCurrencyCode[user.region],
           recurring: {
             interval: "month"

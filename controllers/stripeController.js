@@ -80,7 +80,8 @@ exports.add_subscription_post = async (req, res, next) => {
     const user = await User.findById(req.user._id);
     const creator = await User.findById(creatorId);
 
-    // If current user does not already have stripe acct
+    // If current user does not already have stripe acct,
+    // create a new stripe customer obj
     if (!user.stripeId) {
       const customer = await Stripe.customers.create(
         {
@@ -100,6 +101,7 @@ exports.add_subscription_post = async (req, res, next) => {
     const session = await Stripe.checkout.sessions.create(
       {
         mode: "subscription",
+        customer: user.stripeId,
         line_items: [
           {
             price: priceId,

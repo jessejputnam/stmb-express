@@ -10,9 +10,9 @@ const isVerifiedCheck = require("../middlewares/isVerifiedCheck");
 
 const User = require("../models/user");
 
-const webhook_controller = require("../controllers/webhookController");
-
 const Stripe = require("stripe")(process.env.STRIPE_SECRET_TEST_KEY);
+
+const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 // #####################################################
 // #####################################################
@@ -20,22 +20,17 @@ const Stripe = require("stripe")(process.env.STRIPE_SECRET_TEST_KEY);
 // Account webhooks
 
 // Connect webhooks
-// Stripe CLI webhook secret for testing endpoint locally.
-const endpointSecret =
-  "whsec_e2070f0395fb379a063a351bf8d45d4f86969e7b51c69237b8f1b8763e72f789";
-
 router.post("/connect", (req, res, next) => {
-  // console.log("REQUEST HEADERS", req.headers);
   const sig = req.headers["stripe-signature"];
-  // console.log("webbook.js:SIG", sig);
 
   let event;
 
+  // Check if webhook signing is configured
   try {
-    event = Stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+    event = Stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
   } catch (err) {
     res.status(400).send(`Webhook Error: ${err.message}`);
-    return;
+    return next(err);
   }
 
   // Handle the event

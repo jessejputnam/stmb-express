@@ -286,6 +286,7 @@ function App() {
     - [ ] Stripe users
   - [ ] Subscription logic
   - [ ] Set up webhooks to listen for changes
+
     - [ ] Connected Accounts
       - [ ] Account Deauthorized
       - [ ] Account updated
@@ -295,12 +296,16 @@ function App() {
       - [ ] Payment intent succeeded
       - [ ] Payout Failed
     - [ ] Users
-      - [ ] checkout.session.completed (on subbing)
-      - [ ] invoice.paid (on monthly renewal)
-        - [ ] invoice.payment_failed (on failure)
-      - [ ] Customer subscription deleted
-      - [ ] Customer subscription updated
-      - [ ]
+      - [ ] checkout.session.completed
+        - on successful subscribing
+      - [ ] invoice.paid
+        - On successfull monthly renewal
+      - [ ] invoice.payment_failed
+        - On renewal failure
+      - [ ] customer.subscription.updated
+        - When Creator changes subscription, i.e. price
+      - [ ] customer.subscription.deleted
+        - Customer subscription deleted
 
 - [ ] Views set up
 

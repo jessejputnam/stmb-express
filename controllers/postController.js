@@ -2,8 +2,6 @@
 
 const { body, validationResult } = require("express-validator");
 
-const User = require("../models/user");
-const Page = require("../models/page");
 const Post = require("../models/post");
 
 // Handle display posts on GET

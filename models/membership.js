@@ -5,9 +5,8 @@ const Schema = mongoose.Schema;
 
 const MembershipSchema = new Schema(
   {
-    creator: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    page: { type: Schema.Types.ObjectId, ref: "Page", required: true },
     stripePriceId: { type: String, required: true },
-    price: { type: Number, min: 1, max: 999, required: true },
     title: { type: String, minLength: 1, maxLength: 50, required: true },
     imgUrl: String,
     description: { type: String, maxLength: 500 },
