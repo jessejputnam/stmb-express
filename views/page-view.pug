@@ -43,7 +43,7 @@ block content
               else 
                 form(method="POST" action=`/${page._id}/subscribe`) 
                   input#creatorId(type="hidden" name="creatorId" required="true" value=page.user._id)
-                  input#priceId(type="hidden" name="priceId" required="true" value=membership.stripePriceId)
+                  input#membership(type="hidden" name="membership" required="true" value=membership)
                   button.btn.btn-secondary(type="submit") Subscribe
               
 

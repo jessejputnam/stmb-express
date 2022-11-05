@@ -88,6 +88,7 @@ exports.sign_up_post = [
 
       // Successful, redirect to verification reminder
       return res.render("success-message", {
+        title: "Check email",
         message:
           "A verification email has been sent to " +
           user.username +
@@ -301,6 +302,7 @@ exports.reset_password_post = async (req, res, next) => {
     await sendEmail({ to, from, subject, html });
 
     return res.render("success-message", {
+      title: "Update success",
       message: "Your password has been updated"
     });
   } catch (err) {

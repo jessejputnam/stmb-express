@@ -106,8 +106,8 @@ exports.add_membership_post = [
 
       // Make app obj
       const membership = new Membership({
-        creator: user,
         stripePriceId: null,
+        price: req.body.price,
         title: req.body.title,
         imgUrl: req.body.imgUrl || null,
         description: req.body.desc,

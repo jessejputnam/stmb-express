@@ -67,14 +67,15 @@ exports.stripe_onboard_refresh = async (req, res, next) => {
   }
 };
 
-// ###########################################################
+// ########################################################
 // User Accounts
-// ###########################################################
+// ########################################################
 
 // Handle add subscription on POST
 exports.add_subscription_post = async (req, res, next) => {
   try {
-    const priceId = req.body.priceId;
+    // const priceId = req.body.priceId;
+    const membership = req.body.membership;
     const creatorId = req.body.creatorId;
 
     const user = await User.findById(req.user._id);
@@ -104,14 +105,14 @@ exports.add_subscription_post = async (req, res, next) => {
         customer: user.stripeId,
         line_items: [
           {
-            price: priceId,
+            price: membership.stripePriceId,
             quantity: 1
           }
         ],
 
         //! change to https for production
-        success_url: `http://${req.headers.host}/${creator.creator.page}/success`,
-        cancel_url: `http://${req.headers.host}/${creator.creator.page}/cancel`
+        success_url: `http://${req.headers.host}/subscription/success/${membership._id}`,
+        cancel_url: `http://${req.headers.host}/subscription/cancel`
       },
       { stripeAccount: creator.creator.stripeId }
     );

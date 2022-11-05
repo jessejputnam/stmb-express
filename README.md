@@ -304,6 +304,7 @@ function App() {
         - On renewal failure
       - [ ] customer.subscription.updated
         - When Creator changes subscription, i.e. price
+        - [ ] Update the subscription objects in app to update to new price
       - [ ] customer.subscription.deleted
         - Customer subscription deleted
 

@@ -32,9 +32,16 @@ router.get("/home", authCheckFalse, async function (req, res, next) {
 
 router.get("/not-verified", (req, res, next) => {
   res.render("success-message", {
+    title: "Check email",
     message: "Please check email and verify."
   });
 });
+
+router.get("/subscription/success/:id", (req, res, next) => {
+  const pageId = req.params.id;
+});
+
+router.get("/subscription/cancel");
 
 /* -------------------- Landing Page ------------------ */
 // GET request for landing page.
@@ -123,8 +130,12 @@ router.post(
   page_controller.create_page_post
 );
 
+/* ----------------- User View --------------- */
+
 // GET request for view page
 router.get("/:id", page_controller.page_get);
+
+/* ---------------- Creator View ------------- */
 
 // GET request for edit page
 router.get(
