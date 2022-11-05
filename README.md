@@ -209,6 +209,7 @@ function App() {
     - [x] Post Model
     - [x] Membership Model
     - [x] Genre Model
+    - [x] Subscription Model
 
 - [x] Security set up
 
@@ -260,7 +261,7 @@ function App() {
   - [ ] Subscriptions
     - [x] Create subscriptions
       - [x] Tie to stripe
-    - [ ] Edit subscriptions
+    - [ ] Change sub tier
     - [ ] Delete subscriptions
   - [ ] Search
     - [ ] By name
@@ -284,7 +285,12 @@ function App() {
         - [x] Refresh using accountID in creator obj
       - [ ] Handle complete stripe account/payment_intent ready
     - [ ] Stripe users
-  - [ ] Subscription logic
+      - [x] Create user accounts on checkout
+      - [ ] Subscription logic
+        - [ ] Add subscription
+        - [ ] Sub payment
+        - [ ] Sub cancel
+        - [ ] Sub edit
   - [ ] Set up webhooks to listen for changes
 
     - [ ] Connected Accounts

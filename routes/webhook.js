@@ -2,11 +2,6 @@
 
 const express = require("express");
 const router = express.Router();
-const bodyParser = require("body-parser");
-
-const authCheckFalse = require("../middlewares/authCheckFalse");
-const authCheck = require("../middlewares/authCheck");
-const isVerifiedCheck = require("../middlewares/isVerifiedCheck");
 
 const User = require("../models/user");
 
@@ -51,6 +46,18 @@ router.post("/connect", (req, res, next) => {
           });
         });
       }
+
+      break;
+    case "checkout.session.completed":
+      const checkout = event.data.object;
+
+      // listen for success
+
+      // creator
+      // -- add to a log on analytics?
+
+      // customer
+      // -- go into user subsctiption obj, make active
 
       break;
     case "account.application.deauthorized":
