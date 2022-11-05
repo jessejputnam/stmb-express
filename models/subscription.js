@@ -6,13 +6,13 @@ const Schema = mongoose.Schema;
 const SubscriptionSchema = new Schema(
   {
     user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    page: { type: Schema.Types.ObjectId, ref: "Page", required: true },
     membership: {
       type: Schema.Types.ObjectId,
       ref: "Membership",
       required: true
     },
-    active: { type: Boolean, required: true },
-    stripeId: { type: String, default: null }
+    active: { type: Boolean, required: true }
   },
   { timestamps: true }
 );
