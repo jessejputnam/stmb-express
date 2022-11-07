@@ -262,7 +262,7 @@ function App() {
     - [x] Create subscriptions
       - [x] Tie to stripe
     - [ ] Change sub tier
-    - [ ] Delete subscriptions
+    - [ ] Delete/Cancel subscriptions
   - [ ] Search
     - [ ] By name
     - [ ] By genre

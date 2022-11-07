@@ -19,9 +19,7 @@ const PageSchema = new Schema(
     imgUrls: {
       banner: { type: String, default: "images/banner-placeholder.jpeg" },
       avatar: { type: String, default: "images/avatar-placeholder.svg" }
-    },
-
-    tiers: [{ type: Schema.Types.ObjectId, ref: "Membership" }]
+    }
   },
   { timestamps: true }
 );

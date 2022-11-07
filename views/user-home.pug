@@ -13,3 +13,10 @@ block content
     form(method="POST" action="/verify/resend") 
       input#email(type="hidden" name="email" required="true" value=currentUser.username)
       button.btn.btn-primary(type="submit") Resend Verification Email
+
+  div 
+    if subs 
+      each sub in subs 
+        p Subscription: 
+        p= sub.page.title 
+        p Tier: #{sub.membership.title}

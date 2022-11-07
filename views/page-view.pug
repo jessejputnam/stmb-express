@@ -26,9 +26,9 @@ block content
     div.page-tiers-container 
       h3 Membership Tiers
       div.tiers-wrapper
-        if page.tiers.length > 0
+        if tiers.length > 0
 
-          - const tiers = page.tiers.sort((a, b) => a.price - b.price)
+          - tiers.sort((a, b) => a.price - b.price)
 
           each membership in tiers   
             div.tier-wrapper 
@@ -41,7 +41,7 @@ block content
               if String(currentUser._id) === String(page.user._id)
                 em Your Page
               else 
-                form(method="POST" action=`/${page._id}/subscribe`) 
+                form(method="POST" action=`/subscribe/${page._id}`) 
                   input#creatorId(type="hidden" name="creatorId" required="true" value=page.user._id)
                   input#membership(type="hidden" name="membership" required="true" value=membership)
                   button.btn.btn-secondary(type="submit") Subscribe

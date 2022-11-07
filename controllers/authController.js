@@ -14,7 +14,9 @@ const countryCodes = require("../utils/countryCodes");
 // ######################################################
 // ######################################################
 
-// Display correct page on index GET
+// ################# Home Pages ##################
+
+// Display Landing Page on GET
 exports.index_get = (req, res, next) => {
   return res.render("index", { title: "Smash the Motherboard" });
 };
@@ -309,6 +311,8 @@ exports.reset_password_post = async (req, res, next) => {
     if (err) return next(err);
   }
 };
+
+// ################# SUBSCRIPTIONS ##################
 
 // ################### SETTINGS ##################
 

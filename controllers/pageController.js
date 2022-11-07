@@ -5,18 +5,18 @@ const { body, validationResult } = require("express-validator");
 const User = require("../models/user");
 const Page = require("../models/page");
 const Post = require("../models/post");
+const Membership = require("../models/membership");
 
 // Display page on GET
 exports.page_get = async (req, res, next) => {
   try {
-    const page = await Page.findById(req.params.id)
-      .populate("genre")
-      .populate("tiers")
-      .exec();
+    const page = await Page.findById(req.params.id).populate("genre").exec();
 
     const posts = await Post.find({ pageId: req.params.id })
       .sort({ timestamp: "desc" })
       .exec();
+
+    const tiers = await Membership.find({ page: page._id });
 
     if (!page) {
       const err = new Error("Page not found");
@@ -27,8 +27,9 @@ exports.page_get = async (req, res, next) => {
     // Successful, so render
     return res.render("page-view", {
       title: page.title,
-      page: page,
-      posts: posts
+      page,
+      tiers,
+      posts
     });
   } catch (err) {
     return next(err);

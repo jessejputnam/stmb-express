@@ -98,7 +98,10 @@ exports.add_membership_post = [
 
       const page = user.creator.page;
 
-      if (page.tiers.length > 2) {
+      // Check current number of page memberships
+      const tiers = await Membership.find({ page: page._id });
+
+      if (tiers.length > 2) {
         const err = new Error("Tier list exceeds 3 memberships");
         err.status = 405;
         return next(err);
@@ -107,6 +110,7 @@ exports.add_membership_post = [
       // Make app obj
       const membership = new Membership({
         stripePriceId: null,
+        page: page._id,
         price: req.body.price,
         title: req.body.title,
         imgUrl: req.body.imgUrl || null,

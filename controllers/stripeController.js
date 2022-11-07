@@ -1,6 +1,7 @@
 "use strict";
 
 const User = require("../models/user");
+const Subscription = require("../models/subscription");
 
 const Stripe = require("stripe")(process.env.STRIPE_SECRET_TEST_KEY);
 
@@ -99,23 +100,38 @@ exports.add_subscription_post = async (req, res, next) => {
       await user.save();
     }
 
+    // Create subscription obj in app for customer
+    const subscription = new Subscription({
+      user: user._id,
+      page: creator.creator.page,
+      membership: membership._id,
+      active: false
+    });
+
     const session = await Stripe.checkout.sessions.create(
       {
-        mode: "subscription",
-        customer: user.stripeId,
         line_items: [
           {
             price: membership.stripePriceId,
             quantity: 1
           }
         ],
+        mode: "subscription",
+        customer: user.stripeId,
+        client_reference_id: subscription._id,
+        payment_intent_data: {
+          application_fee_amount: membership.price * 0.08
+        },
 
         //! change to https for production
-        success_url: `http://${req.headers.host}/subscription/success/${membership._id}`,
-        cancel_url: `http://${req.headers.host}/subscription/cancel`
+        success_url: `http://${req.headers.host}/subscribe/success/${membership._id}`,
+        cancel_url: `http://${req.headers.host}/subscribe/cancel`
       },
       { stripeAccount: creator.creator.stripeId }
     );
+
+    // Save subscripition
+    await subscription.save();
   } catch (err) {
     return next(err);
   }

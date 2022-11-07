@@ -18,17 +18,10 @@ const post_controller = require("../controllers/postController");
 const stripe_controller = require("../controllers/stripeController");
 
 const countryNames = require("../utils/countryNames");
+const Subscription = require("../models/subscription");
 
 // #####################################################
 // #####################################################
-
-// GET request for user home
-router.get("/home", authCheckFalse, async function (req, res, next) {
-  //! FOR DELETING EXCESS TEST ACCOUNTS
-  // await Stripe.accounts.del("acct_1Lzj2oGh5AIIHXsJ");
-
-  res.render("user-home", { title: "Home", country_names: countryNames });
-});
 
 router.get("/not-verified", (req, res, next) => {
   res.render("success-message", {
@@ -37,15 +30,35 @@ router.get("/not-verified", (req, res, next) => {
   });
 });
 
-router.get("/subscription/success/:id", (req, res, next) => {
+router.get("/subscribe/success/:id", (req, res, next) => {
   const pageId = req.params.id;
 });
 
-router.get("/subscription/cancel");
+router.get("/subscribe/cancel", (req, res, next) => {
+  res.render("success", { message: "Subscription attempt canceled" });
+});
 
 /* -------------------- Landing Page ------------------ */
 // GET request for landing page.
 router.get("/", authCheck, auth_controller.index_get);
+
+/* -------------------- Home Page  ---------------- */
+// GET request for user home
+router.get("/home", authCheckFalse, async function (req, res, next) {
+  //! FOR DELETING EXCESS TEST ACCOUNTS
+  // await Stripe.accounts.del("acct_1Lzj2oGh5AIIHXsJ");
+
+  const subscriptions = await Subscription.find({ user: req.user._id })
+    .populate("page")
+    .populate("membership")
+    .exec();
+
+  res.render("user-home", {
+    title: "Home",
+    country_names: countryNames,
+    subs: subscriptions
+  });
+});
 
 /* -------------------- Authentication ---------------- */
 // GET request for register

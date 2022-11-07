@@ -28,14 +28,14 @@ const UserSchema = new Schema(
     resetPasswordExpires: { type: Date, required: false },
 
     stripeId: { type: String, default: null },
-    subscriptions: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Membership",
-        required: true,
-        default: null
-      }
-    ],
+    // subscriptions: [
+    //   {
+    //     type: Schema.Types.ObjectId,
+    //     ref: "Membership",
+    //     required: true,
+    //     default: null
+    //   }
+    // ],
 
     creator: {
       name: String,

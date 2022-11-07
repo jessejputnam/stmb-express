@@ -4,6 +4,7 @@ const express = require("express");
 const router = express.Router();
 
 const User = require("../models/user");
+const Subscription = require("../models/subscription");
 
 const Stripe = require("stripe")(process.env.STRIPE_SECRET_TEST_KEY);
 
@@ -12,10 +13,10 @@ const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 // #####################################################
 // #####################################################
 
-// Account webhooks
+// --------------------------------- Account webhooks
 
-// Connect webhooks
-router.post("/connect", (req, res, next) => {
+// --------------------------------- Connect webhooks
+router.post("/connect", async (req, res, next) => {
   const sig = req.headers["stripe-signature"];
 
   let event;
@@ -24,7 +25,7 @@ router.post("/connect", (req, res, next) => {
   try {
     event = Stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
   } catch (err) {
-    res.status(400).send(`Webhook Error: ${err.message}`);
+    console.error(`Webhook Error: ${err.message}`);
     return next(err);
   }
 
@@ -54,10 +55,13 @@ router.post("/connect", (req, res, next) => {
       // listen for success
 
       // creator
-      // -- add to a log on analytics?
+      //! -- add to a log on analytics?
 
       // customer
       // -- go into user subsctiption obj, make active
+      await Subscription.findByIdAndUpdate(checkout.client_reference_id, {
+        active: true
+      });
 
       break;
     case "account.application.deauthorized":
