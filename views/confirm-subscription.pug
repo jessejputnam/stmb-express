@@ -1,0 +1,23 @@
+extends layout 
+
+block scripts 
+  script(type="module" src="/javascripts/confirmSubscription.js" defer)
+
+block content 
+  h1= title
+
+  p Try success test card 4242424242424242
+
+  p Try card with SCA 4000002500003155
+
+  hr
+
+  form#subscribe-form
+    label(for="name") Full Name 
+    input#name(type="text" placeholder="Barnabas Stoutcastle")
+
+    div#card-element 
+
+    button.btn.btn-primary(type="submit") Subscribe
+
+    div#messages

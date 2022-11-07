@@ -192,6 +192,7 @@ function App() {
 - [ ] Replace env email to stmb email
 - [ ] Replace MONGODB_TEST_URI
 - [ ] Replace Stripe secret key
+- [ ] confirmSubscription change publishable key from test
 
 ### Checklist
 

@@ -12,7 +12,8 @@ const SubscriptionSchema = new Schema(
       ref: "Membership",
       required: true
     },
-    active: { type: Boolean, required: true }
+    active: { type: Boolean, required: true },
+    stripeSubscriptionId: { type: String, required: true }
   },
   { timestamps: true }
 );

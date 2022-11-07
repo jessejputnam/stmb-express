@@ -2,6 +2,7 @@
 
 const User = require("../models/user");
 const Subscription = require("../models/subscription");
+const Membership = require("../models/membership");
 
 const Stripe = require("stripe")(process.env.STRIPE_SECRET_TEST_KEY);
 
@@ -72,15 +73,18 @@ exports.stripe_onboard_refresh = async (req, res, next) => {
 // User Accounts
 // ########################################################
 
-// Handle add subscription on POST
-exports.add_subscription_post = async (req, res, next) => {
+// Handle add subscription on GET
+exports.create_subscription_post = async (req, res, next) => {
   try {
-    // const priceId = req.body.priceId;
-    const membership = req.body.membership;
-    const creatorId = req.body.creatorId;
+    const membershipId = req.query.membershipId;
 
-    const user = await User.findById(req.user._id);
-    const creator = await User.findById(creatorId);
+    const membership = await Membership.findById(membershipId)
+      .populate("page")
+      .exec();
+    const user = req.user;
+    // const user = await User.findById(req.user._id);
+
+    const app_fee = membership.price * 8;
 
     // If current user does not already have stripe acct,
     // create a new stripe customer obj
@@ -103,36 +107,49 @@ exports.add_subscription_post = async (req, res, next) => {
     // Create subscription obj in app for customer
     const subscription = new Subscription({
       user: user._id,
-      page: creator.creator.page,
+      page: membership.page._id,
       membership: membership._id,
-      active: false
+      active: false,
+      stripeSubscriptionId: null
     });
 
-    const session = await Stripe.checkout.sessions.create(
-      {
-        line_items: [
-          {
-            price: membership.stripePriceId,
-            quantity: 1
-          }
-        ],
-        mode: "subscription",
-        customer: user.stripeId,
-        client_reference_id: subscription._id,
-        payment_intent_data: {
-          application_fee_amount: membership.price * 0.08
-        },
-
-        //! change to https for production
-        success_url: `http://${req.headers.host}/subscribe/success/${membership._id}`,
-        cancel_url: `http://${req.headers.host}/subscribe/cancel`
+    const stripeSubscription = await Stripe.subscriptions.create({
+      customer: user.stripeId,
+      items: [
+        {
+          price: membership.stripePriceId
+        }
+      ],
+      payment_behavior: "default_incomplete",
+      payment_settings: {
+        save_default_payment_method: "on_subscription"
       },
-      { stripeAccount: creator.creator.stripeId }
-    );
+      application_fee_percent: 8,
+      expand: ["latest_invoice.payment_intent"]
+    });
 
     // Save subscripition
+    subscription.stripeSubscriptionId = stripeSubscription.id;
+    subscription.tempSecret =
+      stripeSubscription.latest_invoice.payment_intent.client_secret;
     await subscription.save();
+
+    res.redirect(`subscribe/confirm/${subscription._id}`);
   } catch (err) {
     return next(err);
   }
+};
+
+exports.confirm_subscription_get = async (req, res, next) => {
+  const subId = req.params.id;
+
+  const subscription = await Subscription.findById(subId);
+  const membership = await Membership.findById(subscription.membership);
+
+  res.render("confirm_subscription", {
+    title: "Finalize Subscription",
+    stripePublishKey: process.env.STRIPE_PUBLISHABLE_KEY,
+    client_secret: subscription.tempSecret,
+    stripe_sub_id: subscription.stripeSubscriptionId
+  });
 };

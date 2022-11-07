@@ -30,6 +30,16 @@ router.get("/not-verified", (req, res, next) => {
   });
 });
 
+/* ------------------ Subscription Routes ---------------- */
+router.post(
+  "/subscribe/add-subscription",
+  authCheckFalse,
+  isVerifiedCheck,
+  stripe_controller.create_subscription_post
+);
+
+router.get("/subscribe/confirm/:id");
+
 router.get("/subscribe/success/:id", (req, res, next) => {
   const pageId = req.params.id;
 });

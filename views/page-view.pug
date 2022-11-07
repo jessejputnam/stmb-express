@@ -41,9 +41,8 @@ block content
               if String(currentUser._id) === String(page.user._id)
                 em Your Page
               else 
-                form(method="POST" action=`/subscribe/${page._id}`) 
-                  input#creatorId(type="hidden" name="creatorId" required="true" value=page.user._id)
-                  input#membership(type="hidden" name="membership" required="true" value=membership)
+                form(method="GET" action=`/subscribe/add-subscription`) 
+                  input#membershipId(type="hidden" name="membershipId" required="true" value=membership._id)
                   button.btn.btn-secondary(type="submit") Subscribe
               
 

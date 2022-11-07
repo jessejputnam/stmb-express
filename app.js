@@ -50,7 +50,15 @@ sessionStore.on(
   console.error.bind(console, "MongoDB Session Storage connection error")
 );
 
-app.use(helmet());
+// app.use(helmet())
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      "script-src": ["'self'", "js.stripe.com/v3/"],
+      "frame-src": ["'self'", "js.stripe.com/v3/"]
+    }
+  })
+);
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
