@@ -51,7 +51,7 @@ router.post("/connect", async (req, res, next) => {
 
       break;
     // SUBSCRIPTION ACTIVE/UPDATED
-    case "cutomer.subscription.updated":
+    case "customer.subscription.updated":
       const stripeSub = event.data.object;
       // listen for success
 
@@ -61,14 +61,18 @@ router.post("/connect", async (req, res, next) => {
 
         // customer
         // -- Update sub active status in app
-        const appSub = await Subscription.findById(
-          stripeSub.metadata.app_sub_id
-        );
+        const appSub = await Subscription.findOne({
+          stripeSubscriptionId: stripeSub.id
+        });
+
+        console.log("APPSUB", appSub);
+
         if (stripeSub.status === "active") {
           appSub.active = true;
         } else {
           appSub.active = false;
         }
+        appSub.temp = null;
 
         await appSub.save();
       } catch (err) {

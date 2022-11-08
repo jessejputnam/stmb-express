@@ -126,10 +126,7 @@ exports.create_subscription_post = async (req, res, next) => {
           save_default_payment_method: "on_subscription"
         },
         application_fee_percent: 8,
-        expand: ["latest_invoice.payment_intent"],
-        metadata: {
-          app_sub_id: subscription._id
-        }
+        expand: ["latest_invoice.payment_intent"]
       },
       {
         stripeAccount: creator.creator.stripeId
@@ -151,14 +148,18 @@ exports.create_subscription_post = async (req, res, next) => {
 exports.confirm_subscription_get = async (req, res, next) => {
   const subId = req.params.id;
 
-  const subscription = await Subscription.findById(subId);
+  const subscription = await Subscription.findById(subId)
+    .populate("page")
+    .exec();
+  const creator = await User.findById(subscription.page.user);
 
   res.render("confirm-subscription", {
     title: "Finalize Subscription",
     stripe_publishable_key: process.env.STRIPE_PUBLISHABLE_KEY,
     client_secret: subscription.temp,
     stripe_sub_id: subscription.stripeSubscriptionId,
-    app_sub_id: subId
+    app_sub_id: subId,
+    creator_acct: creator.creator.stripeId
   });
   return;
 };

@@ -4,18 +4,22 @@ import "https://js.stripe.com/v3/";
 
 const form = document.querySelector("#subscribe-form");
 const clientSecret = document.querySelector("#client-secret").value;
-const stripeSubId = document.querySelector("#stripe-sub-id").value;
-const appSubId = document.querySelector("#app-sub-id").value;
 const stripePublishableKey = document.querySelector(
   "#stripe-publishable-key"
 ).value;
+const creatorAcct = document.querySelector("#creator-acct").value;
 
 const setMessage = (message) => {
   const messageDiv = document.querySelector("#messages");
   messageDiv.innerHTML += "<br>" + message;
 };
 
-const stripe = await Stripe(stripePublishableKey);
+const stripe = await Stripe(stripePublishableKey, {
+  stripeAccount: creatorAcct
+});
+
+//? Customize
+
 const elements = stripe.elements();
 const cardElement = elements.create("card");
 cardElement.mount("#card-element");
