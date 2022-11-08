@@ -38,11 +38,16 @@ router.post(
   stripe_controller.create_subscription_post
 );
 
-router.get("/subscribe/confirm/:id");
+router.get(
+  "/subscribe/confirm/:id",
+  authCheckFalse,
+  isVerifiedCheck,
+  stripe_controller.confirm_subscription_get
+);
 
-router.get("/subscribe/success/:id", (req, res, next) => {
-  const pageId = req.params.id;
-});
+// router.get("/subscribe/success/:id", (req, res, next) => {
+//   const subId = req.params.id;
+// });
 
 router.get("/subscribe/cancel", (req, res, next) => {
   res.render("success", { message: "Subscription attempt canceled" });

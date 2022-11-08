@@ -9,8 +9,6 @@ block content
   p Page: #{currentUser.creator.page}
   p Region: #{country_names[currentUser.region]}
 
-  
-
   if !currentUser.isVerified 
     form(method="POST" action="/verify/resend") 
       input#email(type="hidden" name="email" required="true" value=currentUser.username)
@@ -19,6 +17,8 @@ block content
   div 
     if subs 
       each sub in subs 
+        hr
         p Subscription: 
         p= sub.page.title 
         p Tier: #{sub.membership.title}
+        p Active: #{sub.membership.active}

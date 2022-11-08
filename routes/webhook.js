@@ -31,6 +31,7 @@ router.post("/connect", async (req, res, next) => {
 
   // Handle the event
   switch (event.type) {
+    // CREATOR ACCOUNT UPDATED
     case "account.updated":
       const account = event.data.object;
 
@@ -49,19 +50,30 @@ router.post("/connect", async (req, res, next) => {
       }
 
       break;
-    case "checkout.session.completed":
-      const checkout = event.data.object;
-
+    // SUBSCRIPTION ACTIVE/UPDATED
+    case "cutomer.subscription.updated":
+      const stripeSub = event.data.object;
       // listen for success
 
-      // creator
-      //! -- add to a log on analytics?
+      try {
+        // creator
+        //! -- add to a log on analytics?
 
-      // customer
-      // -- go into user subsctiption obj, make active
-      await Subscription.findByIdAndUpdate(checkout.client_reference_id, {
-        active: true
-      });
+        // customer
+        // -- Update sub active status in app
+        const appSub = await Subscription.findById(
+          stripeSub.metadata.app_sub_id
+        );
+        if (stripeSub.status === "active") {
+          appSub.active = true;
+        } else {
+          appSub.active = false;
+        }
+
+        await appSub.save();
+      } catch (err) {
+        return next(err);
+      }
 
       break;
     case "account.application.deauthorized":

@@ -73,18 +73,18 @@ exports.stripe_onboard_refresh = async (req, res, next) => {
 // User Accounts
 // ########################################################
 
-// Handle add subscription on GET
+// Handle add subscription on POST
 exports.create_subscription_post = async (req, res, next) => {
   try {
-    const membershipId = req.query.membershipId;
+    const membershipId = req.body.membershipId;
 
     const membership = await Membership.findById(membershipId)
       .populate("page")
       .exec();
-    const user = req.user;
-    // const user = await User.findById(req.user._id);
 
-    const app_fee = membership.price * 8;
+    const creator = await User.findById(membership.page.user);
+
+    const user = req.user;
 
     // If current user does not already have stripe acct,
     // create a new stripe customer obj
@@ -113,28 +113,36 @@ exports.create_subscription_post = async (req, res, next) => {
       stripeSubscriptionId: null
     });
 
-    const stripeSubscription = await Stripe.subscriptions.create({
-      customer: user.stripeId,
-      items: [
-        {
-          price: membership.stripePriceId
+    const stripeSubscription = await Stripe.subscriptions.create(
+      {
+        customer: user.stripeId,
+        items: [
+          {
+            price: membership.stripePriceId
+          }
+        ],
+        payment_behavior: "default_incomplete",
+        payment_settings: {
+          save_default_payment_method: "on_subscription"
+        },
+        application_fee_percent: 8,
+        expand: ["latest_invoice.payment_intent"],
+        metadata: {
+          app_sub_id: subscription._id
         }
-      ],
-      payment_behavior: "default_incomplete",
-      payment_settings: {
-        save_default_payment_method: "on_subscription"
       },
-      application_fee_percent: 8,
-      expand: ["latest_invoice.payment_intent"]
-    });
+      {
+        stripeAccount: creator.creator.stripeId
+      }
+    );
 
     // Save subscripition
     subscription.stripeSubscriptionId = stripeSubscription.id;
-    subscription.tempSecret =
+    subscription.temp =
       stripeSubscription.latest_invoice.payment_intent.client_secret;
     await subscription.save();
 
-    res.redirect(`subscribe/confirm/${subscription._id}`);
+    return res.redirect(`/subscribe/confirm/${subscription._id}`);
   } catch (err) {
     return next(err);
   }
@@ -144,12 +152,13 @@ exports.confirm_subscription_get = async (req, res, next) => {
   const subId = req.params.id;
 
   const subscription = await Subscription.findById(subId);
-  const membership = await Membership.findById(subscription.membership);
 
-  res.render("confirm_subscription", {
+  res.render("confirm-subscription", {
     title: "Finalize Subscription",
-    stripePublishKey: process.env.STRIPE_PUBLISHABLE_KEY,
-    client_secret: subscription.tempSecret,
-    stripe_sub_id: subscription.stripeSubscriptionId
+    stripe_publishable_key: process.env.STRIPE_PUBLISHABLE_KEY,
+    client_secret: subscription.temp,
+    stripe_sub_id: subscription.stripeSubscriptionId,
+    app_sub_id: subId
   });
+  return;
 };

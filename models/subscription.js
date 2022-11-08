@@ -13,7 +13,8 @@ const SubscriptionSchema = new Schema(
       required: true
     },
     active: { type: Boolean, required: true },
-    stripeSubscriptionId: { type: String, required: true }
+    stripeSubscriptionId: { type: String, required: true },
+    temp: { type: String }
   },
   { timestamps: true }
 );
