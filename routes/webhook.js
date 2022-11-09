@@ -65,13 +65,13 @@ router.post("/connect", async (req, res, next) => {
           stripeSubscriptionId: stripeSub.id
         });
 
-        console.log("APPSUB", appSub);
-
-        if (stripeSub.status === "active") {
-          appSub.active = true;
-        } else {
-          appSub.active = false;
-        }
+        // Change app subscription active status according to stripe status
+        appSub.active = stripeSub.status === "active" ? true : false;
+        // if (stripeSub.status === "active") {
+        //   appSub.active = true;
+        // } else {
+        //   appSub.active = false;
+        // }
         appSub.temp = null;
 
         await appSub.save();

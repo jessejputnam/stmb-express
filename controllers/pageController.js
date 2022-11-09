@@ -6,17 +6,12 @@ const User = require("../models/user");
 const Page = require("../models/page");
 const Post = require("../models/post");
 const Membership = require("../models/membership");
+const Subscription = require("../models/subscription");
 
 // Display page on GET
 exports.page_get = async (req, res, next) => {
   try {
     const page = await Page.findById(req.params.id).populate("genre").exec();
-
-    const posts = await Post.find({ pageId: req.params.id })
-      .sort({ timestamp: "desc" })
-      .exec();
-
-    const tiers = await Membership.find({ page: page._id });
 
     if (!page) {
       const err = new Error("Page not found");
@@ -24,12 +19,27 @@ exports.page_get = async (req, res, next) => {
       return next(err);
     }
 
+    const posts = await Post.find({ pageId: req.params.id })
+      .sort({ timestamp: "desc" })
+      .exec();
+
+    const tiers = await Membership.find({ page: page._id });
+
+    const userSubs = await Subscription.find({ user: req.user._id })
+      .populate("membership")
+      .exec();
+    const curPageSub = userSubs.filter(
+      (sub) => String(sub.page) === String(page._id)
+    )[0];
+    console.log(curPageSub);
+
     // Successful, so render
     return res.render("page-view", {
       title: page.title,
       page,
       tiers,
-      posts
+      posts,
+      curPageSub
     });
   } catch (err) {
     return next(err);

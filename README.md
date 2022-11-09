@@ -181,6 +181,7 @@ function App() {
 - [ ] Figure out region list
 - [ ] Determine sanitize and validate reqs on page/user/creator/membership
 - [ ] Format emails and wording/branding
+- [ ] Check async performance: switch to parallel asynchonicity?
 
 #### Before Going Live:
 

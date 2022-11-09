@@ -24,26 +24,36 @@ block content
             a(href=`https://www.twitter.com/${page.socialUrls.twitterHandle}` target="_blank" rel="noreferrer") Twitter
 
     div.page-tiers-container 
-      h3 Membership Tiers
+      h3= curPageSub ? "My Membership" : "Membership Tiers"
       div.tiers-wrapper
-        if tiers.length > 0
+        if curPageSub
+          div.tier-wrapper 
+            h3= curPageSub.membership.title
+            p= `$${curPageSub.membership.price}`
+            p= curPageSub.membership.description
+            ul 
+              each reward in curPageSub.membership.rewards   
+                li= reward
+            p= "Active: " + curPageSub.active
+        else 
+          if tiers.length > 0
 
-          - tiers.sort((a, b) => a.price - b.price)
+            - tiers.sort((a, b) => a.price - b.price)
 
-          each membership in tiers   
-            div.tier-wrapper 
-              h3= membership.title 
-              p= `$${membership.price}`
-              p= membership.desc
-              ul 
-                each reward in membership.rewards   
-                  li= reward
-              if String(currentUser._id) === String(page.user._id)
-                em Your Page
-              else 
-                form(method="POST" action=`/subscribe/add-subscription`) 
-                  input#membershipId(type="hidden" name="membershipId" required="true" value=membership._id)
-                  button.btn.btn-secondary(type="submit") Subscribe
+            each membership in tiers   
+              div.tier-wrapper 
+                h3= membership.title 
+                p= `$${membership.price}`
+                p= membership.description
+                ul 
+                  each reward in membership.rewards   
+                    li= reward
+                if String(currentUser._id) === String(page.user._id)
+                  em Your Page
+                else 
+                  form(method="POST" action=`/subscribe/add-subscription`) 
+                    input#membershipId(type="hidden" name="membershipId" required="true" value=membership._id)
+                    button.btn.btn-secondary(type="submit") Subscribe
               
 
 
