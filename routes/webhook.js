@@ -31,6 +31,8 @@ router.post("/connect", async (req, res, next) => {
 
   // Handle the event
   switch (event.type) {
+    /* --------- CREATOR ACCOUNT ACTIVITY ----------- */
+
     // CREATOR ACCOUNT UPDATED
     case "account.updated":
       const account = event.data.object;
@@ -47,36 +49,6 @@ router.post("/connect", async (req, res, next) => {
             if (err) return next(err);
           });
         });
-      }
-
-      break;
-    // SUBSCRIPTION ACTIVE/UPDATED
-    case "customer.subscription.updated":
-      const stripeSub = event.data.object;
-      // listen for success
-
-      try {
-        // creator
-        //! -- add to a log on analytics?
-
-        // customer
-        // -- Update sub active status in app
-        const appSub = await Subscription.findOne({
-          stripeSubscriptionId: stripeSub.id
-        });
-
-        // Change app subscription active status according to stripe status
-        appSub.active = stripeSub.status === "active" ? true : false;
-        // if (stripeSub.status === "active") {
-        //   appSub.active = true;
-        // } else {
-        //   appSub.active = false;
-        // }
-        appSub.temp = null;
-
-        await appSub.save();
-      } catch (err) {
-        return next(err);
       }
 
       break;
@@ -100,6 +72,42 @@ router.post("/connect", async (req, res, next) => {
       const payout = event.data.object;
       // Then define and call a function to handle the event payout.failed
       break;
+
+    /* ---------- SUBSCRIPTION ACTIVITY ------------- */
+
+    // SUBSCRIPTION ACTIVE/UPDATED
+    case "customer.subscription.updated":
+      const stripeSub = event.data.object;
+      // listen for success
+
+      try {
+        // creator
+        //! An alert to the creator?
+        //! -- add to a log on analytics?
+
+        // customer
+        // -- Update sub active status in app
+        const appSub = await Subscription.findOne({
+          stripeSubscriptionId: stripeSub.id
+        });
+
+        // Change app subscription active status according to stripe status
+        appSub.active = stripeSub.status === "active" ? true : false;
+        appSub.temp = null;
+
+        await appSub.save();
+      } catch (err) {
+        return next(err);
+      }
+
+      break;
+    // Each billing interval when a payment succeeds
+    case "invoice.paid":
+      break;
+    // Each billing interval when a payment fails
+    case "invoice.payment_failed":
+      break;
+
     // ... handle other event types
     default:
       console.log(`Unhandled event type ${event.type}`);
