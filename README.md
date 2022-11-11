@@ -182,6 +182,7 @@ function App() {
 - [ ] Determine sanitize and validate reqs on page/user/creator/membership
 - [ ] Format emails and wording/branding
 - [ ] Check async performance: switch to parallel asynchonicity?
+- [ ] How do user post access work? Viewing privileged posts
 
 #### Before Going Live:
 
@@ -239,27 +240,36 @@ function App() {
     - [x] Connecting Stripe account
       - [x] Onboarding
   - [ ] Page
-    - [ ] Page deleting
+
     - [ ] Page deletion
     - [x] Page viewing
       - [ ] Hidden/Visible aspects based on whether its your page
     - [ ] Page editing
+
       - [ ] Images
       - [x] Description/handles
+
     - [ ] Posts
-      - [x] Posts viewing
+      - [x] Posts viewing as creator
+      - [ ] Post viewing as user
+        - [x] as subscribed
+        - [ ] as public
       - [x] Adding posts
       - [ ] Adding images to posts
       - [ ] Editing posts
       - [ ] Deleting posts
     - [x] Membership creation
     - [x] Page creation
+
   - [ ] Memberships
+
     - [x] Create membership
       - [x] Create Stripe product and price
-    - [ ] Edit membership
     - [ ] Delete membership
       - [ ] Delete stripe priceID in Stripe as well
+      - [ ] Cancels all current subs with membership ID
+        - [ ] Send notification to subs/users
+
   - [ ] Subscriptions
     - [x] Create subscriptions
       - [x] Tie to stripe
@@ -279,6 +289,7 @@ function App() {
 
   - [x] Connect stripe
   - [ ] Stripe accounts
+
     - [ ] Creator account onboarding
       - [x] Stripe connect create account
       - [x] Account Link between STMB database and Stripe database
@@ -289,10 +300,10 @@ function App() {
     - [ ] Stripe users
       - [x] Create user accounts on checkout
       - [ ] Subscription logic
-        - [ ] Add subscription
-        - [ ] Sub payment
+        - [x] Add subscription
+        - [x] Sub payment
         - [ ] Sub cancel
-        - [ ] Sub edit
+
   - [ ] Set up webhooks to listen for changes
 
     - [ ] Connected Accounts

@@ -59,7 +59,11 @@ block content
 
     div.page-posts-container 
       h3 Posts
+
       div.posts-wrapper
+        if !curPageSub && String(currentUser._id) !== String(page.user._id) 
+          div.blur-shield 
+
         if !posts.length
           div  
             em No posts yet

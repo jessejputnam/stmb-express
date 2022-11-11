@@ -31,7 +31,6 @@ exports.page_get = async (req, res, next) => {
     const curPageSub = userSubs.filter(
       (sub) => String(sub.page) === String(page._id)
     )[0];
-    console.log(curPageSub);
 
     // Successful, so render
     return res.render("page-view", {
@@ -79,10 +78,7 @@ exports.create_page_post = async (req, res, next) => {
 // Display edit page on GET
 exports.edit_page_get = async (req, res, next) => {
   try {
-    const page = await Page.findById(req.params.id)
-      .populate("genre")
-      .populate("tiers")
-      .exec();
+    const page = await Page.findById(req.params.id).populate("genre").exec();
 
     // Page not found
     if (!page) {

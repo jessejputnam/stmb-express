@@ -101,8 +101,8 @@ exports.add_membership_post = [
       // Check current number of page memberships
       const tiers = await Membership.find({ page: page._id });
 
-      if (tiers.length > 2) {
-        const err = new Error("Tier list exceeds 3 memberships");
+      if (tiers.length > 3) {
+        const err = new Error("Tier list exceeds 4 memberships");
         err.status = 405;
         return next(err);
       }
