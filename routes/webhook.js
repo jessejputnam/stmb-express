@@ -37,6 +37,18 @@ router.post("/connect", async (req, res, next) => {
     case "account.updated":
       const account = event.data.object;
 
+      try {
+        const creator = await User.findOne({ username: account.email });
+
+        if (!creator.creator.onboardComplete && account.details_submitted) {
+          creator.creator.onboardComplete = true;
+        }
+
+        await creator.save();
+      } catch (err) {
+        return next(err);
+      }
+
       // Once onboard is complete, update user obj
       if (!account.metadata.onboardComplete && account.details_submitted) {
         account.metadata.onboardComplete = true;

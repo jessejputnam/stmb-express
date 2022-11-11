@@ -50,7 +50,7 @@ exports.create_page_post = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id);
 
-    if (!result) {
+    if (!user) {
       const err = new Error("User not found");
       err.status = 404;
       return next(err);
