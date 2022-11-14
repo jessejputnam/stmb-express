@@ -49,7 +49,9 @@ block content
                   each reward in membership.rewards   
                     li!= "⏦ " + reward
                 div.membership-btn-container
-                  if String(currentUser._id) === String(page.user._id)
+                  if !currentUser 
+                    em Register to Subscribe!
+                  else if String(currentUser._id) === String(page.user._id)
                     em Your Page
                   else 
                     form(method="POST" action=`/subscribe/add-subscription`) 
