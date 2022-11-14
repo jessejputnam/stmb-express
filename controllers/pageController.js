@@ -25,12 +25,17 @@ exports.page_get = async (req, res, next) => {
 
     const tiers = await Membership.find({ page: page._id });
 
-    const userSubs = await Subscription.find({ user: req.user._id })
-      .populate("membership")
-      .exec();
-    const curPageSub = userSubs.filter(
-      (sub) => String(sub.page) === String(page._id)
-    )[0];
+    let curPageSub;
+    if (req.user) {
+      const userSubs = await Subscription.find({ user: req.user._id })
+        .populate("membership")
+        .exec();
+      curPageSub = userSubs.filter(
+        (sub) => String(sub.page) === String(page._id)
+      )[0];
+    } else {
+      curPageSub = null;
+    }
 
     // Successful, so render
     return res.render("page-view", {

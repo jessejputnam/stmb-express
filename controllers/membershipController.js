@@ -22,7 +22,7 @@ exports.display_memberships_get = async (req, res, next) => {
   }
 
   try {
-    const page = await Page.findById(userPageId).populate("tiers").exec();
+    const page = await Page.findById(userPageId);
 
     if (!page) {
       const err = new Error("Page does not exist");
@@ -30,9 +30,11 @@ exports.display_memberships_get = async (req, res, next) => {
       return next(err);
     }
 
+    const memberships = await Membership.find({ page: page });
+
     return res.render("memberships-view", {
       title: "Memberships",
-      memberships: page.tiers
+      memberships
     });
   } catch (err) {
     return next(err);
@@ -99,7 +101,7 @@ exports.add_membership_post = [
       const page = user.creator.page;
 
       // Check current number of page memberships
-      const tiers = await Membership.find({ page: page._id });
+      const tiers = await Membership.find({ page: page });
 
       if (tiers.length > 3) {
         const err = new Error("Tier list exceeds 4 memberships");
@@ -144,10 +146,6 @@ exports.add_membership_post = [
       membership.stripePriceId = price.id;
 
       await membership.save();
-
-      page.tiers.push(membership._id);
-
-      await page.save();
 
       return res.redirect(`/${page._id}/memberships`);
     } catch (err) {

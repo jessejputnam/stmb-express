@@ -256,6 +256,8 @@ function App() {
         - [ ] as public
       - [x] Adding posts
       - [ ] Adding images to posts
+      - [ ] Adding embed to posts
+      - [ ] Adding paragraphs for post (Blog-like?)
       - [ ] Editing posts
       - [ ] Deleting posts
     - [x] Membership creation

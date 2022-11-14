@@ -61,7 +61,7 @@ router.get("/", authCheck, auth_controller.index_get);
 // GET request for user home
 router.get("/home", authCheckFalse, async function (req, res, next) {
   //! FOR DELETING EXCESS TEST ACCOUNTS
-  // await Stripe.accounts.del("acct_1Lzj2oGh5AIIHXsJ");
+  // await Stripe.accounts.del("acct_1LzhwH2c4oReatrd");
 
   const subscriptions = await Subscription.find({ user: req.user._id })
     .populate("page")

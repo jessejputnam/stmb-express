@@ -47,13 +47,14 @@ block content
                 p= membership.description
                 ul 
                   each reward in membership.rewards   
-                    li= reward
-                if String(currentUser._id) === String(page.user._id)
-                  em Your Page
-                else 
-                  form(method="POST" action=`/subscribe/add-subscription`) 
-                    input#membershipId(type="hidden" name="membershipId" required="true" value=membership._id)
-                    button.btn.btn-secondary(type="submit") Subscribe
+                    li!= "⏦ " + reward
+                div.membership-btn-container
+                  if String(currentUser._id) === String(page.user._id)
+                    em Your Page
+                  else 
+                    form(method="POST" action=`/subscribe/add-subscription`) 
+                      input#membershipId(type="hidden" name="membershipId" required="true" value=membership._id)
+                      button.btn.btn-secondary(type="submit") Subscribe
               
 
 
@@ -61,7 +62,7 @@ block content
       h3 Posts
 
       div.posts-wrapper
-        if !curPageSub && String(currentUser._id) !== String(page.user._id) 
+        if !currentUser || (!curPageSub && String(currentUser._id) !== String(page.user._id))
           div.blur-shield 
 
         if !posts.length
