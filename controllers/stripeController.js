@@ -21,11 +21,13 @@ exports.stripe_onboard_get = async (req, res, next) => {
         name: req.user.creator.name
       },
       metadata: {
-        onboardComplete: false
+        onboard_complete: "false",
+        payment_status: "pending",
+        stripe_issue: "true"
       }
     });
 
-    const user = await User.findByIdAndUpdate(req.user._id, {
+    await User.findByIdAndUpdate(req.user._id, {
       "creator.stripeId": account.id
     });
 
@@ -33,7 +35,7 @@ exports.stripe_onboard_get = async (req, res, next) => {
       account: account.id,
       //! change to https for production
       refresh_url: `http://${req.headers.host}/onboard-user/refresh`,
-      return_url: `http://${req.headers.host}/home`,
+      return_url: `http://${req.headers.host}/onboard-user/success`,
       type: "account_onboarding"
     });
 

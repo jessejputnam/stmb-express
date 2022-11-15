@@ -27,10 +27,7 @@ exports.become_creator_get = async (req, res, next) => {
 // Handle become creator on POST
 exports.become_creator_post = [
   // Validate and sanitize fields
-  body("projectName", "Project name required")
-    .trim()
-    .isLength({ min: 1 })
-    .escape(),
+  body("projectName", "Project name required").trim().isLength({ min: 1 }),
   body("genre", "Genre is required").trim().isLength({ min: 1 }).escape(),
 
   async (req, res, next) => {
@@ -55,7 +52,9 @@ exports.become_creator_post = [
       user.creator = {};
       user.creator.name = req.body.projectName;
       user.creator.genre = req.body.genre;
-      user.creator.onboardComplete = false;
+      user.creator.stripeStatus = "pending";
+      user.creator.stripeOnboarding = false;
+      user.creator.stripeIssue = false;
 
       user.save();
       return res.redirect("/home");

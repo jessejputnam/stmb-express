@@ -6,7 +6,6 @@ html(lang='en')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(type="module" src="/javascripts/script.js" defer)
-    //- script(src="https://js.stripe.com/v3/")
     block scripts 
   
   body 
@@ -35,10 +34,13 @@ html(lang='en')
                 a(href="/settings") Settings 
               li 
                 a(href="/logout") Logout
+              hr(style='margin:10px')
 
+              //- IF CREATOR
               if currentUser.creator.name
+                //- IF PAGE EXISTS
                 if currentUser.creator.page
-                  hr(style='margin:10px')
+                  //- hr(style='margin:10px')
                   li 
                     a(href=`/${currentUser.creator.page}`) View Page 
                   li 
@@ -49,25 +51,43 @@ html(lang='en')
                     a(href=`/${currentUser.creator.page}/memberships`) Memberships
                   li 
                     a(href="/analytics") Analytics 
-                else 
-                  if currentUser.creator.onboardComplete
-                    hr(style='margin:10px')
-                    form(method="POST" action="/create-page") 
-                      button.btn.btn-secondary(type="submit") Create Page
-                  else 
-                    hr(style='margin:10px')
-                    li 
-                      if !currentUser.creator.stripeId
-                        a(href="/onboard-user") Connect to Stripe
-                      else 
-                        a(href="/onboard-user/refresh") Continue Connecting to Stripe
 
+                //- IF NO PAGE
+                else 
+                  //- IF ONBOARDING INCOMPLETE
+                  if !currentUser.creator.stripeOnboardComplete
+                    //- IF ONBOARDING NOT STARTED
+                    if !currentUser.creator.stripeId
+                      a(href="/onboard-user") Connect to Stripe
+                    //- IF ONBOARDING STARTED
+                    else 
+                      a(href="/onboard-user/refresh") Continue Connecting to Stripe
+
+                  //- IF ONBOARDING COMPLETE
+                  else 
+                    //- IF PAYMENTS ACTIVE
+                    if currentUser.creator.stripeStatus === "active" 
+                      form(method="POST" action="/create-page") 
+                        button.btn.btn-secondary(type="submit") Create Page
+                    
+                    //- IF PAYMENT ISSUE
+                    else 
+                      div 
+                        em Stripe Payment Issue
+                        p Status: 
+                          span= currentUser.creator.stripeStatus
+                        a(href="https://dashboard.stripe.com") Stripe Dashboard
+                    
+                    //- IF STRIPE REQUIRES INFO
+                    if currentUser.creator.stripeIssue 
+                      div 
+                        em Stripe requires attention 
+                        a(href="https://dashboard.stripe.com") Stripe Dashboard
+
+              //- IF NOT CREATOR
               else 
-                hr(style='margin:10px')
                 li 
                   a(href="/creator-signup") Become Creator
-
-                
 
 
         main.main-wrapper

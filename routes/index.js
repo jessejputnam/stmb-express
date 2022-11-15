@@ -3,7 +3,7 @@
 const express = require("express");
 const router = express.Router();
 
-//! FOR DELETING EXCESS TEST ACCOUNTS
+// //! FOR DELETING EXCESS TEST ACCOUNTS
 // const Stripe = require("stripe")(process.env.STRIPE_SECRET_TEST_KEY);
 
 const authCheckFalse = require("../middlewares/authCheckFalse");
@@ -61,7 +61,7 @@ router.get("/", authCheck, auth_controller.index_get);
 // GET request for user home
 router.get("/home", authCheckFalse, async function (req, res, next) {
   //! FOR DELETING EXCESS TEST ACCOUNTS
-  // await Stripe.accounts.del("acct_1LzhwH2c4oReatrd");
+  // await Stripe.accounts.del("acct_1M4Usf2fKNHCRH9J");
 
   const subscriptions = await Subscription.find({ user: req.user._id })
     .populate("page")
@@ -145,6 +145,7 @@ router.get(
 // GET request for refresh_url from accountLink
 router.get("/onboard-user/refresh", stripe_controller.stripe_onboard_refresh);
 
+// GET request for successful onboarding -> direct to Stripe
 router.get("/onboard-user/success", (req, res, next) => {
   res.render("success-onboarding");
 });

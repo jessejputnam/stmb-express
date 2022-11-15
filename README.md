@@ -195,6 +195,7 @@ function App() {
 - [ ] Replace MONGODB_TEST_URI
 - [ ] Replace Stripe secret key
 - [ ] confirmSubscription change publishable key from test
+- [ ] Change app.js session to include http/secure only
 
 ### Checklist
 

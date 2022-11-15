@@ -86,6 +86,7 @@ app.use(
   session({
     cookie: {
       maxAge: 60 * 60 * 1000,
+      //! CHANGE ON PRODUCTION
       // httpOnly: true,
       // secure: true
       sameSite: true

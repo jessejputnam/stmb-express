@@ -28,21 +28,15 @@ const UserSchema = new Schema(
     resetPasswordExpires: { type: Date, required: false },
 
     stripeId: { type: String, default: null },
-    // subscriptions: [
-    //   {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Membership",
-    //     required: true,
-    //     default: null
-    //   }
-    // ],
 
     creator: {
       name: String,
       genre: { type: Schema.Types.ObjectId, ref: "Genre" },
       page: { type: Schema.Types.ObjectId, ref: "Page" },
       stripeId: { type: String },
-      onboardComplete: { type: Boolean }
+      stripeOnboardComplete: { type: Boolean },
+      stripeStatus: { type: String },
+      stripeIssue: { type: Boolean }
     }
   },
   { timestamps: true }
