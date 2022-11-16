@@ -196,6 +196,8 @@ function App() {
 - [ ] Replace Stripe secret key
 - [ ] confirmSubscription change publishable key from test
 - [ ] Change app.js session to include http/secure only
+- [ ] Webhooks
+  - [ ] Flip livemode check
 
 ### Checklist
 
@@ -274,10 +276,12 @@ function App() {
         - [ ] Send notification to subs/users
 
   - [ ] Subscriptions
+
     - [x] Create subscriptions
       - [x] Tie to stripe
-    - [ ] Change sub tier
     - [ ] Delete/Cancel subscriptions
+    - [ ] Filter subscriptions by status
+
   - [ ] Search
     - [ ] By name
     - [ ] By genre

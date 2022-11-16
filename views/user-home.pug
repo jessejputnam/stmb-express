@@ -21,4 +21,9 @@ block content
         p Subscription: 
         p= sub.page.title 
         p Tier: #{sub.membership.title}
-        p Active: #{sub.active}
+        p Status: #{sub.status}
+        div 
+          form.form(method="POST" action="/subscription/cancel") 
+            input#creatorId(type='hidden' name="creatorId" value=sub.page.user)
+            input#stripeSubId(type='hidden' name="stripeSubId" value=sub.stripeSubscriptionId)
+            button.btn.btn-secondary(type="submit") Cancel

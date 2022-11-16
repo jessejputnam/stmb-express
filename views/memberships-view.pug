@@ -11,12 +11,16 @@ block content
   - memberships.sort((a, b) => a.price - b.price)
 
   each membership in memberships 
-    div
+    div.tier-wrapper
       p= membership.title
       p= "$" + membership.price.toFixed(2)
       p= membership.desc 
       ul 
         each reward in membership.rewards
           li= "- " + reward
+      div.membership-btn-container
+        form(method="POST" action=`/membership/delete`) 
+          input#membershipId(type="hidden" name="membershipId" value=membership._id)
+          button.btn.btn-secondary(type="submit") Delete
 
 

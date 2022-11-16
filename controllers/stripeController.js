@@ -3,6 +3,7 @@
 const User = require("../models/user");
 const Subscription = require("../models/subscription");
 const Membership = require("../models/membership");
+const Page = require("../models/page");
 
 const Stripe = require("stripe")(process.env.STRIPE_SECRET_TEST_KEY);
 
@@ -111,7 +112,6 @@ exports.create_subscription_post = async (req, res, next) => {
       user: user._id,
       page: membership.page._id,
       membership: membership._id,
-      active: false,
       stripeSubscriptionId: null
     });
 
@@ -150,18 +150,51 @@ exports.create_subscription_post = async (req, res, next) => {
 exports.confirm_subscription_get = async (req, res, next) => {
   const subId = req.params.id;
 
-  const subscription = await Subscription.findById(subId)
-    .populate("page")
-    .exec();
-  const creator = await User.findById(subscription.page.user);
+  try {
+    const subscription = await Subscription.findById(subId)
+      .populate("page")
+      .exec();
+    const creator = await User.findById(subscription.page.user);
 
-  res.render("confirm-subscription", {
-    title: "Finalize Subscription",
-    stripe_publishable_key: process.env.STRIPE_PUBLISHABLE_KEY,
-    client_secret: subscription.temp,
-    stripe_sub_id: subscription.stripeSubscriptionId,
-    app_sub_id: subId,
-    creator_acct: creator.creator.stripeId
-  });
-  return;
+    res.render("confirm-subscription", {
+      title: "Finalize Subscription",
+      stripe_publishable_key: process.env.STRIPE_PUBLISHABLE_KEY,
+      client_secret: subscription.temp,
+      stripe_sub_id: subscription.stripeSubscriptionId,
+      app_sub_id: subId,
+      creator_acct: creator.creator.stripeId
+    });
+    return;
+  } catch (err) {
+    return next(err);
+  }
+};
+
+exports.cancel_subscription_post = async (req, res, next) => {
+  const creatorId = req.body.creatorId;
+  const stripeSubId = req.body.stripeSubId;
+
+  try {
+    const creator = await User.findById(creatorId);
+    await Stripe.subscriptions.del(stripeSubId, {
+      stripeAccount: creator.creator.stripeId
+    });
+
+    res.redirect(`/${creator.creator.page}/subscription-canceled`);
+  } catch (err) {
+    return next(err);
+  }
+};
+
+exports.subscription_cancelled_get = async (req, res, next) => {
+  try {
+    const page = await Page.findById(req.params.id);
+
+    res.render("success-message", {
+      title: "Subscription Cancelled",
+      message: `You have successfully unsubscribed from ${page.title}`
+    });
+  } catch (err) {
+    return next(err);
+  }
 };

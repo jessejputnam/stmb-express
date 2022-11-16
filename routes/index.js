@@ -150,6 +150,15 @@ router.get("/onboard-user/success", (req, res, next) => {
   res.render("success-onboarding");
 });
 
+// POST request for cancel subscription
+router.post("/subscription/cancel", stripe_controller.cancel_subscription_post);
+
+// GET request for successfully canceled subscription
+router.get(
+  "/:id/subscription-canceled",
+  stripe_controller.subscription_cancelled_get
+);
+
 /* -------------------- Page Routes ------------------ */
 // POST request for create page
 router.post(

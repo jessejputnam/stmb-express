@@ -29,6 +29,13 @@ router.post("/connect", async (req, res, next) => {
     return next(err);
   }
 
+  // ! UNCOMMENT ON LIVE
+  // if (!event.livemode) {
+  //   const err = new Error("This is a test event. Please edit codebase to test what you would like.")
+  //   err.status = 511;
+  //   return next(err);
+  // }
+
   // Handle the event
   switch (event.type) {
     /* --------- CREATOR ACCOUNT ACTIVITY ----------- */
@@ -150,7 +157,7 @@ router.post("/connect", async (req, res, next) => {
         });
 
         // Change app subscription active status according to stripe status
-        appSub.active = stripeSub.status === "active" ? true : false;
+        appSub.status = stripeSub.status;
         appSub.temp = null;
 
         await appSub.save();
@@ -158,6 +165,21 @@ router.post("/connect", async (req, res, next) => {
         return next(err);
       }
 
+      break;
+    // On purposeful subscription cancellation
+    case "customer.subscription.deleted":
+      const cancelledSub = event.data.object;
+      try {
+        const cancelledAppSub = await Subscription.findOne({
+          stripeSubscriptionId: cancelledSub.id
+        });
+
+        cancelledAppSub.status = cancelledSub.status;
+        await cancelledAppSub.save();
+        l;
+      } catch (err) {
+        return next(err);
+      }
       break;
     // Each billing interval when a payment succeeds
     case "invoice.paid":

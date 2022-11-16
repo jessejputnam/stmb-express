@@ -12,7 +12,7 @@ const SubscriptionSchema = new Schema(
       ref: "Membership",
       required: true
     },
-    active: { type: Boolean, required: true },
+    status: { type: String, default: "incomplete", required: true },
     stripeSubscriptionId: { type: String, required: true },
     temp: { type: String }
   },

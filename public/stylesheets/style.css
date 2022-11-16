@@ -137,6 +137,7 @@ textarea {
 
 .membership-btn-container {
   display: flex;
+  width: 67px;
   justify-content: center;
   position: absolute;
   bottom: 0;
@@ -164,4 +165,8 @@ textarea {
   background-color: rgba(245, 245, 245, 0.257);
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
+}
+
+/* ########### ## MEMBERSHIP VIEW ############ */
+.membership-container {
 }
