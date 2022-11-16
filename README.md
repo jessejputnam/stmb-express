@@ -279,7 +279,7 @@ function App() {
 
     - [x] Create subscriptions
       - [x] Tie to stripe
-    - [ ] Delete/Cancel subscriptions
+    - [x] Delete/Cancel subscriptions
     - [ ] Filter subscriptions by status
 
   - [ ] Search

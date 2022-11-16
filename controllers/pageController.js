@@ -26,13 +26,31 @@ exports.page_get = async (req, res, next) => {
     const tiers = await Membership.find({ page: page._id });
 
     let curPageSub;
+
     if (req.user) {
       const userSubs = await Subscription.find({ user: req.user._id })
         .populate("membership")
         .exec();
-      curPageSub = userSubs.filter(
+      // curPageSub = userSubs.filter(
+      //   (sub) => String(sub.page) === String(page._id)
+      // )[0];
+      const curPageAllSubs = userSubs.filter(
         (sub) => String(sub.page) === String(page._id)
-      )[0];
+      );
+
+      const active = curPageAllSubs.filter((sub) => {
+        sub.status === "active";
+      });
+
+      if (active.length > 1) {
+        const err = new Error(
+          "More than one active page sub detected. Please contact administrator."
+        );
+        err.status = 409;
+        return next(err);
+      }
+
+      curPageSub = active.length === 0 ? null : active[0];
     } else {
       curPageSub = null;
     }
