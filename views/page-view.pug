@@ -33,8 +33,8 @@ block content
             p= curPageSub.membership.description
             ul 
               each reward in curPageSub.membership.rewards   
-                li= reward
-            em= "Active: " + curPageSub.active
+                li!= "⏦ " + reward
+            em= "Status: " + curPageSub.status
         else 
           if tiers.length > 0
 

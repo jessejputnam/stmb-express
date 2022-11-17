@@ -39,7 +39,10 @@ router.get("/:id/add-membership", memberships_controller.add_membership_get);
 router.post("/:id/add-membership", memberships_controller.add_membership_post);
 
 // POST request for delete membership
-router.post("/delete-membership");
+router.post(
+  "/delete-membership",
+  memberships_controller.delete_membership_post
+);
 
 /* -------------------- POSTS ------------------ */
 

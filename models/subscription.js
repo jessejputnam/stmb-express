@@ -14,11 +14,10 @@ const SubscriptionSchema = new Schema(
     },
     status: { type: String, default: "incomplete", required: true },
     stripeSubscriptionId: { type: String, required: true },
+    stripeCustomerId: { type: String, required: true },
     temp: { type: String }
   },
   { timestamps: true }
 );
 
 module.exports = mongoose.model("Subscription", SubscriptionSchema);
-
-//! HOW TO MAKE SUBS BE UNIQUE FOR CUSTOMER/CREATOR TIE, SUB GETS ONE MEMBERSHIP?

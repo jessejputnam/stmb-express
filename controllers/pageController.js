@@ -11,7 +11,6 @@ const Subscription = require("../models/subscription");
 // Display page on GET
 exports.page_get = async (req, res, next) => {
   try {
-    console.log("check");
     const page = await Page.findById(req.params.id).populate("genre").exec();
 
     if (!page) {
@@ -32,17 +31,18 @@ exports.page_get = async (req, res, next) => {
       const userSubs = await Subscription.find({ user: req.user._id })
         .populate("membership")
         .exec();
-      // curPageSub = userSubs.filter(
-      //   (sub) => String(sub.page) === String(page._id)
-      // )[0];
+
+      // Find all subs to page (active and not)
       const curPageAllSubs = userSubs.filter(
         (sub) => String(sub.page) === String(page._id)
       );
 
+      // Filter for active
       const active = curPageAllSubs.filter((sub) => {
-        sub.status === "active";
+        return sub.status === "active";
       });
 
+      // If more than one active subscription, that's bad
       if (active.length > 1) {
         const err = new Error(
           "More than one active page sub detected. Please contact administrator."

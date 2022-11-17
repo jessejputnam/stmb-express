@@ -80,18 +80,35 @@ exports.stripe_onboard_refresh = async (req, res, next) => {
 exports.create_subscription_post = async (req, res, next) => {
   try {
     const membershipId = req.body.membershipId;
+    const user = req.user;
 
     const membership = await Membership.findById(membershipId)
       .populate("page")
       .exec();
 
+    const subscriptions = await Subscription.find({ user: user._id });
+
     const creator = await User.findById(membership.page.user);
 
-    const user = req.user;
+    // Check if user has previous sub
+    const curPageSub = subscriptions.filter(
+      (sub) => String(sub.page) === String(membership.page._id)
+    )[0];
 
-    // If current user does not already have stripe acct,
-    // create a new stripe customer obj
-    if (!user.stripeId) {
+    // If sub active, return
+    if (curPageSub.status === "active") {
+      const err = new Error(
+        "Current user already has a subscription to the creator"
+      );
+      err.status = 403;
+      return next(err);
+    }
+
+    let customerId;
+    let subscription;
+
+    // If current user has no previous sub to page
+    if (!curPageSub) {
       const customer = await Stripe.customers.create(
         {
           email: user.username,
@@ -103,21 +120,30 @@ exports.create_subscription_post = async (req, res, next) => {
         { stripeAccount: creator.creator.stripeId }
       );
 
-      user.stripeId = customer.id;
-      await user.save();
-    }
+      customerId = customer.id;
 
-    // Create subscription obj in app for customer
-    const subscription = new Subscription({
-      user: user._id,
-      page: membership.page._id,
-      membership: membership._id,
-      stripeSubscriptionId: null
-    });
+      // Create subscription obj in app for customer
+      subscription = new Subscription({
+        user: user._id,
+        page: membership.page._id,
+        membership: membership._id,
+        stripeCustomerId: customerId,
+        stripeSubscriptionId: null
+      });
+      // Current User has previous sub
+    } else {
+      customerId = curPageSub.stripeCustomerId;
+
+      // Replace old subscription obj in app
+      subscription = curPageSub;
+      subscription.membership = membership._id;
+      subscription.stripeSubscriptionId = null;
+      subscription.status = "incomplete";
+    }
 
     const stripeSubscription = await Stripe.subscriptions.create(
       {
-        customer: user.stripeId,
+        customer: customerId,
         items: [
           {
             price: membership.stripePriceId
@@ -139,6 +165,7 @@ exports.create_subscription_post = async (req, res, next) => {
     subscription.stripeSubscriptionId = stripeSubscription.id;
     subscription.temp =
       stripeSubscription.latest_invoice.payment_intent.client_secret;
+
     await subscription.save();
 
     return res.redirect(`/subscribe/confirm/${subscription._id}`);

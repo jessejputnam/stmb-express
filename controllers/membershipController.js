@@ -147,9 +147,17 @@ exports.add_membership_post = [
 
       await membership.save();
 
-      return res.redirect(`/${page._id}/memberships`);
+      return res.redirect(`/account/${page._id}/memberships`);
     } catch (err) {
       return next(err);
     }
   }
 ];
+
+exports.delete_membership_post = async (req, res, next) => {
+  const membershipId = req.body.membershipId;
+  try {
+  } catch (err) {
+    return next(err);
+  }
+};
