@@ -120,6 +120,12 @@ To run this project, you will need to add the following environment variables to
 
 ### :test_tube: Running Tests
 
+To set up testing webhook endpoints
+
+```bash
+  stripe listen --forward-connect-to http://localhost:8080/webhook/connect
+```
+
 To run tests, run the following command
 
 ```bash
