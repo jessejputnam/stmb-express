@@ -24,7 +24,7 @@ block content
         p Status: #{sub.status}
         div 
           if sub.status !== "canceled"
-            form.form(method="POST" action="/subscription/cancel") 
+            form.form(method="POST" action="/subscribe/cancel-subscription") 
               input#creatorId(type='hidden' name="creatorId" value=sub.page.user)
               input#stripeSubId(type='hidden' name="stripeSubId" value=sub.stripeSubscriptionId)
               button.btn.btn-secondary(type="submit") Cancel

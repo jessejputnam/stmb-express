@@ -8,8 +8,6 @@ const express = require("express");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const flash = require("connect-flash");
-// const passport = require("passport");
-// const LocalStrategy = require("passport-local");
 const path = require("path");
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -19,6 +17,9 @@ const helmet = require("helmet");
 const compression = require("compression");
 
 const passport = require("./middlewares/passport");
+
+const authCheckFalse = require("./middlewares/authCheckFalse");
+const isVerifiedCheck = require("./middlewares/isVerifiedCheck");
 
 // Database Connection
 //! UPDATE TO NON-TEST DATABSE AT PRODUCTION
@@ -37,6 +38,9 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 const indexRouter = require("./routes/index");
 const webhookRouter = require("./routes/webhook");
 const searchRouter = require("./routes/search");
+const homeRouter = require("./routes/home");
+const creatorRouter = require("./routes/account");
+const subscribeRouter = require("./routes/subscribe");
 
 const app = express();
 const sessionStore = new MongoDBStore({
@@ -115,6 +119,9 @@ app.use(function (req, res, next) {
 app.use(express.urlencoded({ extended: false }));
 
 // ------------ Routes --------------- //
+app.use("/home", authCheckFalse, homeRouter);
+app.use("/account", authCheckFalse, isVerifiedCheck, creatorRouter);
+app.use("/subscribe", authCheckFalse, isVerifiedCheck, subscribeRouter);
 app.use("/search", searchRouter);
 app.use("/", indexRouter);
 

@@ -68,7 +68,7 @@ exports.add_post_post = [
     post.save((err) => {
       if (err) return next(err);
 
-      res.redirect(`/${userPageId}/posts`);
+      res.redirect(`/account/${userPageId}/posts`);
     });
   }
 ];

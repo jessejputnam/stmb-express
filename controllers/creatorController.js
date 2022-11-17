@@ -32,6 +32,8 @@ exports.become_creator_post = [
 
   async (req, res, next) => {
     const errors = validationResult(req);
+
+    // If user already exists
     if (req.user.creator.name) {
       return res.redirect("/home");
     }
@@ -53,10 +55,10 @@ exports.become_creator_post = [
       user.creator.name = req.body.projectName;
       user.creator.genre = req.body.genre;
       user.creator.stripeStatus = "pending";
-      user.creator.stripeOnboarding = false;
+      user.creator.stripeOnboardComplete = false;
       user.creator.stripeIssue = false;
 
-      user.save();
+      await user.save();
       return res.redirect("/home");
     } catch (err) {
       return next(err);

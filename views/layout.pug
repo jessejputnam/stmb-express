@@ -31,7 +31,7 @@ html(lang='en')
               li 
                 a(href="/search") Search 
               li 
-                a(href="/settings") Settings 
+                a(href="/home/settings") Settings 
               li 
                 a(href="/logout") Logout
               hr(style='margin:10px')
@@ -44,13 +44,13 @@ html(lang='en')
                   li 
                     a(href=`/${currentUser.creator.page}`) View Page 
                   li 
-                    a(href=`/${currentUser.creator.page}/edit`) Edit Page
+                    a(href=`/account/${currentUser.creator.page}/edit`) Edit Page
                   li 
-                    a(href=`/${currentUser.creator.page}/posts`) Posts
+                    a(href=`/account/${currentUser.creator.page}/posts`) Posts
                   li 
-                    a(href=`/${currentUser.creator.page}/memberships`) Memberships
+                    a(href=`/account/${currentUser.creator.page}/memberships`) Memberships
                   li 
-                    a(href="/analytics") Analytics 
+                    a(href="/account/analytics") Analytics 
 
                 //- IF NO PAGE
                 else 
@@ -58,16 +58,16 @@ html(lang='en')
                   if !currentUser.creator.stripeOnboardComplete
                     //- IF ONBOARDING NOT STARTED
                     if !currentUser.creator.stripeId
-                      a(href="/onboard-user") Connect to Stripe
+                      a(href="/account/onboard-user") Connect to Stripe
                     //- IF ONBOARDING STARTED
                     else 
-                      a(href="/onboard-user/refresh") Continue Connecting to Stripe
+                      a(href="/account/onboard-user/refresh") Continue Connecting to Stripe
 
                   //- IF ONBOARDING COMPLETE
                   else 
                     //- IF PAYMENTS ACTIVE
                     if currentUser.creator.stripeStatus === "active" 
-                      form(method="POST" action="/create-page") 
+                      form(method="POST" action="/account/create-page") 
                         button.btn.btn-secondary(type="submit") Create Page
                     
                     //- IF PAYMENT ISSUE
@@ -87,7 +87,7 @@ html(lang='en')
               //- IF NOT CREATOR
               else 
                 li 
-                  a(href="/creator-signup") Become Creator
+                  a(href="/home/creator-signup") Become Creator
 
 
         main.main-wrapper

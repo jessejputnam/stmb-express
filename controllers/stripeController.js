@@ -35,7 +35,7 @@ exports.stripe_onboard_get = async (req, res, next) => {
     const accountLink = await Stripe.accountLinks.create({
       account: account.id,
       //! change to https for production
-      refresh_url: `http://${req.headers.host}/onboard-user/refresh`,
+      refresh_url: `http://${req.headers.host}/account/onboard-user/refresh`,
       return_url: `http://${req.headers.host}/onboard-user/success`,
       type: "account_onboarding"
     });
@@ -62,7 +62,7 @@ exports.stripe_onboard_refresh = async (req, res, next) => {
     const accountLink = await Stripe.accountLinks.create({
       type: "account_onboarding",
       account: accountID,
-      refresh_url: `${origin}/onboard-user/refresh`,
+      refresh_url: `${origin}/account/onboard-user/refresh`,
       return_url: `${origin}/onboard-user/success`
     });
 

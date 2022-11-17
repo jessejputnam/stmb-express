@@ -230,8 +230,8 @@ exports.send_reset_email_post = async (req, res, next) => {
     const to = user.username;
     const from = process.env.FROM_EMAIL;
     //! Change to secure for production
-    const link = `http://${req.headers.host}/reset/${user.resetPasswordToken}`;
-    // const link = `https://${req.headers.host}/reset-password/${user.resetPasswordToken}`;
+    const link = `http://${req.headers.host}/home/reset/${user.resetPasswordToken}`;
+    // const link = `https://${req.headers.host}/home/reset/${user.resetPasswordToken}`;
     const html = `
       <p>Hi ${user.firstname}</p>
       <p>Please click on the following <a href="${link}">link</a> to reset your password.</p> 

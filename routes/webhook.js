@@ -43,11 +43,9 @@ router.post("/connect", async (req, res, next) => {
     // ON CREATOR ACCOUNT CHANGES
     case "account.updated":
       const account = event.data.object;
-      // console.log("PRE META", account.metadata);
 
       // ON DETAILS SUBMITTED
       if (account.metadata.onboard_complete === "false") {
-        // console.log("-------ONBOARD INCOMPLETE");
         try {
           const creator = await User.findOne({ username: account.email });
           const sub_details = account.details_submitted;
@@ -55,7 +53,6 @@ router.post("/connect", async (req, res, next) => {
           account.metadata.onboard_complete = sub_details ? "true" : "false";
           creator.creator.stripeOnboardComplete = sub_details;
 
-          // console.log("POST META", account.metadata);
           await creator.save();
         } catch (err) {
           return next(err);
@@ -67,9 +64,6 @@ router.post("/connect", async (req, res, next) => {
       if (
         account.metadata.payment_status !== account.capabilities.card_payments
       ) {
-        // console.log("----------PAY-STAT !==");
-        // console.log("STRIPE", account.capabilities.card_payments);
-        // console.log("META", account.metadata);
         try {
           const creator = await User.findOne({ username: account.email });
           const payment_status = account.capabilities.card_payments;
@@ -86,8 +80,6 @@ router.post("/connect", async (req, res, next) => {
       // CHECK STRIPE REQUIREMENTS FULFILLED
       // - deadline appears and metadata does not know
       if (account.requirements.current_deadline) {
-        // console.log("---------DEADLINE ACTIVE");
-        // console.log(account.requirements);
         if (account.metadata.stripe_issue === "false") {
           try {
             const creator = await User.findOne({ username: account.email });
@@ -101,8 +93,6 @@ router.post("/connect", async (req, res, next) => {
         }
         // - deadline disappears and metadata does not know
       } else {
-        // console.log("-------DEADLINE INACTIVE");
-        // console.log(account.requirements);
         if (account.metadata.stripe_issue === "true") {
           try {
             const creator = await User.findOne({ username: account.email });
@@ -176,7 +166,6 @@ router.post("/connect", async (req, res, next) => {
 
         cancelledAppSub.status = cancelledSub.status;
         await cancelledAppSub.save();
-        l;
       } catch (err) {
         return next(err);
       }

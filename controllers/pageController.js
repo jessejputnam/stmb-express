@@ -11,6 +11,7 @@ const Subscription = require("../models/subscription");
 // Display page on GET
 exports.page_get = async (req, res, next) => {
   try {
+    console.log("check");
     const page = await Page.findById(req.params.id).populate("genre").exec();
 
     if (!page) {

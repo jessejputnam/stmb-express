@@ -2,7 +2,7 @@
 
 const isVerifiedCheck = (req, res, next) => {
   if (req.user && !req.user.isVerified) {
-    return res.redirect("/not-verified");
+    return res.redirect("/home/not-verified");
   } else {
     next();
   }

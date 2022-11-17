@@ -51,6 +51,8 @@ block content
                 div.membership-btn-container
                   if !currentUser 
                     em Register to Subscribe!
+                  else if !currentUser.isVerified
+                    em Check email to verify
                   else if String(currentUser._id) === String(page.user._id)
                     em Your Page
                   else 
@@ -71,7 +73,7 @@ block content
           div  
             em No posts yet
         each post in posts 
-          div.post-wrapper 
+          div.post-wrapperdiv(style="margin-top:15px;border-bottom:solid 1px black;max-width:650px")  
             div.post-img-container 
               //- img(src=post.image, alt="Post image")
             div.post-header 
