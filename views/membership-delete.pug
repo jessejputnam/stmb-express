@@ -1,0 +1,22 @@
+extends layout 
+
+block content 
+  h1= title 
+
+  p Do you want to delete the following membership: 
+  
+  div.tier-wrapper
+      p= membership.title
+      p= "$" + membership.price.toFixed(2)
+      p= membership.desc 
+      ul 
+        each reward in membership.rewards
+          li= "- " + reward
+
+      div.membership-btn-container
+        form(method="POST" action="") 
+          input#membershipId(type="hidden" name="membershipId" value=membership._id)
+          input#productId(type="hidden" name="productId" value=membership.stripeProductId)
+          input#priceId(type="hidden" name="priceId" value=membership.stripePriceId)
+          
+          button.btn.btn-secondary(type="submit") Delete

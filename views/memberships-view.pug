@@ -19,8 +19,10 @@ block content
         each reward in membership.rewards
           li= "- " + reward
       div.membership-btn-container
-        form(method="POST" action=`/account/delete-membership`) 
-          input#membershipId(type="hidden" name="membershipId" value=membership._id)
-          button.btn.btn-secondary(type="submit") Delete
+        a(href=`/account/${currentUser.creator.page}/delete-membership/${membership._id}`) Delete 
+      //- div.membership-btn-container
+      //-   form(method="POST" action=`/account/delete-membership`) 
+      //-     input#membershipId(type="hidden" name="membershipId" value=membership._id)
+      //-     button.btn.btn-secondary(type="submit") Delete
 
 

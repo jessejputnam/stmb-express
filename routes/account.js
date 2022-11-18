@@ -38,9 +38,15 @@ router.get("/:id/add-membership", memberships_controller.add_membership_get);
 // POST request for add membership
 router.post("/:id/add-membership", memberships_controller.add_membership_post);
 
+// GET request for delete membership
+router.get(
+  "/:id/delete-membership/:memberid",
+  memberships_controller.delete_membership_get
+);
+
 // POST request for delete membership
 router.post(
-  "/delete-membership",
+  "/:id/delete-membership/:memberid",
   memberships_controller.delete_membership_post
 );
 

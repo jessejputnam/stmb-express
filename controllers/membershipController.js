@@ -112,6 +112,7 @@ exports.add_membership_post = [
       // Make app obj
       const membership = new Membership({
         stripePriceId: null,
+        stripeProductId: null,
         page: page._id,
         price: req.body.price,
         title: req.body.title,
@@ -143,6 +144,7 @@ exports.add_membership_post = [
         { stripeAccount: user.creator.stripeId }
       );
 
+      membership.stripePriceId = product.id;
       membership.stripePriceId = price.id;
 
       await membership.save();
@@ -154,9 +156,35 @@ exports.add_membership_post = [
   }
 ];
 
+exports.delete_membership_get = async (req, res, next) => {
+  const membership = await Membership.findById(req.params.memberid);
+
+  return res.render("membership-delete", {
+    title: "Delete Membership",
+    membership: membership
+  });
+};
+
 exports.delete_membership_post = async (req, res, next) => {
   const membershipId = req.body.membershipId;
+  const accountId = currentUser.creator.stripeId;
+  const productId = req.body.productId;
+  const priceId = req.body.priceId;
+
   try {
+    // Archive product and price on stripe
+    await Stripe.product.update(
+      productId,
+      { active: false },
+      { stripeAccount: accountId }
+    );
+    await Stripe.prices.update(
+      priceId,
+      { active: false },
+      { stripeAccount: accountId }
+    );
+
+    res.redirect("/");
   } catch (err) {
     return next(err);
   }

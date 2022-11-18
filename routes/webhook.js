@@ -5,6 +5,7 @@ const router = express.Router();
 
 const User = require("../models/user");
 const Subscription = require("../models/subscription");
+const Membership = require("../models/membership");
 
 const Stripe = require("stripe")(process.env.STRIPE_SECRET_TEST_KEY);
 
@@ -127,11 +128,36 @@ router.post("/connect", async (req, res, next) => {
       const payout = event.data.object;
       // Then define and call a function to handle the event payout.failed
       break;
+    // When product updates
+    case "product.updated":
+      const product = event.data.object;
+      console.log("-----------PRODUCT.UPDATED-----------");
+
+      try {
+        if (!product.active) {
+          console.log("PRODUCT ARCHIVED");
+          const membership = Membership.findOne({
+            stripeProductId: product.id
+          });
+          // const subscriptions = Subscription.find({});
+        }
+      } catch (err) {
+        return next(err);
+      }
+
+      break;
+    // When Price updates
+    case "price.updated":
+      const price = event.data.object;
+      console.log("-----------PRICE.UPDATED-----------");
+      break;
 
     /* ---------- SUBSCRIPTION ACTIVITY ------------- */
 
     // SUBSCRIPTION ACTIVE/UPDATED
     case "customer.subscription.updated":
+      console.log("------CUSTOMER.SUBSCRIPTION.UPDATED-----");
+
       const stripeSub = event.data.object;
       // listen for success
 
@@ -158,14 +184,16 @@ router.post("/connect", async (req, res, next) => {
       break;
     // On purposeful subscription cancellation
     case "customer.subscription.deleted":
-      const cancelledSub = event.data.object;
+      console.log("-------CUSTOMER.SUBSCRIPTION.DELETED------");
+
+      const canceledSub = event.data.object;
       try {
-        const cancelledAppSub = await Subscription.findOne({
-          stripeSubscriptionId: cancelledSub.id
+        const canceledAppSub = await Subscription.findOne({
+          stripeSubscriptionId: canceledSub.id
         });
 
-        cancelledAppSub.status = cancelledSub.status;
-        await cancelledAppSub.save();
+        canceledAppSub.status = canceledSub.status;
+        await canceledAppSub.save();
       } catch (err) {
         return next(err);
       }
