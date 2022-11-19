@@ -15,7 +15,8 @@ const SubscriptionSchema = new Schema(
     status: { type: String, default: "incomplete", required: true },
     stripeSubscriptionId: { type: String, required: true },
     stripeCustomerId: { type: String, required: true },
-    temp: { type: String }
+    temp: { type: String },
+    warning: { type: String }
   },
   { timestamps: true }
 );

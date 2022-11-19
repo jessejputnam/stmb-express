@@ -133,13 +133,43 @@ router.post("/connect", async (req, res, next) => {
       const product = event.data.object;
       console.log("-----------PRODUCT.UPDATED-----------");
 
+      // On creator deleting membership
       try {
         if (!product.active) {
           console.log("PRODUCT ARCHIVED");
-          const membership = Membership.findOne({
+
+          // Find the membership attached to product id
+          const membership = await Membership.findOne({
             stripeProductId: product.id
           });
-          // const subscriptions = Subscription.find({});
+
+          // Find all subscriptions made with membership
+          const subscriptions = await Subscription.find({
+            membership: membership
+          })
+            .populate("page")
+            .exec();
+
+          console.log("********SUBSCRIPTIONS", subscriptions);
+
+          // Loop over subscriptions
+          if (subscriptions.length) {
+            for (let sub of subscriptions) {
+              const creatorId = sub.page.user;
+              const stripeSubId = sub.stripeSubscriptionId;
+
+              // Delete Stripe subscription
+              const creator = await User.findById(creatorId);
+
+              await Stripe.subscriptions.del(stripeSubId, {
+                stripeAccount: creator.creator.stripeId
+              });
+
+              // Update subscription object to give customer a warning
+              sub.warning = "Creator has deleted this membership tier";
+              await sub.save();
+            }
+          }
         }
       } catch (err) {
         return next(err);

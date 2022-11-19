@@ -96,7 +96,7 @@ exports.create_subscription_post = async (req, res, next) => {
     )[0];
 
     // If sub active, return
-    if (curPageSub.status === "active") {
+    if (curPageSub && curPageSub.status === "active") {
       const err = new Error(
         "Current user already has a subscription to the creator"
       );
