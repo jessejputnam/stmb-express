@@ -276,9 +276,9 @@ function App() {
 
     - [x] Create membership
       - [x] Create Stripe product and price
-    - [ ] Delete membership
-      - [ ] Delete stripe priceID in Stripe as well
-      - [ ] Cancels all current subs with membership ID
+    - [x] Delete membership
+      - [x] Delete stripe priceID in Stripe as well
+      - [x] Cancels all current subs with membership ID
         - [ ] Send notification to subs/users
 
   - [ ] Subscriptions
@@ -303,42 +303,36 @@ function App() {
   - [x] Connect stripe
   - [ ] Stripe accounts
 
-    - [ ] Creator account onboarding
+    - [x] Creator account onboarding
       - [x] Stripe connect create account
       - [x] Account Link between STMB database and Stripe database
       - [x] Handle success
       - [x] Handle refresh
         - [x] Refresh using accountID in creator obj
-      - [ ] Handle complete stripe account/payment_intent ready
-    - [ ] Stripe users
+      - [x] Handle complete stripe account/payment_intent ready
+    - [x] Stripe users
       - [x] Create user accounts on checkout
-      - [ ] Subscription logic
+      - [x] Subscription logic
         - [x] Add subscription
         - [x] Sub payment
-        - [ ] Sub cancel
+        - [x] Sub cancel
 
   - [ ] Set up webhooks to listen for changes
 
     - [ ] Connected Accounts
       - [ ] Account Deauthorized
-      - [ ] Account updated
+      - [x] Account updated
         - [x] Check for Stripe authorized for payment reciept
       - [ ] External Account updated
       - [ ] Balance available
       - [ ] Payment intent succeeded
       - [ ] Payout Failed
     - [ ] Users
-      - [ ] checkout.session.completed
-        - on successful subscribing
-      - [ ] invoice.paid
-        - On successfull monthly renewal
-      - [ ] invoice.payment_failed
-        - On renewal failure
-      - [ ] customer.subscription.updated
-        - When Creator changes subscription, i.e. price
-        - [ ] Update the subscription objects in app to update to new price
-      - [ ] customer.subscription.deleted
-        - Customer subscription deleted
+      - [x] Subscription added
+      - [ ] Monthly renewal (invoice.paid)
+      - [ ] Renewal failure (invoice.payment_failed)
+      - [x] customer.subscription.deleted
+      - [x] Membership gets deleted
 
 - [ ] Views set up
 
