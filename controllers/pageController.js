@@ -10,6 +10,7 @@ const Subscription = require("../models/subscription");
 
 // Display page on GET
 exports.page_get = async (req, res, next) => {
+  console.time("TEST");
   try {
     const page = await Page.findById(req.params.id).populate("genre").exec();
 
@@ -56,6 +57,7 @@ exports.page_get = async (req, res, next) => {
       curPageSub = null;
     }
 
+    console.timeEnd("TEST");
     // Successful, so render
     return res.render("page-view", {
       title: page.title,
