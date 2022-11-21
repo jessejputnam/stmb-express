@@ -82,11 +82,16 @@ exports.create_subscription_post = async (req, res, next) => {
     const membershipId = req.body.membershipId;
     const user = req.user;
 
-    const membership = await Membership.findById(membershipId)
+    const membershipPromise = Membership.findById(membershipId)
       .populate("page")
       .exec();
 
-    const subscriptions = await Subscription.find({ user: user._id });
+    const subscriptionsPromise = Subscription.find({ user: user._id });
+
+    const [membership, subscriptions] = await Promise.all([
+      membershipPromise,
+      subscriptionsPromise
+    ]);
 
     const creator = await User.findById(membership.page.user);
 

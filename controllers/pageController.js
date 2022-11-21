@@ -10,9 +10,11 @@ const Subscription = require("../models/subscription");
 
 // Display page on GET
 exports.page_get = async (req, res, next) => {
-  console.time("TEST");
+  const pageId = req.params.id;
+
   try {
-    const page = await Page.findById(req.params.id).populate("genre").exec();
+    const page = await Page.findById(pageId).populate("genre").exec();
+    // const page = await Page.findById(pageId).populate("genre").exec();
 
     if (!page) {
       const err = new Error("Page not found");
@@ -20,11 +22,17 @@ exports.page_get = async (req, res, next) => {
       return next(err);
     }
 
-    const posts = await Post.find({ pageId: req.params.id })
+    const postsPromise = Post.find({ pageId: pageId })
       .sort({ timestamp: "desc" })
       .exec();
+    // const posts = await Post.find({ pageId: pageId })
+    //   .sort({ timestamp: "desc" })
+    //   .exec();
 
-    const tiers = await Membership.find({ page: page._id });
+    const tiersPromise = Membership.find({ page: pageId });
+    // const tiers = await Membership.find({ page: pageId });
+
+    const [posts, tiers] = await Promise.all([postsPromise, tiersPromise]);
 
     let curPageSub;
 
@@ -35,7 +43,7 @@ exports.page_get = async (req, res, next) => {
 
       // Find all subs to page (active and not)
       const curPageAllSubs = userSubs.filter(
-        (sub) => String(sub.page) === String(page._id)
+        (sub) => String(sub.page) === String(pageId)
       );
 
       // Filter for active
@@ -57,7 +65,6 @@ exports.page_get = async (req, res, next) => {
       curPageSub = null;
     }
 
-    console.timeEnd("TEST");
     // Successful, so render
     return res.render("page-view", {
       title: page.title,

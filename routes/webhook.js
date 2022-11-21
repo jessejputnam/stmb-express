@@ -150,8 +150,6 @@ router.post("/connect", async (req, res, next) => {
             .populate("page")
             .exec();
 
-          console.log("********SUBSCRIPTIONS", subscriptions);
-
           // Loop over subscriptions
           if (subscriptions.length) {
             for (let sub of subscriptions) {
@@ -166,7 +164,7 @@ router.post("/connect", async (req, res, next) => {
               });
 
               // Update subscription object to give customer a warning
-              sub.warning = "Creator has deleted this membership tier";
+              sub.membership = null;
               await sub.save();
             }
           }
