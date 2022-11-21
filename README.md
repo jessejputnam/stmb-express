@@ -236,21 +236,19 @@ function App() {
 - [ ] Controllers set up
 
   - [ ] Auth
-    - [ ] Delete User account - [remove subs]
     - [x] Register user
       - [x] Email verification
     - [x] Login
     - [x] Reset password
     - [x] Email verification
   - [ ] Creator
-    - [ ] Delete creator account
+    - [ ] Hide creator page
     - [x] Creator sign up
       - [ ] Info box for if genre not found, contact admin
     - [x] Connecting Stripe account
       - [x] Onboarding
   - [ ] Page
 
-    - [ ] Page deletion
     - [x] Page viewing
       - [ ] Hidden/Visible aspects based on whether its your page
     - [ ] Page editing

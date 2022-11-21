@@ -30,18 +30,6 @@ block content
       input#profileImg(type="text" name="profileImg")
     button.btn.btn-secondary(type="submit") Submit
 
-
-
-
-//- description
-//- socialUrls
-//- -- facebookHandle
-//- -- instagramHandle
-//- -- twitterHandle
-//- imgUrls 
-//- -- banner
-//- -- avatar
-//- tiers
-//- -- top
-//- -- middle
-//- -- bottom
+  form.form-wrapper(method="GET" action=`/account/${page._id}/confirm-active`)
+    h3= page.active ? "Deactivate Page" : "Activate Page"
+    button.btn.btn-primary(type="submit") 

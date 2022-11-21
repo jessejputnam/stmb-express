@@ -6,6 +6,7 @@ const Schema = mongoose.Schema;
 const PageSchema = new Schema(
   {
     user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    active: { type: Boolean, required: true, default: true },
     title: { type: String, maxLength: 50, required: true },
     genre: { type: Schema.Types.ObjectId, ref: "Genre", required: true },
     region: { type: String, required: true },

@@ -14,23 +14,26 @@ exports.page_get = async (req, res, next) => {
 
   try {
     const page = await Page.findById(pageId).populate("genre").exec();
-    // const page = await Page.findById(pageId).populate("genre").exec();
 
+    // If no page is found
     if (!page) {
       const err = new Error("Page not found");
       err.status = 404;
       return next(err);
     }
 
+    // If page is marked inactive
+    if (!page.active) {
+      const err = new Error("Page is not currently active");
+      err.status = 403;
+      return next(err);
+    }
+
     const postsPromise = Post.find({ pageId: pageId })
       .sort({ timestamp: "desc" })
       .exec();
-    // const posts = await Post.find({ pageId: pageId })
-    //   .sort({ timestamp: "desc" })
-    //   .exec();
 
     const tiersPromise = Membership.find({ page: pageId });
-    // const tiers = await Membership.find({ page: pageId });
 
     const [posts, tiers] = await Promise.all([postsPromise, tiersPromise]);
 
