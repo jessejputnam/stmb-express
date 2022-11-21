@@ -27,6 +27,13 @@ router.get("/:id/edit", page_controller.edit_page_get);
 // POST request for edit page
 router.post("/:id/edit", page_controller.edit_page_post);
 
+/* -------------------- PAGE VISIBILITY ------------------ */
+// GET request for change page active status for search
+router.get("/:id/confirm-active", page_controller.page_activate_get);
+
+// POST request for change page active status for search
+router.post("/:id/confirm-active", page_controller.page_activate_post);
+
 /* -------------------- MEMBERSHIPS ------------------ */
 
 // GET request for view memberships page

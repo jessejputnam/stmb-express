@@ -8,6 +8,8 @@ block content
         img(src=page.imgUrls.avatar, alt="Avatar image")
     div.page-title
       h1= title 
+        if !page.active 
+          span(style="color:red;font-size:1rem")  (Inactive)
     
     div.page-about
       p= page.region

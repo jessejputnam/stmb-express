@@ -11,6 +11,16 @@ const Subscription = require("../models/subscription");
 // Display page on GET
 exports.page_get = async (req, res, next) => {
   const pageId = req.params.id;
+  const isOwnPage = req.user.creator
+    ? String(req.user.creator.page) === pageId
+    : false;
+  console.log("---TESTING---");
+  console.log(req.user.creator);
+  console.log(String(req.user.creator.page));
+  console.log(pageId);
+  console.log(pageId === String(req.user.creator.page));
+  console.log(isOwnPage);
+  console.log("---END TESTING---");
 
   try {
     const page = await Page.findById(pageId).populate("genre").exec();
@@ -19,13 +29,6 @@ exports.page_get = async (req, res, next) => {
     if (!page) {
       const err = new Error("Page not found");
       err.status = 404;
-      return next(err);
-    }
-
-    // If page is marked inactive
-    if (!page.active) {
-      const err = new Error("Page is not currently active");
-      err.status = 403;
       return next(err);
     }
 
@@ -66,6 +69,17 @@ exports.page_get = async (req, res, next) => {
       curPageSub = active.length === 0 ? null : active[0];
     } else {
       curPageSub = null;
+    }
+
+    console.log("ACTIVE:", !page.active);
+    console.log("CURSUB:", !curPageSub);
+    console.log("OWNPAGE:", !isOwnPage);
+
+    // If page is marked inactive
+    if (!page.active && !curPageSub && !isOwnPage) {
+      const err = new Error("Page is not currently active");
+      err.status = 403;
+      return next(err);
     }
 
     // Successful, so render
@@ -191,3 +205,35 @@ exports.edit_page_post = [
     }
   }
 ];
+
+// Handle page activate/deactivate on GET
+exports.page_activate_get = async (req, res, next) => {
+  try {
+    const page = await Page.findById(req.params.id);
+    const isActive = page.active;
+
+    const title = isActive ? "Deactivate Page?" : "Activate Page?";
+
+    return res.render("confirm-active", {
+      title: title,
+      page: page
+    });
+  } catch (err) {
+    return next(err);
+  }
+};
+
+// Handle page activate/deactivate on POST
+exports.page_activate_post = async (req, res, next) => {
+  const pageId = req.params.id;
+
+  try {
+    const page = await Page.findById(pageId);
+
+    page.active = !page.active;
+    await page.save();
+    return res.redirect("/home");
+  } catch (err) {
+    return next(err);
+  }
+};

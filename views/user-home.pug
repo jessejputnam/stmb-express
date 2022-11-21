@@ -20,7 +20,7 @@ block content
         - console.log(sub)
         hr
         p Subscription: 
-        p= sub.page.title 
+        a(href=`/${sub.page._id}`)= sub.page.title 
         p Tier: #{sub.membership ? sub.membership.title : "Membership Tier Deleted"}
         p Status: #{sub.status}
         div 
