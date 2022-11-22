@@ -14,13 +14,6 @@ exports.page_get = async (req, res, next) => {
   const isOwnPage = req.user.creator
     ? String(req.user.creator.page) === pageId
     : false;
-  console.log("---TESTING---");
-  console.log(req.user.creator);
-  console.log(String(req.user.creator.page));
-  console.log(pageId);
-  console.log(pageId === String(req.user.creator.page));
-  console.log(isOwnPage);
-  console.log("---END TESTING---");
 
   try {
     const page = await Page.findById(pageId).populate("genre").exec();
@@ -70,10 +63,6 @@ exports.page_get = async (req, res, next) => {
     } else {
       curPageSub = null;
     }
-
-    console.log("ACTIVE:", !page.active);
-    console.log("CURSUB:", !curPageSub);
-    console.log("OWNPAGE:", !isOwnPage);
 
     // If page is marked inactive
     if (!page.active && !curPageSub && !isOwnPage) {
