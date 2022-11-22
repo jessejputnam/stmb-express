@@ -16,11 +16,8 @@ const PageSchema = new Schema(
       instagramHandle: { type: String },
       twitterHandle: { type: String }
     },
-
-    imgUrls: {
-      banner: { type: String, default: "images/banner-placeholder.jpeg" },
-      avatar: { type: String, default: "images/avatar-placeholder.svg" }
-    }
+    bannerImg: { type: String, default: "images/banner-placeholder.jpeg" },
+    profileImg: { type: String, default: "images/avatar-placeholder.svg" }
   },
   { timestamps: true }
 );

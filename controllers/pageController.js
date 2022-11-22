@@ -11,7 +11,13 @@ const Subscription = require("../models/subscription");
 // Display page on GET
 exports.page_get = async (req, res, next) => {
   const pageId = req.params.id;
-  const isOwnPage = req.user.creator
+
+  // I know. Doesn't look great. Checks if no user, then
+  // its false; if there is a user, checks if the user
+  // is the owner and returns that answer
+  const isOwnPage = !req.user
+    ? false
+    : req.user.creator
     ? String(req.user.creator.page) === pageId
     : false;
 
@@ -194,6 +200,11 @@ exports.edit_page_post = [
     }
   }
 ];
+
+exports.banner_img_post = async (req, res, next) => {
+  console.log("FILE:", req.file);
+  console.log("PARAMS:", req.params.id);
+};
 
 // Handle page activate/deactivate on GET
 exports.page_activate_get = async (req, res, next) => {

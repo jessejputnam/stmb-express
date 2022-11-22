@@ -3,9 +3,9 @@ extends layout
 block content 
   div.page-view-wrapper
     div.page-banner
-      img(src=page.imgUrls.banner, alt="Banner image")
+      img(src=page.bannerImg, alt="Banner image")
       div.page-avatar-wrapper 
-        img(src=page.imgUrls.avatar, alt="Avatar image")
+        img(src=page.profileImg, alt="Profile image")
     div.page-title
       h1= title 
         if !page.active 

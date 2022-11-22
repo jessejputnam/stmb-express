@@ -26,9 +26,24 @@ block content
       label(for="bannerImg") Banner Image
       input#bannerImg(type="text" name="bannerImg")
     div.form-control
-      label(for="bannerImg") Profile Image
+      label(for="ProfileImg") Profile Image
       input#profileImg(type="text" name="profileImg")
     button.btn.btn-secondary(type="submit") Submit
 
-    h3 Page Visibility
-    a(href=`/account/${page._id}/confirm-active`)= page.active ? "Deactivate Page" : "Activate Page"
+  h3 Images 
+  form.form-wrapper(method="POST" action="update/profileImg" enctype="multipart/form-data")
+    input(type="hidden" name="folder" value="profile")
+    input(type="hidden" name="pageId" value=page._id)
+    div.form-control
+      label(for="ProfileImg") Profile Image
+      input#profileImg(type="file" name="file" accept="image/png, image/jpeg, image/jpg")
+    button.btn.btn-primary(type="submit") Upload Image
+
+  form.form-wrapper(method="POST" action="update/bannerImg" enctype="multipart/form-data")
+    div.form-control
+      label(for="bannerImg") Banner Image
+      input#bannerImg(type="file" name="bannerImg" accept="image/png, image/jpeg, image/jpg")
+    button.btn.btn-primary(type="submit") Upload Image
+
+  h3 Page Visibility
+  a(href=`/account/${page._id}/confirm-active`)= page.active ? "Deactivate Page" : "Activate Page"

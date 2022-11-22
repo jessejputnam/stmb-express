@@ -8,6 +8,8 @@ const memberships_controller = require("../controllers/membershipController");
 const post_controller = require("../controllers/postController");
 const stripe_controller = require("../controllers/stripeController");
 
+const upload_img = require("../utils/imageUpload");
+
 /* ------------------ STRIPE ONBOARDING ---------------- */
 
 // GET request for Stripe creator onboarding
@@ -26,6 +28,16 @@ router.get("/:id/edit", page_controller.edit_page_get);
 
 // POST request for edit page
 router.post("/:id/edit", page_controller.edit_page_post);
+
+// POST request for change page banner image
+router.post(
+  "/:id/update/bannerImg",
+  upload_img("banner").single("bannerImg"),
+  page_controller.banner_img_post
+);
+
+// POST request for change page profile image
+// router.post("/:id/update/profileImg", upload_controller.upload_page_img_post);
 
 /* -------------------- PAGE VISIBILITY ------------------ */
 // GET request for change page active status for search
