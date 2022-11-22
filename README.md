@@ -242,7 +242,7 @@ function App() {
     - [x] Reset password
     - [x] Email verification
   - [ ] Creator
-    - [ ] Hide creator page
+    - [x] Hide creator page
     - [x] Creator sign up
       - [ ] Info box for if genre not found, contact admin
     - [x] Connecting Stripe account
@@ -250,8 +250,8 @@ function App() {
   - [ ] Page
 
     - [x] Page viewing
-      - [ ] Hidden/Visible aspects based on whether its your page
-    - [ ] Page editing
+      - [x] Hidden/Visible aspects based on whether its your page
+    - [x] Page editing
 
       - [ ] Images
       - [x] Description/handles
@@ -299,7 +299,7 @@ function App() {
 - [ ] Stripe set up
 
   - [x] Connect stripe
-  - [ ] Stripe accounts
+  - [x] Stripe accounts
 
     - [x] Creator account onboarding
       - [x] Stripe connect create account
