@@ -33,6 +33,7 @@ const uploadImg = function upload(destinationPath) {
     fileFilter: fileFilter,
 
     // Create mutler s3 function for storage
+    // Check with ACL or permissions?
     storage: multerS3({
       acl: "public-read",
       s3,
