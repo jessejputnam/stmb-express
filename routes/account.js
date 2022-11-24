@@ -32,8 +32,9 @@ router.post("/:id/edit", page_controller.edit_page_post);
 // POST request for change page banner image
 router.post(
   "/:id/update/bannerImg",
-  upload_img("banner").single("bannerImg"),
-  page_controller.banner_img_post
+  upload_img.single("bannerImg"),
+  // upload_img("banner").single("bannerImg"),
+  page_controller.set_banner_img_post
 );
 
 // POST request for change page profile image

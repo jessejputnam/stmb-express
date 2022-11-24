@@ -8,6 +8,8 @@ const Post = require("../models/post");
 const Membership = require("../models/membership");
 const Subscription = require("../models/subscription");
 
+const s3UploadBanner = require("../middlewares/s3UploadBanner");
+
 // Display page on GET
 exports.page_get = async (req, res, next) => {
   const pageId = req.params.id;
@@ -201,9 +203,11 @@ exports.edit_page_post = [
   }
 ];
 
-exports.banner_img_post = async (req, res, next) => {
-  console.log("FILE:", req.file);
-  console.log("PARAMS:", req.params.id);
+exports.set_banner_img_post = async (req, res, next) => {
+  const pageId = String(req.user.creator.page);
+  const result = await s3UploadBanner(req.file, pageId);
+  console.log(result);
+  return res.redirect("/" + String(req.user.creator.page));
 };
 
 // Handle page activate/deactivate on GET
