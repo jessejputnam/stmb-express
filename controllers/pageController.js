@@ -209,9 +209,11 @@ exports.set_banner_img_post = async (req, res, next) => {
     const result = await s3UploadBanner(req.file, pageId);
     console.log(result);
 
-    // Page.findByIdAndUpdate(pageId, {});
+    const page = await Page.findByIdAndUpdate(pageId, {
+      bannerImg: file.location
+    });
 
-    return res.redirect("/" + String(req.user.creator.page));
+    return res.redirect(page.url);
   } catch (err) {
     return next(err);
   }

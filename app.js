@@ -98,7 +98,7 @@ app.use(
     store: sessionStore,
     secret: process.env.SESSION_SECRET,
     name: "session-id",
-    resave: false,
+    resave: true,
     rolling: true,
     saveUninitialized: true
   })
