@@ -210,7 +210,7 @@ exports.set_banner_img_post = async (req, res, next) => {
     console.log(result);
 
     const page = await Page.findByIdAndUpdate(pageId, {
-      bannerImg: file.location
+      bannerImg: result.Location
     });
 
     return res.redirect(page.url);
