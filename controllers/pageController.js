@@ -9,6 +9,7 @@ const Membership = require("../models/membership");
 const Subscription = require("../models/subscription");
 
 const s3UploadBanner = require("../middlewares/s3UploadBanner");
+const s3UploadProfile = require("../middlewares/s3UploadProfile");
 
 // Display page on GET
 exports.page_get = async (req, res, next) => {
@@ -207,10 +208,24 @@ exports.set_banner_img_post = async (req, res, next) => {
   const pageId = String(req.user.creator.page);
   try {
     const result = await s3UploadBanner(req.file, pageId);
-    console.log(result);
 
     const page = await Page.findByIdAndUpdate(pageId, {
       bannerImg: result.Location
+    });
+
+    return res.redirect(page.url);
+  } catch (err) {
+    return next(err);
+  }
+};
+
+exports.set_profile_img_post = async (req, res, next) => {
+  const pageId = String(req.user.creator.page);
+  try {
+    const result = await s3UploadProfile(req.file, pageId);
+
+    const page = await Page.findByIdAndUpdate(pageId, {
+      profileImg: result.Location
     });
 
     return res.redirect(page.url);

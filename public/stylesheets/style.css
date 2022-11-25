@@ -67,6 +67,7 @@ textarea {
   width: 15%;
   box-shadow: 1px 0 3px 0 rgba(0, 0, 0, 0.543);
   height: 100vh;
+  z-index: 100;
 }
 
 /* ##################### # MAIN ####################### */
@@ -103,9 +104,13 @@ textarea {
   height: 100px;
 }
 
-/* .page-about {
-  margin-top: 20px;
-} */
+.page-title {
+  padding: 0 10px;
+}
+
+.page-view-main-container {
+  padding: 0 20px;
+}
 
 .page-tiers-container {
   width: 90%;

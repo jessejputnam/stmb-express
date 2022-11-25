@@ -33,12 +33,15 @@ router.post("/:id/edit", page_controller.edit_page_post);
 router.post(
   "/:id/update/bannerImg",
   upload_img.single("bannerImg"),
-  // upload_img("banner").single("bannerImg"),
   page_controller.set_banner_img_post
 );
 
 // POST request for change page profile image
-// router.post("/:id/update/profileImg", upload_controller.upload_page_img_post);
+router.post(
+  "/:id/update/profileImg",
+  upload_img.single("profileImg"),
+  page_controller.set_profile_img_post
+);
 
 /* -------------------- PAGE VISIBILITY ------------------ */
 // GET request for change page active status for search

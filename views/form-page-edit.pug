@@ -32,12 +32,11 @@ block content
 
   h3 Images 
   form.form-wrapper(method="POST" action="update/profileImg" enctype="multipart/form-data")
-    input(type="hidden" name="folder" value="profile")
-    input(type="hidden" name="pageId" value=page._id)
     div.form-control
-      label(for="ProfileImg") Profile Image
-      input#profileImg(type="file" name="file" accept="image/png, image/jpeg, image/jpg")
+      label(for="profileImg") Profile Image
+      input#profileImg(type="file" name="profileImg" accept="image/png, image/jpeg, image/jpg")
     button.btn.btn-primary(type="submit") Upload Image
+
 
   form.form-wrapper(method="POST" action="update/bannerImg" enctype="multipart/form-data")
     div.form-control

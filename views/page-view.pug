@@ -10,76 +10,76 @@ block content
       h1= title 
         if !page.active 
           span(style="color:red;font-size:1rem")  (Inactive)
-    
-    div.page-about
-      p= page.region
-      p!= page.description 
-      ul
-        if page.socialUrls.facebookHandle
-          li 
-            a(href=`https://www.facebook.com/${page.socialUrls.facebookHandle}` target="_blank" rel="noreferrer") Facebook
-        if page.socialUrls.instagramHandle 
-          li
-            a(href=`https://www.instagram.com/${page.socialUrls.instagramHandle}` target="_blank" rel="noreferrer") Instagram
-        if page.socialUrls.twitterHandle
-          li
-            a(href=`https://www.twitter.com/${page.socialUrls.twitterHandle}` target="_blank" rel="noreferrer") Twitter
+    div.page-view-main-container
+      div.page-about
+        p= page.region
+        p!= page.description 
+        ul
+          if page.socialUrls.facebookHandle
+            li 
+              a(href=`https://www.facebook.com/${page.socialUrls.facebookHandle}` target="_blank" rel="noreferrer") Facebook
+          if page.socialUrls.instagramHandle 
+            li
+              a(href=`https://www.instagram.com/${page.socialUrls.instagramHandle}` target="_blank" rel="noreferrer") Instagram
+          if page.socialUrls.twitterHandle
+            li
+              a(href=`https://www.twitter.com/${page.socialUrls.twitterHandle}` target="_blank" rel="noreferrer") Twitter
 
-    div.page-tiers-container 
-      h3= curPageSub ? "My Membership" : "Membership Tiers"
-      div.tiers-wrapper
-        if curPageSub
-          div.tier-wrapper 
-            h3= curPageSub.membership.title
-            p= `$${curPageSub.membership.price}`
-            p= curPageSub.membership.description
-            ul 
-              each reward in curPageSub.membership.rewards   
-                li!= "⏦ " + reward
-            em= "Status: " + curPageSub.status
-        else 
-          if tiers.length > 0
+      div.page-tiers-container 
+        h3= curPageSub ? "My Membership" : "Membership Tiers"
+        div.tiers-wrapper
+          if curPageSub
+            div.tier-wrapper 
+              h3= curPageSub.membership.title
+              p= `$${curPageSub.membership.price}`
+              p= curPageSub.membership.description
+              ul 
+                each reward in curPageSub.membership.rewards   
+                  li!= "⏦ " + reward
+              em= "Status: " + curPageSub.status
+          else 
+            if tiers.length > 0
 
-            - tiers.sort((a, b) => a.price - b.price)
+              - tiers.sort((a, b) => a.price - b.price)
 
-            each membership in tiers   
-              div.tier-wrapper 
-                h3= membership.title 
-                p= `$${membership.price}`
-                p= membership.description
-                ul 
-                  each reward in membership.rewards   
-                    li!= "⏦ " + reward
-                div.membership-btn-container
-                  if !currentUser 
-                    em Register to Subscribe!
-                  else if !currentUser.isVerified
-                    em Check email to verify
-                  else if String(currentUser._id) === String(page.user._id)
-                    em Your Page
-                  else 
-                    form(method="POST" action=`/subscribe/add-subscription`) 
-                      input#membershipId(type="hidden" name="membershipId" required="true" value=membership._id)
-                      button.btn.btn-secondary(type="submit") Subscribe
-              
+              each membership in tiers   
+                div.tier-wrapper 
+                  h3= membership.title 
+                  p= `$${membership.price}`
+                  p= membership.description
+                  ul 
+                    each reward in membership.rewards   
+                      li!= "⏦ " + reward
+                  div.membership-btn-container
+                    if !currentUser 
+                      em Register to Subscribe!
+                    else if !currentUser.isVerified
+                      em Check email to verify
+                    else if String(currentUser._id) === String(page.user._id)
+                      em Your Page
+                    else 
+                      form(method="POST" action=`/subscribe/add-subscription`) 
+                        input#membershipId(type="hidden" name="membershipId" required="true" value=membership._id)
+                        button.btn.btn-secondary(type="submit") Subscribe
+                
 
 
-    div.page-posts-container 
-      h3 Posts
+      div.page-posts-container 
+        h3 Posts
 
-      div.posts-wrapper
-        if !currentUser || (!curPageSub && String(currentUser._id) !== String(page.user._id))
-          div.blur-shield 
+        div.posts-wrapper
+          if !currentUser || (!curPageSub && String(currentUser._id) !== String(page.user._id))
+            div.blur-shield 
 
-        if !posts.length
-          div  
-            em No posts yet
-        each post in posts 
-          div.post-wrapperdiv(style="margin-top:15px;border-bottom:solid 1px black;max-width:650px")  
-            div.post-img-container 
-              //- img(src=post.image, alt="Post image")
-            div.post-header 
-              p= post.timestamp.toLocaleDateString()
-              h3!= post.title 
-            div.post-text 
-              p!= post.text
+          if !posts.length
+            div  
+              em No posts yet
+          each post in posts 
+            div.post-wrapperdiv(style="margin-top:15px;border-bottom:solid 1px black;max-width:650px")  
+              div.post-img-container 
+                //- img(src=post.image, alt="Post image")
+              div.post-header 
+                p= post.timestamp.toLocaleDateString()
+                h3!= post.title 
+              div.post-text 
+                p!= post.text
