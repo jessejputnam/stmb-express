@@ -205,9 +205,16 @@ exports.edit_page_post = [
 
 exports.set_banner_img_post = async (req, res, next) => {
   const pageId = String(req.user.creator.page);
-  const result = await s3UploadBanner(req.file, pageId);
-  console.log(result);
-  return res.redirect("/" + String(req.user.creator.page));
+  try {
+    const result = await s3UploadBanner(req.file, pageId);
+    console.log(result);
+
+    // Page.findByIdAndUpdate(pageId, {});
+
+    return res.redirect("/" + String(req.user.creator.page));
+  } catch (err) {
+    return next(err);
+  }
 };
 
 // Handle page activate/deactivate on GET
