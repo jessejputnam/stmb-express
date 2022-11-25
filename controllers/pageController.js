@@ -224,6 +224,12 @@ exports.set_profile_img_post = async (req, res, next) => {
   try {
     const result = await s3UploadProfile(req.file, pageId);
 
+    if (result.errorMsg) {
+      const err = new Error(result.errorMsg);
+      err.status = 404;
+      return next(err);
+    }
+
     const page = await Page.findByIdAndUpdate(pageId, {
       profileImg: result.Location
     });

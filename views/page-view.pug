@@ -52,7 +52,7 @@ block content
                       li!= "⏦ " + reward
                   div.membership-btn-container
                     if !currentUser 
-                      em Register to Subscribe!
+                      em(style="font-size:.7rem") Register to Subscribe!
                     else if !currentUser.isVerified
                       em Check email to verify
                     else if String(currentUser._id) === String(page.user._id)
