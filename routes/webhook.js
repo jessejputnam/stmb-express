@@ -150,6 +150,8 @@ router.post("/connect", async (req, res, next) => {
             .populate("page")
             .exec();
 
+          await Membership.findByIdAndRemove(membership._id);
+
           // Loop over subscriptions
           if (subscriptions.length) {
             for (let sub of subscriptions) {

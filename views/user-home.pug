@@ -17,7 +17,6 @@ block content
   div 
     if subs 
       each sub in subs 
-        - console.log(sub)
         hr
         p Subscription: 
         a(href=`/${sub.page._id}`)= sub.page.title 

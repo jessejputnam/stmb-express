@@ -77,7 +77,8 @@ exports.add_membership_post = [
 
     if (!errors.isEmpty) {
       return res.render("form-membership-add", {
-        title: "Add Membership"
+        title: "Add Membership",
+        errors: errors.array()
       });
     }
 
@@ -144,7 +145,7 @@ exports.add_membership_post = [
         { stripeAccount: user.creator.stripeId }
       );
 
-      membership.stripePriceId = product.id;
+      membership.stripeProductId = product.id;
       membership.stripePriceId = price.id;
 
       await membership.save();
@@ -184,7 +185,6 @@ exports.delete_membership_post = async (req, res, next) => {
       { stripeAccount: accountId }
     );
 
-    await Membership.findByIdAndRemove(membershipId);
     res.redirect("/");
   } catch (err) {
     return next(err);

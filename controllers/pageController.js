@@ -169,14 +169,21 @@ exports.edit_page_post = [
     }
 
     const errors = validationResult(req);
-    // Errors, rerender form
-    if (!errors.isEmpty()) {
-      res.render("form-page-edit", {
-        title: "Edit Page",
-        page: page,
-        errors: errors
-      });
-      return;
+
+    try {
+      // If errors exist, rerender form
+      if (!errors.isEmpty()) {
+        const page = await Page.findById(req.params.id);
+
+        res.render("form-page-edit", {
+          title: "Edit Page",
+          page: page,
+          errors: errors.array()
+        });
+        return;
+      }
+    } catch (err) {
+      return next(err);
     }
 
     try {

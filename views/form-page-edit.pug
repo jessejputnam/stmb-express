@@ -4,7 +4,7 @@ block content
   if errors 
     ul 
       for error in errors 
-        li!= error.msg
+        li= error.msg
 
   form.form-wrapper(method="POST" action="") 
     h2(style="text-align:center")= title
@@ -22,12 +22,6 @@ block content
       div.form-control
         label(for="twitterHandle") Twitter
         input#twitterHandle(type="text" name="twitterHandle" value=page.socialUrls.twitterHandle)
-    div.form-control
-      label(for="bannerImg") Banner Image
-      input#bannerImg(type="text" name="bannerImg")
-    div.form-control
-      label(for="ProfileImg") Profile Image
-      input#profileImg(type="text" name="profileImg")
     button.btn.btn-secondary(type="submit") Submit
 
   h3 Images 
