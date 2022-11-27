@@ -34,7 +34,7 @@ exports.search_form_get = async (req, res, next) => {
   }
 
   try {
-    const results = await Page.find({ title: regs }).exec();
+    const results = await Page.find({ title: regs }).populate("genre").exec();
 
     return res.render("form-search", {
       title: "Search Results",

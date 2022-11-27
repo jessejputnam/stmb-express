@@ -2,6 +2,11 @@ extends layout
 
 block content 
   h1= title
+  p(style="color:red") To be added:
+  ul(style="margin:10px") 
+    li ✓ Filter options: (e.g. by genre, by region, any others?)
+    li ✓ Sort options: (e.g. by )
+    li ✓ Give default smart sorting -- thinking initially by country
 
   div
     form.form-control(method="GET" action="")
@@ -17,4 +22,5 @@ block content
           p No results
         for page of pages
           li
-            a(href=page.url)= page.title
+            a(href=page.url) #{page.title} 
+              span(style="color:gray;font-size:.7rem") (#{page.genre.type}) 
