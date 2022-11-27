@@ -23,5 +23,8 @@ block content
     div#card-element 
 
     button.btn.btn-primary(type="submit") Subscribe
-
-    div#messages
+    
+  div 
+    form(method="POST" action=`/subscribe/confirm/${app_sub_id}/cancel`)
+      button.btn.btn-primary(type="submit") Cancel
+  div#messages

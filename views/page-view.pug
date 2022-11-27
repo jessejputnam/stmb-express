@@ -54,7 +54,7 @@ block content
                     if !currentUser 
                       em(style="font-size:.7rem") Register to Subscribe!
                     else if !currentUser.isVerified
-                      em Check email to verify
+                      em(style="font-size:.7rem") Check email to verify
                     else if String(currentUser._id) === String(page.user._id)
                       em Your Page
                     else 

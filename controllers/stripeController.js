@@ -179,6 +179,7 @@ exports.create_subscription_post = async (req, res, next) => {
   }
 };
 
+// Handle confirm sub with payment on GET
 exports.confirm_subscription_get = async (req, res, next) => {
   const subId = req.params.id;
 
@@ -202,6 +203,19 @@ exports.confirm_subscription_get = async (req, res, next) => {
   }
 };
 
+// Handle cancel subscription sign up on POST
+exports.cancel_sub_signup_post = async (req, res, next) => {
+  const subId = req.params.id;
+
+  try {
+    await Subscription.findByIdAndRemove(subId);
+    return res.redirect("/home");
+  } catch (err) {
+    return next(err);
+  }
+};
+
+// Handle cancel subscription on POST
 exports.cancel_subscription_post = async (req, res, next) => {
   const creatorId = req.body.creatorId;
   const stripeSubId = req.body.stripeSubId;
@@ -218,6 +232,7 @@ exports.cancel_subscription_post = async (req, res, next) => {
   }
 };
 
+// Handle subscription cancelled confirm on GET
 exports.subscription_cancelled_get = async (req, res, next) => {
   try {
     const page = await Page.findById(req.params.id);

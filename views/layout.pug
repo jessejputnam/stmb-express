@@ -88,8 +88,12 @@ html(lang='en')
 
               //- IF NOT CREATOR
               else 
-                li 
-                  a(href="/home/creator-signup") Become Creator
+                if currentUser.isVerified
+                  li 
+                    a(href="/home/creator-signup") Become Creator
+                else 
+                  li 
+                    p(style="font-size:.6rem") [Please Verify Email]
 
 
         main.main-wrapper
