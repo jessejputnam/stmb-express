@@ -109,6 +109,11 @@ textarea {
   padding: 0 10px;
 }
 
+.page-genres {
+  padding: 0 10px;
+  margin-top: -25px;
+}
+
 .page-view-main-container {
   padding: 0 20px;
 }

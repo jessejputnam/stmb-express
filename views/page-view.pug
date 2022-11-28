@@ -6,10 +6,19 @@ block content
       img(src=page.bannerImg, alt="Banner image")
       div.page-avatar-wrapper 
         img(src=page.profileImg, alt="Profile image")
+    
     div.page-title
       h1= title 
         if !page.active 
           span(style="color:red;font-size:1rem")  (Inactive)
+    
+    div.page-genres 
+      p 
+        a()= page.genre[0].displayType  
+        if page.genre.length > 1
+          a()= ", " + page.genre[1].displayType 
+        if page.genre.length > 2
+          a()= ", " + page.genre[2].displayType 
     div.page-view-main-container
       div.page-about
         p= page.region

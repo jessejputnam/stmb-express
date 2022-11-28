@@ -22,13 +22,13 @@ block content
     div.form-control 
       label(for="genre2" style="margin-left:15px") Genre 2
       select#genre2(name="genre2")
-        option(value="" hidden selected)
+        option(value="" selected)
         each genre in genres 
           option(value=genre._id ) !{`${genre.type[0].toUpperCase()}${genre.type.slice(1)}`}
     div.form-control 
       label(for="genre3" style="margin-left:15px") Genre 3
       select#genre3(name="genre3")
-        option(value="" hidden selected)
+        option(value="" selected)
         each genre in genres 
           option(value=genre._id ) !{`${genre.type[0].toUpperCase()}${genre.type.slice(1)}`}
     div.form-control-btns 

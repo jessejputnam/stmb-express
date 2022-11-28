@@ -7,6 +7,7 @@ const Page = require("../models/page");
 const Post = require("../models/post");
 const Membership = require("../models/membership");
 const Subscription = require("../models/subscription");
+const Genre = require("../models/genre");
 
 const s3UploadBanner = require("../middlewares/s3UploadBanner");
 const s3UploadProfile = require("../middlewares/s3UploadProfile");
@@ -129,7 +130,10 @@ exports.create_page_post = async (req, res, next) => {
 // Display edit page on GET
 exports.edit_page_get = async (req, res, next) => {
   try {
-    const page = await Page.findById(req.params.id).populate("genre").exec();
+    const genresPromise = Genre.find({}, "type").exec();
+    const pagePromise = Page.findById(req.params.id).populate("genre").exec();
+
+    const [genres, page] = await Promise.all([genresPromise, pagePromise]);
 
     // Page not found
     if (!page) {
@@ -146,7 +150,8 @@ exports.edit_page_get = async (req, res, next) => {
     // Successful, so render
     return res.render("form-page-edit", {
       title: "Edit Page",
-      page: page
+      page: page,
+      genres
     });
   } catch (err) {
     return next(err);
@@ -155,8 +160,9 @@ exports.edit_page_get = async (req, res, next) => {
 
 // Handle edit page on POST
 exports.edit_page_post = [
-  //! Verify with Ed validation and sanitization
   // Validate and sanitize fields
+  body("pageTitle", "Page title required").trim().isLength({ min: 1 }),
+  body("genre1", "At least one genre is required").trim().isLength({ min: 1 }),
   body("desc", "Description cannot be empty")
     .trim()
     .isLength({ min: 1 })
@@ -164,7 +170,6 @@ exports.edit_page_post = [
   body("facebookHandle").trim().escape(),
   body("instaHandle").trim().escape(),
   body("twitterHandle").trim().escape(),
-  //! Change sanitize and validate for images
 
   async (req, res, next) => {
     if (String(req.user.creator.page._id) !== req.params.id) {
@@ -176,11 +181,15 @@ exports.edit_page_post = [
     try {
       // If errors exist, rerender form
       if (!errors.isEmpty()) {
-        const page = await Page.findById(req.params.id);
+        const genresPromise = Genre.find({}, "type").exec();
+        const pagePromise = Page.findById(req.params.id);
+
+        const [genres, page] = await Promise.all([genresPromise, pagePromise]);
 
         res.render("form-page-edit", {
           title: "Edit Page",
-          page: page,
+          page,
+          genres,
           errors: errors.array()
         });
         return;
@@ -198,6 +207,12 @@ exports.edit_page_post = [
         return next(err);
       }
 
+      const genres = [req.body.genre1];
+      if (req.body.genre2) genres.push(req.body.genre2);
+      if (req.body.genre3) genres.push(req.body.genre3);
+
+      page.title = req.body.pageTitle;
+      page.genre = genres;
       page.description = req.body.desc;
       page.socialUrls = {
         facebookHandle: req.body.facebookHandle,
