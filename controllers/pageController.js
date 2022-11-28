@@ -15,9 +15,9 @@ const s3UploadProfile = require("../middlewares/s3UploadProfile");
 exports.page_get = async (req, res, next) => {
   const pageId = req.params.id;
 
-  // I know. Doesn't look great. Checks if no user, then
-  // its false; if there is a user, checks if the user
-  // is the owner and returns that answer
+  // I know. Doesn't look great. If there is no user, then
+  // its not their page; if there is a user, checks if
+  // the user is the owner and returns that answer
   const isOwnPage = !req.user
     ? false
     : req.user.creator
@@ -114,7 +114,10 @@ exports.create_page_post = async (req, res, next) => {
 
     await page.save();
 
+    // Save page and remove name/genre fields
     user.creator.page = page;
+    user.creator.name = undefined;
+    user.creator.genre = undefined;
     await user.save();
 
     return res.redirect(page.url);

@@ -29,7 +29,7 @@ const UserSchema = new Schema(
 
     creator: {
       name: String,
-      genre: { type: Schema.Types.ObjectId, ref: "Genre" },
+      genre: String,
       page: { type: Schema.Types.ObjectId, ref: "Page" },
       stripeId: { type: String },
       stripeOnboardComplete: { type: Boolean },
