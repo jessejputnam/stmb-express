@@ -24,31 +24,31 @@ router.get("/onboard-user/refresh", stripe_controller.stripe_onboard_refresh);
 router.post("/create-page", page_controller.create_page_post);
 
 // GET request for edit page
-router.get("/:id/edit", page_controller.edit_page_get);
+router.get("/edit", page_controller.edit_page_get);
 
 // POST request for edit page
-router.post("/:id/edit", page_controller.edit_page_post);
+router.post("/edit", page_controller.edit_page_post);
 
 // POST request for change page banner image
 router.post(
-  "/:id/update/bannerImg",
+  "/update/bannerImg",
   upload_img.single("bannerImg"),
   page_controller.set_banner_img_post
 );
 
 // POST request for change page profile image
 router.post(
-  "/:id/update/profileImg",
+  "/update/profileImg",
   upload_img.single("profileImg"),
   page_controller.set_profile_img_post
 );
 
 /* -------------------- PAGE VISIBILITY ------------------ */
 // GET request for change page active status for search
-router.get("/:id/confirm-active", page_controller.page_activate_get);
+router.get("/confirm-active", page_controller.page_activate_get);
 
 // POST request for change page active status for search
-router.post("/:id/confirm-active", page_controller.page_activate_post);
+router.post("/confirm-active", page_controller.page_activate_post);
 
 /* -------------------- MEMBERSHIPS ------------------ */
 

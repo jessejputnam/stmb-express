@@ -22,7 +22,7 @@ exports.page_get = async (req, res, next) => {
   const isOwnPage = !req.user
     ? false
     : req.user.creator
-    ? String(req.user.creator.page) === pageId
+    ? String(req.user.creator.page._id) === pageId
     : false;
 
   try {
@@ -130,8 +130,9 @@ exports.create_page_post = async (req, res, next) => {
 // Display edit page on GET
 exports.edit_page_get = async (req, res, next) => {
   try {
+    const pageId = req.user.creator.page._id;
     const genresPromise = Genre.find({}, "type").exec();
-    const pagePromise = Page.findById(req.params.id).populate("genre").exec();
+    const pagePromise = Page.findById(pageId).populate("genre").exec();
 
     const [genres, page] = await Promise.all([genresPromise, pagePromise]);
 
@@ -140,11 +141,6 @@ exports.edit_page_get = async (req, res, next) => {
       const err = new Error("Page does not exist");
       err.status = 404;
       return next(err);
-    }
-
-    // User artist id does not match page's artist id
-    if (String(req.user._id) !== String(page.user._id)) {
-      return res.redirect(`/${req.params.id}`);
     }
 
     // Successful, so render
@@ -172,9 +168,7 @@ exports.edit_page_post = [
   body("twitterHandle").trim().escape(),
 
   async (req, res, next) => {
-    if (String(req.user.creator.page._id) !== req.params.id) {
-      return res.redirect("/home");
-    }
+    const pageId = req.user.creator.page._id;
 
     const errors = validationResult(req);
 
@@ -182,7 +176,7 @@ exports.edit_page_post = [
       // If errors exist, rerender form
       if (!errors.isEmpty()) {
         const genresPromise = Genre.find({}, "type").exec();
-        const pagePromise = Page.findById(req.params.id);
+        const pagePromise = Page.findById(pageId);
 
         const [genres, page] = await Promise.all([genresPromise, pagePromise]);
 
@@ -199,7 +193,7 @@ exports.edit_page_post = [
     }
 
     try {
-      const page = await Page.findById(req.params.id);
+      const page = await Page.findById(pageId);
 
       if (!page) {
         const err = new Error("Page does not exist");
@@ -230,7 +224,8 @@ exports.edit_page_post = [
 ];
 
 exports.set_banner_img_post = async (req, res, next) => {
-  const pageId = String(req.user.creator.page);
+  const pageId = String(req.user.creator.page._id);
+
   try {
     const result = await s3UploadBanner(req.file, pageId);
 
@@ -245,7 +240,8 @@ exports.set_banner_img_post = async (req, res, next) => {
 };
 
 exports.set_profile_img_post = async (req, res, next) => {
-  const pageId = String(req.user.creator.page);
+  const pageId = String(req.user.creator.page._id);
+
   try {
     const result = await s3UploadProfile(req.file, pageId);
 
@@ -267,8 +263,10 @@ exports.set_profile_img_post = async (req, res, next) => {
 
 // Handle page activate/deactivate on GET
 exports.page_activate_get = async (req, res, next) => {
+  const pageId = req.user.creator.page._id;
+
   try {
-    const page = await Page.findById(req.params.id);
+    const page = await Page.findById(pageId);
     const isActive = page.active;
 
     const title = isActive ? "Deactivate Page?" : "Activate Page?";
@@ -284,7 +282,7 @@ exports.page_activate_get = async (req, res, next) => {
 
 // Handle page activate/deactivate on POST
 exports.page_activate_post = async (req, res, next) => {
-  const pageId = req.params.id;
+  const pageId = req.user.creator.page._id;
 
   try {
     const page = await Page.findById(pageId);

@@ -23,4 +23,4 @@ block content
         for page of pages
           li
             a(href=page.url) #{page.title} 
-              span(style="color:gray;font-size:.7rem") (#{page.genre.type}) 
+              span(style="color:gray;font-size:.7rem") [#{page.genre.map(genre => genre.type).join(", ")}] 

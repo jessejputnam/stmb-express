@@ -35,10 +35,11 @@ exports.search_form_get = async (req, res, next) => {
 
   try {
     const results = await Page.find({ title: regs }).populate("genre").exec();
+    const activeResults = results.filter((page) => page.active);
 
     return res.render("form-search", {
       title: "Search Results",
-      pages: results
+      pages: activeResults
     });
   } catch (err) {
     return next(err);

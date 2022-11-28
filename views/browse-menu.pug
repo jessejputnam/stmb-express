@@ -9,4 +9,4 @@ block content
         each page in page_list 
           li 
             a(href=page.url)= page.title 
-              span(style="color:gray;font-size:.7rem")  (#{page.genre.type})
+              span(style="color:gray;font-size:.7rem")  [#{page.genre.map(genre => genre.type).join(", ")}] 
