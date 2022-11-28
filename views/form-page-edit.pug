@@ -24,14 +24,14 @@ block content
       select#genre2(name="genre2")
         option(value="" selected=(!page.genre[1] ? "selected" : false))
         each genre in genres
-          option(value=genre._id selected=(page.genre[1].toString() === genre.toString() ? "selected" : false)) !{genre.displayType}
+          option(value=genre._id selected=(!page.genre[1] ? false : page.genre[1].toString() === genre.toString() ? "selected" : false)) !{genre.displayType}
 
     div.form-control 
       label(for="genre3" style="margin-left:15px") Genre 3
       select#genre3(name="genre3")
         option(value="" selected=(!page.genre[2] ? "selected" : false))
         each genre in genres 
-          option(value=genre._id selected=(page.genre[2].toString() === genre.toString() ? "selected" : false)) !{genre.displayType}
+          option(value=genre._id selected=(!page.genre[2] ? false : page.genre[2].toString() === genre.toString() ? "selected" : false)) !{genre.displayType}
 
     div.form-control 
       label(for="desc") Description
