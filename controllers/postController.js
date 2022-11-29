@@ -22,8 +22,11 @@ exports.posts_display_get = async (req, res, next) => {
 
 // Handle add post on GET
 exports.add_post_get = (req, res, next) => {
+  const postType = req.url.split("_")[1];
+
   return res.render("form-post-edit", {
-    title: "Add Post"
+    title: "Add Post",
+    postType
   });
 };
 

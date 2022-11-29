@@ -84,10 +84,16 @@ router.post(
 // GET request for display all creator's posts
 router.get("/posts", post_controller.posts_display_get);
 
-// GET request for add post
-router.get("/add-post", post_controller.add_post_get);
+// GET request for add text post
+router.get("/posts/add-post_text", post_controller.add_post_get);
+// GET request for add link post
+router.get("/posts/add-post_link", post_controller.add_post_get);
+// GET request for add image post
+router.get("/posts/add-post_image", post_controller.add_post_get);
+// GET request for add video post
+router.get("/posts/add-post_video", post_controller.add_post_get);
 
 // POST request for add post
-router.post("/add-post", post_controller.add_post_post);
+router.post("/posts/add-post", post_controller.add_post_post);
 
 module.exports = router;

@@ -180,10 +180,19 @@ textarea {
 }
 
 /* ########### ## POSTS ############ */
+
+/* Individual Posts */
 .post-container {
   min-height: 200px;
   width: 600px;
   padding: 15px;
   box-shadow: 0 0 3px 1px black;
   margin-bottom: 10px;
+}
+
+/* Add Posts */
+.add-posts-nav {
+  padding: 5px;
+  display: flex;
+  column-gap: 10px;
 }

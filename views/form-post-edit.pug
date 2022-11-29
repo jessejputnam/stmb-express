@@ -2,13 +2,23 @@ extends layout
 
 block content 
   h1= title 
+    span(style="font-size:.7rem;color:gray")  [#{postType}]
+  div.add-posts-nav
+    p 
+      a(href="/account/posts/add-post_text") Text Post 
+    p 
+      a(href="/account/posts/add-post_link") Link Post 
+    p
+      a(href="/account/posts/add-post_image") Image Post 
+    p
+      a(href="/account/posts/add-post_video") Video Post 
 
   if errors 
     ul 
       for error in errors 
         li!= error.msg
 
-  form.form-wrapper(method='POST' action='') 
+  form.form-wrapper(method='POST' action='/account/posts/add-post') 
     input#userId(type="hidden" name="userId" value=currentUser._id required="true")
 
     div.form-control 
@@ -17,7 +27,13 @@ block content
 
     div.form-control 
       label(for="text" style="margin-left:15px") Text
-      input#text(type="text" name="text" required="true")
+      //- input#text(type="text" name="text" required="true")
+      textarea#text(name="text")
+
+    div.form-control
+      if postType !== "text"
+        label(for="typeContent")= postType[0].toUpperCase() + postType.slice(1) + " URL"
+      input#typeContent(type=(postType === "text" ? "hidden" : "text") name="typeContent")
   
     div.form-control-btns 
       a(href="/home") Cancel
