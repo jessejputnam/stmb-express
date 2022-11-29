@@ -6,10 +6,6 @@ const Post = require("../models/post");
 
 // Handle display posts on GET
 exports.posts_display_get = async (req, res, next) => {
-  if (String(req.user.creator.page._id) !== req.params.id) {
-    return res.redirect("/home");
-  }
-
   try {
     const posts = await Post.find({ user: req.user })
       .sort({ timestamp: "desc" })
@@ -26,11 +22,7 @@ exports.posts_display_get = async (req, res, next) => {
 
 // Handle add post on GET
 exports.add_post_get = (req, res, next) => {
-  if (String(req.user.creator.page._id) !== req.params.id) {
-    return res.redirect("/home");
-  }
-
-  res.render("form-post-edit", {
+  return res.render("form-post-edit", {
     title: "Add Post"
   });
 };

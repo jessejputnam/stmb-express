@@ -8,6 +8,7 @@
   # Sidebar
   # Main
     ## Page View
+    ## Posts
 
 */
 
@@ -178,4 +179,11 @@ textarea {
   -webkit-backdrop-filter: blur(3px);
 }
 
-/* ########### ## MEMBERSHIP VIEW ############ */
+/* ########### ## POSTS ############ */
+.post-container {
+  min-height: 200px;
+  width: 600px;
+  padding: 15px;
+  box-shadow: 0 0 3px 1px black;
+  margin-bottom: 10px;
+}

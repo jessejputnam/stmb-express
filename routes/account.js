@@ -53,35 +53,41 @@ router.post("/confirm-active", page_controller.page_activate_post);
 /* -------------------- MEMBERSHIPS ------------------ */
 
 // GET request for view memberships page
-router.get("/:id/memberships", memberships_controller.display_memberships_get);
+router.get("/memberships", memberships_controller.display_memberships_get);
 
 // GET request for add memberships page
-router.get("/:id/add-membership", memberships_controller.add_membership_get);
+router.get(
+  "/memberships/add-membership",
+  memberships_controller.add_membership_get
+);
 
 // POST request for add membership
-router.post("/:id/add-membership", memberships_controller.add_membership_post);
+router.post(
+  "/memberships/add-membership",
+  memberships_controller.add_membership_post
+);
 
 // GET request for delete membership
 router.get(
-  "/:id/delete-membership/:memberid",
+  "/memberships/delete-membership/:memberid",
   memberships_controller.delete_membership_get
 );
 
 // POST request for delete membership
 router.post(
-  "/:id/delete-membership/:memberid",
+  "/memberships/delete-membership/:memberid",
   memberships_controller.delete_membership_post
 );
 
 /* -------------------- POSTS ------------------ */
 
 // GET request for display all creator's posts
-router.get("/:id/posts", post_controller.posts_display_get);
+router.get("/posts", post_controller.posts_display_get);
 
 // GET request for add post
-router.get("/:id/add-post", post_controller.add_post_get);
+router.get("/add-post", post_controller.add_post_get);
 
 // POST request for add post
-router.post("/:id/add-post", post_controller.add_post_post);
+router.post("/add-post", post_controller.add_post_post);
 
 module.exports = router;

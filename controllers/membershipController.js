@@ -14,15 +14,10 @@ const getCurrencyCode = require("../utils/getCurrencyCode");
 
 // Display memberships page on GET
 exports.display_memberships_get = async (req, res, next) => {
-  const userPageId = req.user.creator.page._id;
-
-  // User artist id does not match page's artist id
-  if (String(userPageId) !== req.params.id) {
-    return res.redirect(`/${req.params.id}`);
-  }
+  const pageId = req.user.creator.page._id;
 
   try {
-    const page = await Page.findById(userPageId);
+    const page = await Page.findById(pageId);
 
     if (!page) {
       const err = new Error("Page does not exist");
@@ -42,14 +37,7 @@ exports.display_memberships_get = async (req, res, next) => {
 };
 
 exports.add_membership_get = (req, res, next) => {
-  const userPageId = req.user.creator.page.toString();
-
-  // User artist id does not match page's artist id
-  if (userPageId !== req.params.id) {
-    return res.redirect(`/${req.params.id}`);
-  }
-
-  res.render("form-membership-add", {
+  return res.render("form-membership-add", {
     title: "Add Membership"
   });
 };
@@ -58,7 +46,7 @@ exports.add_membership_get = (req, res, next) => {
 exports.add_membership_post = [
   // Validate and sanitize fields
   body("title", "Tier title required").trim().isLength({ min: 1 }).escape(),
-  body("price", "Price is required").trim().isDecimal({ min: 0.01 }),
+  body("price", "Price is required").trim().isInt({ min: 1 }),
   body("desc", "Decription is required").trim().isLength({ min: 1 }).escape(),
   body("rewards", "Rewards must be specified")
     .trim()
@@ -68,12 +56,8 @@ exports.add_membership_post = [
   async (req, res, next) => {
     const errors = validationResult(req);
 
-    const userPageId = req.user.creator.page.toString();
-
-    // User artist id does not match page's artist id
-    if (userPageId !== req.params.id) {
-      return res.redirect(`/${req.params.id}`);
-    }
+    const user = req.user;
+    const pageId = user.creator.page._id;
 
     if (!errors.isEmpty) {
       return res.render("form-membership-add", {
@@ -83,23 +67,7 @@ exports.add_membership_post = [
     }
 
     try {
-      const user = await User.findById(req.user._id)
-        .populate({
-          path: "creator",
-          populate: {
-            path: "page",
-            model: "Page"
-          }
-        })
-        .exec();
-
-      if (!user) {
-        const err = new Error("User not found");
-        err.status = 404;
-        return next(err);
-      }
-
-      const page = user.creator.page;
+      const page = await Page.findById(pageId);
 
       // Check current number of page memberships
       const tiers = await Membership.find({ page: page });
@@ -150,7 +118,7 @@ exports.add_membership_post = [
 
       await membership.save();
 
-      return res.redirect(`/account/${page._id}/memberships`);
+      return res.redirect("/account/memberships");
     } catch (err) {
       return next(err);
     }

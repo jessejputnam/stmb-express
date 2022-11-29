@@ -6,7 +6,7 @@ block content
   if !memberships.length
     p No memberships yet added
 
-  a(href=`/account/${currentUser.creator.page}/add-membership`) Add Membership
+  a(href="/account/memberships/add-membership") Add Membership
 
   - memberships.sort((a, b) => a.price - b.price)
 
@@ -19,10 +19,6 @@ block content
         each reward in membership.rewards
           li= "- " + reward
       div.membership-btn-container
-        a(href=`/account/${currentUser.creator.page}/delete-membership/${membership._id}`) Delete 
-      //- div.membership-btn-container
-      //-   form(method="POST" action=`/account/delete-membership`) 
-      //-     input#membershipId(type="hidden" name="membershipId" value=membership._id)
-      //-     button.btn.btn-secondary(type="submit") Delete
+        a(href=`/account/memberships/delete-membership/${membership._id}`) Delete 
 
 

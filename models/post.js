@@ -7,10 +7,16 @@ const PostSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: "User", required: true },
   pageId: { type: String, required: true },
   timestamp: { type: Date, default: Date.now, required: true },
+
   title: { type: String, maxLength: 50, required: true },
-  imgUrl: { type: String },
-  text: { type: String, maxLength: 500, required: true },
-  link: { type: String }
+  text: { type: String, maxLength: 1000 },
+  type: {
+    type: String,
+    enum: ["text", "link", "video", "image"],
+    required: true,
+    default: "text"
+  },
+  typeContent: { type: String, default: null }
 });
 
 module.exports = mongoose.model("Post", PostSchema);

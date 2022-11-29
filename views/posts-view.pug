@@ -4,13 +4,20 @@ block content
   h1= title 
 
   div 
-    a(href=`/account/${currentUser.creator.page._id}/add-post`) Add Post
+    a(href=`/account/posts/add-post`) Add Post
 
   if !posts.length
     div
       em No posts yet
   else 
     each post in posts 
-      div(style="margin-top:15px;border-bottom:solid 1px black;max-width:650px") 
-        h4!= post.title 
-        p!= post.text
+      div.post-container
+        div.post-media
+          if post.type === "image"
+            img(src=post.typeContent, alt="Post image")
+          if post.type === "video" 
+            //- EMBED iFRAME?
+        div.post-title
+          h4!= post.title 
+        div.post-text
+          p!= post.text
