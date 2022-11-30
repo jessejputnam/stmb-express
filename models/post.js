@@ -8,6 +8,8 @@ const PostSchema = new Schema({
   pageId: { type: String, required: true },
   timestamp: { type: Date, default: Date.now, required: true },
 
+  public: { type: Boolean, default: false },
+
   title: { type: String, maxLength: 50, required: true },
   text: { type: String, maxLength: 1000 },
   type: {

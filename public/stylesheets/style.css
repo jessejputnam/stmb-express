@@ -190,6 +190,14 @@ textarea {
   margin-bottom: 10px;
 }
 
+.post-media > img {
+  width: 100%;
+}
+
+.link-ogg-container > img {
+  width: 100%;
+}
+
 /* Add Posts */
 .add-posts-nav {
   padding: 5px;

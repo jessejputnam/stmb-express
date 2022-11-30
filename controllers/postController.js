@@ -24,7 +24,7 @@ exports.posts_display_get = async (req, res, next) => {
 exports.add_post_get = (req, res, next) => {
   const postType = req.url.split("_")[1];
 
-  return res.render("form-post-edit", {
+  return res.render("form-post-add", {
     title: "Add Post",
     postType
   });
@@ -35,12 +35,13 @@ exports.add_post_post = [
   body("title", "Post title required").trim().isLength({ min: 1 }).escape(),
   body("text", "Post text required").trim().isLength({ min: 1 }).escape(),
 
-  (req, res, next) => {
+  async (req, res, next) => {
     const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
       // There are errors, rerender
-      res.render("form-post-edit", {
-        title: "Become Creator",
+      res.render("form-post-add", {
+        title: "Add Post",
         errors: errors.array()
       });
       return;
@@ -49,21 +50,41 @@ exports.add_post_post = [
     // No errors, continue
     const userId = req.user._id;
     const userPageId = String(req.user.creator.page._id);
-    if (userPageId !== req.params.id) {
-      return res.redirect("/home");
-    }
+    const postType = req.body.postType;
+    const publicAccess = req.body.isPublic;
+    const typeContent = req.body.typeContent;
 
     const post = new Post({
       user: userId,
       pageId: userPageId,
+      public: publicAccess,
       title: req.body.title,
-      text: req.body.text
+      text: req.body.text,
+      type: postType,
+      typeContent
     });
 
-    post.save((err) => {
-      if (err) return next(err);
+    try {
+      await post.save();
 
-      res.redirect(`/account/${userPageId}/posts`);
-    });
+      return res.redirect("/account/posts");
+    } catch (err) {
+      return next(err);
+    }
   }
 ];
+
+// Handle edit post on GET
+exports.edit_post_get = async (req, res, next) => {
+  const postId = req.params.id;
+
+  const post = await Post.findById(postId);
+
+  return res.render("form-post-edit", {
+    title: "Edit Post",
+    post
+  });
+};
+
+// Handle Open Graph call on GET
+exports.open_graph_get = async (req, res, next) => {};

@@ -41,6 +41,7 @@ const searchRouter = require("./routes/search");
 const homeRouter = require("./routes/home");
 const creatorRouter = require("./routes/account");
 const subscribeRouter = require("./routes/subscribe");
+const openGraphRouter = require("./routes/open-graph");
 
 const app = express();
 const sessionStore = new MongoDBStore({
@@ -59,8 +60,8 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       "script-src": ["'self'", "js.stripe.com/v3/"],
-      "frame-src": ["'self'", "js.stripe.com/v3/"],
-      "img-src": ["'self'", "stmb-imgs.s3.us-west-2.amazonaws.com/"]
+      "frame-src": ["'self'", "js.stripe.com/v3/", "https://www.youtube.com"],
+      "img-src": ["'self'", "stmb-imgs.s3.us-west-2.amazonaws.com/", "*"]
     }
   })
 );
@@ -124,6 +125,7 @@ app.use("/home", authCheckFalse, homeRouter);
 app.use("/account", authCheckFalse, isVerifiedCheck, creatorRouter);
 app.use("/subscribe", authCheckFalse, isVerifiedCheck, subscribeRouter);
 app.use("/search", searchRouter);
+app.use("/open-graph", openGraphRouter);
 app.use("/", indexRouter);
 
 // catch 404 and forward to error handler

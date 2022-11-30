@@ -96,4 +96,7 @@ router.get("/posts/add-post_video", post_controller.add_post_get);
 // POST request for add post
 router.post("/posts/add-post", post_controller.add_post_post);
 
+// GET request for edit post
+router.get("/posts/:id", post_controller.edit_post_get);
+
 module.exports = router;
