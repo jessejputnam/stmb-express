@@ -1,6 +1,7 @@
 "use strict";
 
 const { body, validationResult } = require("express-validator");
+const ogs = require("open-graph-scraper");
 
 const Post = require("../models/post");
 
@@ -33,7 +34,7 @@ exports.add_post_get = (req, res, next) => {
 // Handle add post on POST
 exports.add_post_post = [
   body("title", "Post title required").trim().isLength({ min: 1 }).escape(),
-  body("text", "Post text required").trim().isLength({ min: 1 }).escape(),
+  body("text").trim().escape(),
 
   async (req, res, next) => {
     const errors = validationResult(req);
@@ -87,4 +88,46 @@ exports.edit_post_get = async (req, res, next) => {
 };
 
 // Handle Open Graph call on GET
-exports.open_graph_get = async (req, res, next) => {};
+exports.open_graph_get = async (req, res, next) => {
+  const site = req.params.id;
+  const options = { url: site };
+
+  let siteInfo = {
+    name: "Not Found",
+    description: "Not Found",
+    url: site,
+    img: "/images/post-placeholder.png"
+  };
+
+  try {
+    const data = await ogs(options);
+    console.log(data.result);
+
+    if (data.error === true) {
+      return res.send(new Error("There was an error fetching site data"));
+    }
+
+    const result = data.result;
+    if (data.result.success) {
+      siteInfo = {
+        name: result.ogSiteName ?? result.ogTitle ?? "Not Found",
+        description: result.ogDescription ?? "Not Found",
+        url: result.ogUrl ?? result.requestUrl ?? "Not Found",
+        img: result.ogImage
+          ? result.ogImage.url
+          : "/images/post-placeholder.png"
+      };
+    } else {
+      siteInfo = {
+        name: "Not Found",
+        description: "Not Found",
+        url: site,
+        img: "/images/post-placeholder.png"
+      };
+    }
+
+    res.send(siteInfo);
+  } catch (err) {
+    return res.send(siteInfo);
+  }
+};

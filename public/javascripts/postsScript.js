@@ -11,11 +11,10 @@ externalLinks.forEach((link) => {
 });
 
 externalLinks.forEach(async (link) => {
-  const linkUrl = link.href.split("://")[1];
+  const linkUrl = link.href.split("://")[1].split("/")[0];
   const linkDiv = link.parentElement.children[1];
 
   console.log(linkUrl);
-  // return;
 
   const result = await fetch(`http://localhost:8080/open-graph/${linkUrl}`);
 
