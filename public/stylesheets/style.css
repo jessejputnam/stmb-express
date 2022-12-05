@@ -20,8 +20,16 @@
 }
 
 a {
-  color: #00b7ff;
+  color: #6d6d6d;
   text-decoration: none;
+  text-decoration: none;
+}
+
+@media (hover: hover) {
+  a:hover {
+    text-decoration: underline;
+    color: #373737;
+  }
 }
 
 ul {
@@ -49,13 +57,32 @@ textarea {
   padding: 5px;
 }
 /* #################### # NO AUTH HEADER ##################### */
-
 .no-auth-header {
-  display: flex;
-  align-items: center;
-  column-gap: 15px;
-  height: 50px;
   box-shadow: -3px 0px 3px 0 rgba(0, 0, 0, 0.455);
+  display: flex;
+}
+
+.header-logo {
+  overflow: hidden;
+  border-radius: 40%;
+  padding: 7px 0;
+}
+
+.header-logo > img {
+  height: 45px;
+}
+
+.no-auth-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 3vw;
+  padding: 10px;
+  max-width: 500px;
+}
+
+.no-auth-content {
+  padding: 15px;
 }
 
 /* #################### # LANDING PAGE ################ */
