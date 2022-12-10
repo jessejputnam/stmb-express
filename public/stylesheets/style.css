@@ -12,6 +12,14 @@
 
 */
 
+/* 
+  STYLE GUIDE:
+
+  - Color Palette
+  - 
+
+*/
+
 /* ##################### # FORMATTING ################## */
 * {
   margin: 0;
@@ -60,16 +68,34 @@ textarea {
 .no-auth-header {
   box-shadow: -3px 0px 3px 0 rgba(0, 0, 0, 0.455);
   display: flex;
+  padding: 0 15px;
+  background-color: #beccd9;
 }
 
 .header-logo {
   overflow: hidden;
-  border-radius: 40%;
   padding: 7px 0;
+  position: relative;
+  filter: contrast(0);
+  margin-right: 15px;
+}
+
+@media (hover: hover) {
+  .header-logo:hover {
+    filter: contrast(50%);
+  }
 }
 
 .header-logo > img {
   height: 45px;
+  z-index: -1;
+}
+.header-logo > .home-link {
+  font-size: 45px;
+  color: rgba(255, 255, 255, 0);
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .no-auth-nav {
