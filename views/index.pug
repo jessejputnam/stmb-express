@@ -1,10 +1,31 @@
 extends layout
 
 block noUser 
-  main.landing-page 
-    h1= title 
+  main.landing-page
+    
+    div.video-player.landing-item-container
+      iframe(src="https://www.youtube.com/embed/CrzVI05kGRI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
 
-    p Smash the Motherboard is an independent creator economy marketplace.
+    div.call-to-action.landing-item-container
+      div.action-container
+        div.img-container
+          img(src="/images/become-creator-placeholder.jpg", alt="")
+        div.info-container
+          p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          button.btn.btn-primary Become a Creator
+      div.action-container
+        div.img-container
+          img(src="/images/support-artists-placeholder.jpg", alt="")
+        div.info-container
+          p Viverra suspendisse potenti nullam ac. Sit amet nisl purus in mollis nunc sed id semper. 
+          button.btn.btn-primary Browse Creators
+      div.action-container
+        div.img-container
+          img(src="/images/about-us-placeholder.jpg", alt="")
+        div.info-container
+          p Vitae justo eget magna fermentum iaculis eu non diam phasellus. Vestibulum lorem sed risus ultricies tristique nulla aliquet enim. Potenti nullam ac tortor vitae purus faucibus ornare suspendisse sed.
+          button.btn.btn-primary About STMB
+        
 
   footer
     div.footer-wrapper
