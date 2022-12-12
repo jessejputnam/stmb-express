@@ -46,18 +46,20 @@ ul {
 
 .btn {
   background-color: #e8287a;
-  padding: 0.8rem;
+  padding: 0.7rem 0.8rem;
   border-radius: 2rem;
   color: white;
   border: none;
   box-shadow: 1px 2px 3px 0 rgba(0, 0, 0, 0.545);
   margin: 5px 2px;
+  min-width: 100px;
 }
 
 @media (hover: hover) {
   .btn:hover {
     box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.545);
     transform: scale(0.98);
+    filter: brightness(110%);
   }
 }
 
@@ -82,8 +84,12 @@ textarea {
   padding: 5px;
 }
 /* #################### # NO AUTH HEADER ##################### */
+.no-auth-content {
+  min-height: 61.5vh;
+}
+
 .no-auth-header {
-  box-shadow: -3px 0px 3px 0 rgba(0, 0, 0, 0.455);
+  box-shadow: 0px 1px 3px 0 rgba(0, 0, 0, 0.455);
   display: flex;
   padding: 0 15px;
   background-color: #beccd9;
@@ -163,10 +169,13 @@ textarea {
   display: flex;
   justify-content: space-around;
   column-gap: 5px;
+  row-gap: 15px;
+  flex-wrap: wrap;
 }
 
 .action-container {
   width: 30%;
+  min-width: 300px;
   display: flex;
   column-gap: 20px;
 }
@@ -190,11 +199,57 @@ textarea {
   flex-direction: column;
   justify-content: space-between;
   padding: 80px 0;
-  /* row-gap: 25px; */
 }
 
 footer {
   margin-top: 100px;
+  min-height: 200px;
+  background-color: #001331;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.footer-socials > img {
+  height: 70px;
+  filter: invert(80%);
+}
+
+.footer-socials ul {
+  display: flex;
+  column-gap: 10px;
+}
+
+@media (hover: hover) {
+  .footer-socials > ul li > a > img:hover {
+    filter: brightness(90%) grayscale(50%);
+  }
+}
+
+.footer-socials > ul li > a > img {
+  filter: brightness(80%) grayscale(100%);
+  height: 30px;
+}
+
+.footer-about > .address {
+  color: rgba(255, 255, 255, 0.69);
+  height: 100%;
+  font-size: 0.8rem;
+  margin-bottom: 30px;
+  text-align: right;
+}
+
+.footer-about-links > ul {
+  display: flex;
+  column-gap: 10px;
 }
 
 /* #################### # SIDEBAR ##################### */

@@ -1,5 +1,8 @@
 extends layout
 
+block scripts 
+  script(src="/javascripts/landingScript.js" defer)
+
 block noUser 
   main.landing-page
     
@@ -13,22 +16,18 @@ block noUser
         div.info-container
           h2 Become a Creator
           p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          button.btn.btn-primary Become a Creator
+          button#register.btn.btn-primary Become a Creator
       div.action-container
         div.img-container
           img(src="/images/support-artists-placeholder.jpg", alt="")
         div.info-container
           h2 Support Creators
           p Viverra suspendisse potenti nullam ac. Sit amet nisl purus in mollis nunc sed id semper. 
-          button.btn.btn-primary Browse Creators
+          button#browse.btn.btn-primary Browse Creators
       div.action-container
         div.img-container
           img(src="/images/about-us-placeholder.jpg", alt="")
         div.info-container
           h2 What to Expect
           p Vitae justo eget magna fermentum iaculis eu non diam phasellus. Vestibulum lorem sed risus ultricies tristique nulla aliquet enim. Potenti nullam ac tortor vitae.
-          button.btn.btn-primary About STMB
-        
-
-  footer
-    div.footer-wrapper
+          button#about.btn.btn-primary About STMB

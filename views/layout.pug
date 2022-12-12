@@ -29,6 +29,46 @@ html(lang='en')
       div.no-auth-content
         block noUser
         block content
+      footer
+        div.footer-wrapper
+          div.footer-socials
+            img(src="/images/logo.png", alt="Logo")
+            ul 
+              li  
+                a(href="https://www.facebook.com", target="_blank" noreferrer)
+                  img(src="/images/icons8-facebook.svg", alt="Facebook")
+              li  
+                a(href="https://www.instagram.com", target="_blank" noreferrer)
+                  img(src="/images/icons8-instagram.svg", alt="Instagram")
+              li  
+                a(href="https://www.twitter.com", target="_blank" noreferrer)
+                  img(src="/images/icons8-twitter.svg", alt="Twitter")
+              li  
+                a(href="https://www.youtube.com", target="_blank" noreferrer)
+                  img(src="/images/icons8-youtube.svg", alt="YouTube")
+          div.footer-about
+            div.address
+              address
+                | Smash the Motherboard 
+                br
+                | 1234 Spinoza Rd 
+                br
+                | Santa Fe, NM 01011
+                | USA
+            nav.footer-about-links
+              ul 
+                li 
+                  a(href="#") Terms of Service
+                li 
+                  a(href="#") Privacy
+                li 
+                  a(href="#") About Us
+                li 
+                  a(href="#") Cookies Policy
+                li 
+                  a(href="#") Contact Us
+                li 
+                  a(href="#") Blog
 
     else  
       div.app-wrapper 
