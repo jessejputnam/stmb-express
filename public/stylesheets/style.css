@@ -35,7 +35,6 @@ a {
 
 @media (hover: hover) {
   a:hover {
-    text-decoration: underline;
     color: #373737;
   }
 }
@@ -99,12 +98,16 @@ textarea {
   overflow: hidden;
   padding: 7px 0;
   position: relative;
-  filter: contrast(0);
   margin-right: 15px;
+  filter: contrast(50%);
+}
+
+.no-auth-header > .header-logo {
+  filter: contrast(0);
 }
 
 @media (hover: hover) {
-  .header-logo:hover {
+  .no-auth-header > .header-logo:hover {
     filter: contrast(50%);
   }
 }
@@ -113,6 +116,7 @@ textarea {
   height: 45px;
   z-index: -1;
 }
+
 .header-logo > .home-link {
   font-size: 45px;
   color: rgba(255, 255, 255, 0);
@@ -255,10 +259,34 @@ footer {
 /* #################### # SIDEBAR ##################### */
 .sidebar {
   padding: 20px;
-  width: 15%;
+  width: 200px;
   box-shadow: 1px 0 3px 0 rgba(0, 0, 0, 0.543);
   height: 100vh;
   z-index: 100;
+  background-color: #beccd9;
+}
+
+.sidebar > .nav-bar ul li a div {
+  padding: 8px 8px;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.selected-sidebar-nav {
+  background-color: #b7c5d3;
+  color: rgb(68, 68, 68);
+}
+
+@media (hover: hover) {
+  .sidebar > .nav-bar ul li a div:hover {
+    background-color: #b7c5d3;
+  }
+}
+
+.sidebar > .nav-bar ul li a div span {
+  font-size: 0.98rem;
+  margin-right: 5px;
 }
 
 /* ##################### # MAIN ####################### */
@@ -268,9 +296,14 @@ footer {
 }
 
 .main-wrapper {
-  width: 85%;
+  width: 100%;
   overflow-y: auto;
   height: 100vh;
+}
+
+/* ########### ## USER HOME ############ */
+.user-home-wrapper {
+  padding: 15px;
 }
 
 /* ########### ## PAGE VIEW ############ */

@@ -8,7 +8,12 @@ html(lang='en')
 
     link(rel='stylesheet', href='/stylesheets/style.css')
 
-    script(type="module" src="/javascripts/script.js" defer)
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+
+    if currentUser
+      script(type="module" src="/javascripts/userScript.js" defer)
+      if currentUser.creator.page 
+        script(type="module" src="/javascripts/creatorScript.js")
     block scripts 
   
   body 
@@ -74,17 +79,35 @@ html(lang='en')
       div.app-wrapper 
         div.sidebar 
           nav.nav-bar 
+            div.header-logo 
+              img(src="/images/logo.png", alt="Logo")
+
             ul 
               li 
-                a(href="/home") Home 
+                a(href="/home") 
+                  div#home
+                    span(class="material-symbols-outlined") home
+                    p Home 
               li 
-                a(href="/search/categories") Browse 
+                a(href="/search/categories")
+                  div#browse
+                    span(class="material-symbols-outlined") category
+                    p Browse 
               li 
-                a(href="/search") Search 
+                a(href="/search")
+                  div#search
+                    span(class="material-symbols-outlined") search
+                    p Search 
               li 
-                a(href="/home/settings") Settings 
+                a(href="/home/settings")
+                  div#settings
+                    span(class="material-symbols-outlined") settings
+                    p Settings 
               li 
-                a(href="/logout") Logout
+                a(href="/logout")
+                  div
+                    span(class="material-symbols-outlined") logout
+                    p Logout
               hr(style='margin:10px')
 
               //- IF CREATOR
@@ -93,15 +116,30 @@ html(lang='en')
                 if currentUser.creator.page
                   //- hr(style='margin:10px')
                   li 
-                    a(href=`/${currentUser.creator.page}`) View Page 
+                    a(href=`/${currentUser.creator.page}`) 
+                      div.view-page(id=currentUser.creator.page._id)
+                        span(class="material-symbols-outlined") web
+                        p View Page 
                   li 
-                    a(href="/account/edit") Edit Page
+                    a(href="/account/edit")
+                      div#edit-page
+                        span(class="material-symbols-outlined") edit
+                        p Edit Page
                   li 
-                    a(href="/account/posts") Posts
+                    a(href="/account/posts")
+                      div#posts
+                        span(class="material-symbols-outlined") post_add
+                        p Posts
                   li 
-                    a(href="/account/memberships") Memberships
+                    a(href="/account/memberships") 
+                      div#memberships
+                        span(class="material-symbols-outlined") payments
+                        p Memberships
                   li 
-                    a(href="/account/analytics") Analytics 
+                    a(href="/account/analytics")
+                      div#analytics
+                        span(class="material-symbols-outlined") leaderboard
+                        p Analytics 
 
                 //- IF NO PAGE
                 else 
