@@ -18,23 +18,24 @@ html(lang='en')
   
   body 
     if !currentUser
-      header.no-auth-header
-        div.header-logo 
-          img(src="/images/logo.png", alt="Logo")
-          a.home-link(href="/") Home
-        nav.no-auth-nav
-          p 
-            a(href="/search/categories") Browse 
-          p 
-            a(href="/search") Search 
-          p 
-            a(href="/register") Register
-          p 
-            a(href="/login") Login
-        div
+      header.no-auth-header-wrapper
+        div.no-auth-header
+          div.header-logo 
+            img(src="/images/logo.png", alt="Logo")
+            a.home-link(href="/") Home
+          nav.no-auth-nav
+            p 
+              a(href="/search/categories") Browse 
+            p 
+              a(href="/search") Search 
+            p 
+              a(href="/register") Register
+            p 
+              a(href="/login") Login
+        div.header-search-container
           form.form-control(method="GET" action="/search")
-            input#searchTerm(type="text" name="searchTerm" placeholder="Search for creators..." required autofocus)
-            button.btn.btn-search Search
+            input#searchTerm(type="text" name="searchTerm" placeholder="Search for creators...")
+            button.btn.btn-search 🔍
         
       div.no-auth-content
         block noUser

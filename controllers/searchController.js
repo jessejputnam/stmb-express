@@ -21,19 +21,11 @@ exports.display_all_pages_get = async (req, res, next) => {
 
 // Handle display search form on GET
 exports.search_form_get = async (req, res, next) => {
-  // console.log(req.url);
   const searchTerm = req.query.searchTerm;
 
-  // Check search containins at least one alphanumeric
-  // const containsAlphaNumeric = /[a-zA-Z0-9]/.test(searchTerm);
-  // if (!containsAlphaNumeric) {
-  //   const err = new Error("Search must contain at least one letter or number");
-  //   return next(err);
-  // }
   const regs = getRegExps(searchTerm);
 
   // If no search yet, just display search form
-  // if (!regs.length) { // - if implementing array method
   if (!regs) {
     return res.render("form-search", {
       title: "Search for Creator Pages",
