@@ -9,9 +9,18 @@ const getSearchRegEx = (searchTerm) => {
     .split()
     .filter((token) => token.trim() !== "");
 
+  console.log("test: ", tokens);
+
   const tokensRegexInput = tokens
     .map((token) => {
-      return `(?=.*\\b${token}\\b)`;
+      const escaped_token_arr = token
+        .split("")
+        .map((char) =>
+          /[a-zA-Z0-9]/.test(char) || / /.test(char) ? char : `\\${char}`
+        );
+      const escaped_token = escaped_token_arr.join("");
+      console.log(escaped_token);
+      return `(?=.*\\b${escaped_token}\\b)`;
     })
     .join("");
 

@@ -31,6 +31,11 @@ html(lang='en')
             a(href="/register") Register
           p 
             a(href="/login") Login
+        div
+          form.form-control(method="GET" action="/search")
+            input#searchTerm(type="text" name="searchTerm" placeholder="Search for creators..." required autofocus)
+            button.btn.btn-search Search
+        
       div.no-auth-content
         block noUser
         block content
