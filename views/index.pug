@@ -4,10 +4,17 @@ block scripts
   script(src="/javascripts/landingScript.js" defer)
 
 block noUser 
-  main.landing-page
+  main.landing-page   
+    h1 Creativity connected through community
+
+    button#register.btn.btn-primary Get Connected
     
     div.video-player.landing-item-container
       iframe(src="https://www.youtube.com/embed/rD7Gux8R2DA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+
+    div.landing-about-container 
+      h1 What is Smash the Motherboard?
+      p Tincidunt dui ut ornare lectus sit. At elementum eu facilisis sed. Elit eget gravida cum sociis natoque penatibus. Tortor posuere ac ut consequat semper viverra. Sed faucibus turpis in eu mi bibendum neque egestas congue. Sed viverra tellus in hac habitasse platea dictumst vestibulum.
 
     div.call-to-action.landing-item-container
       div.action-container
@@ -16,18 +23,18 @@ block noUser
         div.info-container
           h2 Become a Creator
           p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          button#register.btn.btn-primary Become a Creator
+          button#register.btn.btn-secondary Become Creator
       div.action-container
         div.img-container
           img(src="/images/support-artists-placeholder.jpg", alt="")
         div.info-container
           h2 Support Creators
           p Viverra suspendisse potenti nullam ac. Sit amet nisl purus in mollis nunc sed id semper. 
-          button#browse.btn.btn-primary Browse Creators
+          button#browse.btn.btn-secondary Browse Creators
       div.action-container
         div.img-container
           img(src="/images/about-us-placeholder.jpg", alt="")
         div.info-container
           h2 What to Expect
           p Vitae justo eget magna fermentum iaculis eu non diam phasellus. Vestibulum lorem sed risus ultricies tristique nulla aliquet enim. Potenti nullam ac tortor vitae.
-          button#about.btn.btn-primary About STMB
+          button#about.btn.btn-secondary About STMB
