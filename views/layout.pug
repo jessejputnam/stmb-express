@@ -10,9 +10,13 @@ html(lang='en')
     link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
     link(href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Ubuntu:wght@400;700&display=swap" rel="stylesheet")
 
-    link(rel='stylesheet', href='/stylesheets/style.css')
 
     link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0")
+
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    if !currentUser 
+      link(rel="stylesheet", href="/stylesheets/style-noauth.css")
+    block styles
 
     if currentUser
       script(type="module" src="/javascripts/userScript.js" defer)

@@ -1,5 +1,8 @@
 extends layout
 
+block styles  
+  link(rel="stylesheet", href="/stylesheets/style-landing.css")
+
 block scripts 
   script(src="/javascripts/landingScript.js" defer)
 
@@ -80,3 +83,7 @@ block noUser
           img(src="https://images.unsplash.com/photo-1618519764620-7403abdbdfe9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80", alt="")
           h3 Monetizing nostalgia: how to use the authentic loves of your childhood to boost your reach
           a(href="#") Read more 
+
+      div.bottom-call-to-action.landing-item-container
+        h1 Want to be a part of the future?
+        button#register.btn.btn-secondary Get Started

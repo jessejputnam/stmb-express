@@ -1,23 +1,24 @@
 extends layout 
 
 block content 
-  h1= title 
+  div.form-page
+    h1= title 
 
-  form.form-wrapper(method='POST' action='/account/posts/add-post') 
-    input#userId(type="hidden" name="userId" value=currentUser._id required="true")
+    form.form-wrapper(method='POST' action='/account/posts/add-post') 
+      input#userId(type="hidden" name="userId" value=currentUser._id required="true")
 
-    div.form-control 
-      label(for="title" style="margin-left:15px") Post Title
-      input#title(type="text" name="title" required='true')
+      div.form-control 
+        label(for="title" style="margin-left:15px") Post Title
+        input#title(type="text" name="title" required='true')
 
-    div.form-control 
-      label(for="text" style="margin-left:15px") Text
-      textarea#text(name="text")
-  
-    div.form-control-btns 
-      a(href="/home") Cancel
-      button.btn(type="submit") Save
+      div.form-control 
+        label(for="text" style="margin-left:15px") Text
+        textarea#text(name="text")
+    
+      div.form-control-btns 
+        a(href="/home") Cancel
+        button.btn(type="submit") Save
 
-  div 
-    a(href=`/account/posts/${post._id}/delete`) Delete Post
+    div 
+      a(href=`/account/posts/${post._id}/delete`) Delete Post
     

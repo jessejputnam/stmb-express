@@ -1,33 +1,34 @@
 extends layout 
 
 block content
-  if errors 
-    ul 
-      for error in errors 
-        li!= error.msg
+  div.form-page
+    if errors 
+      ul 
+        for error in errors 
+          li!= error.msg
 
-  h1= title 
+    h1= title 
 
-  form.form-wrapper(method='POST' action='') 
-    h2(style="text-align:center")= title
+    form.form-wrapper(method='POST' action='') 
+      h2(style="text-align:center")= title
 
-    div.form-control 
-      label(for="title" style="margin-left:15px") Tier Title
-      input#title(type="text" name="title" required='true')
+      div.form-control 
+        label(for="title" style="margin-left:15px") Tier Title
+        input#title(type="text" name="title" required='true')
 
-    div.form-control 
-      label(for="price" style="margin-left:15px") Price
-      input#price(type="number" name="price" required ="true" step="1" min="1")
+      div.form-control 
+        label(for="price" style="margin-left:15px") Price
+        input#price(type="number" name="price" required ="true" step="1" min="1")
 
-    div.form-control 
-      label(for="desc" style="margin-left:15px") Description
-      input#desc(type="text" name="desc" required="true")
+      div.form-control 
+        label(for="desc" style="margin-left:15px") Description
+        input#desc(type="text" name="desc" required="true")
 
-    div.form-control 
-      label(for="rewards" style="margin-left:15px") Rewards (separate rewards by ||)
-      input#rewards(type="text" name="rewards" required="true")
-  
-    div.form-control-btns 
-      a(href="/home") Cancel
-      button.btn(type="submit") Submit
+      div.form-control 
+        label(for="rewards" style="margin-left:15px") Rewards (separate rewards by ||)
+        input#rewards(type="text" name="rewards" required="true")
     
+      div.form-control-btns 
+        a(href="/home") Cancel
+        button.btn(type="submit") Submit
+      

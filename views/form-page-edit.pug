@@ -1,68 +1,74 @@
 extends layout 
 
+block styles 
+  link(rel="stylesheet", href="/stylesheets/style-page-edit.css")
+
 block content 
-  if errors 
-    ul 
-      for error in errors 
-        li= error.msg
+  div.form-page
+    if errors 
+      ul 
+        for error in errors 
+          li= error.msg
 
-  form.form-wrapper(method="POST" action="") 
-    h2(style="text-align:center")= title
+    h2= title
 
-    div.form-control 
-      label(for="pageTitle") Page Name
-      input#pageTitle(name="pageTitle" value=page.title)
+    div.edit-page-container 
+      form.form-wrapper(method="POST" action="") 
+        div.form-control 
+          label(for="pageTitle") Page Name
+          input#pageTitle(name="pageTitle" value=page.title)
 
-    div.form-control 
-      label(for="genre1" style="margin-left:15px") Genre 1
-      select#genre1(name="genre1")
-        each genre in genres 
-          option(value=genre._id selected=(page.genre[0].toString() === genre.toString() ? "selected" : false)) !{genre.displayType}
+        div.form-control 
+          label(for="genre1" style="margin-left:15px") Genre 1
+          select#genre1(name="genre1")
+            each genre in genres 
+              option(value=genre._id selected=(page.genre[0].toString() === genre.toString() ? "selected" : false)) !{genre.displayType}
 
-    div.form-control 
-      label(for="genre2" style="margin-left:15px") Genre 2
-      select#genre2(name="genre2")
-        option(value="" selected=(!page.genre[1] ? "selected" : false))
-        each genre in genres
-          option(value=genre._id selected=(!page.genre[1] ? false : page.genre[1].toString() === genre.toString() ? "selected" : false)) !{genre.displayType}
+        div.form-control 
+          label(for="genre2" style="margin-left:15px") Genre 2
+          select#genre2(name="genre2")
+            option(value="" selected=(!page.genre[1] ? "selected" : false))
+            each genre in genres
+              option(value=genre._id selected=(!page.genre[1] ? false : page.genre[1].toString() === genre.toString() ? "selected" : false)) !{genre.displayType}
 
-    div.form-control 
-      label(for="genre3" style="margin-left:15px") Genre 3
-      select#genre3(name="genre3")
-        option(value="" selected=(!page.genre[2] ? "selected" : false))
-        each genre in genres 
-          option(value=genre._id selected=(!page.genre[2] ? false : page.genre[2].toString() === genre.toString() ? "selected" : false)) !{genre.displayType}
+        div.form-control 
+          label(for="genre3" style="margin-left:15px") Genre 3
+          select#genre3(name="genre3")
+            option(value="" selected=(!page.genre[2] ? "selected" : false))
+            each genre in genres 
+              option(value=genre._id selected=(!page.genre[2] ? false : page.genre[2].toString() === genre.toString() ? "selected" : false)) !{genre.displayType}
 
-    div.form-control 
-      label(for="desc") Description
-      textarea#desc(type="text" name="desc" cols="30" rows="10" placeholder="Briefly describe your project")= page.description
+        div.form-control 
+          label(for="desc") Description
+          textarea#desc(type="text" name="desc" cols="30" rows="5" placeholder="Briefly describe your project")= page.description
+        div
+          h3(style="margin-top:15px;text-align:center") Social Handles
+          div.form-control
+            label(for="facebookHandle") Facebook
+            input#facebookHandle(type="text" name="facebookHandle" value=page.socialUrls.facebookHandle)
+          div.form-control
+            label(for="instaHandle") Instagram
+            input#instaHandle(type="text" name="instaHandle" value=page.socialUrls.instagramHandle)
+          div.form-control
+            label(for="twitterHandle") Twitter
+            input#twitterHandle(type="text" name="twitterHandle" value=page.socialUrls.twitterHandle)
+        button.btn.btn-secondary(type="submit") Submit
 
-    div 
-      h3 Social Handles
-      div.form-control
-        label(for="facebookHandle") Facebook
-        input#facebookHandle(type="text" name="facebookHandle" value=page.socialUrls.facebookHandle)
-      div.form-control
-        label(for="instaHandle") Instagram
-        input#instaHandle(type="text" name="instaHandle" value=page.socialUrls.instagramHandle)
-      div.form-control
-        label(for="twitterHandle") Twitter
-        input#twitterHandle(type="text" name="twitterHandle" value=page.socialUrls.twitterHandle)
-    button.btn.btn-secondary(type="submit") Submit
-
-  h3 Images 
-  form.form-wrapper(method="POST" action="update/profileImg" enctype="multipart/form-data")
-    div.form-control
-      label(for="profileImg") Profile Image
-      input#profileImg(type="file" name="profileImg" accept="image/png, image/jpeg, image/jpg, image/webp")
-    button.btn.btn-primary(type="submit") Upload Image
+      div 
+        h2(style="margin-bottom:15px;text-align:center") Images 
+        form.form-wrapper(method="POST" action="update/profileImg" enctype="multipart/form-data")
+          div.form-control
+            label(for="profileImg") Profile Image
+            input#profileImg(type="file" name="profileImg" accept="image/png, image/jpeg, image/jpg, image/webp")
+          button.btn.btn-primary(type="submit") Upload Image
 
 
-  form.form-wrapper(method="POST" action="update/bannerImg" enctype="multipart/form-data")
-    div.form-control
-      label(for="bannerImg") Banner Image
-      input#bannerImg(type="file" name="bannerImg" accept="image/png, image/jpeg, image/jpg, image/webp")
-    button.btn.btn-primary(type="submit") Upload Image
+        form.form-wrapper(method="POST" action="update/bannerImg" enctype="multipart/form-data")
+          div.form-control
+            label(for="bannerImg") Banner Image
+            input#bannerImg(type="file" name="bannerImg" accept="image/png, image/jpeg, image/jpg, image/webp")
+          button.btn.btn-primary(type="submit") Upload Image
 
-  h3 Page Visibility
-  a(href="/account/confirm-active")= page.active ? "Deactivate Page" : "Activate Page"
+        hr(style="margin:25px")
+        h2(style="text-align:center") Page Visibility 
+          a(href="/account/confirm-active" style="color:#e8287a")= page.active ? "Deactivate Page" : "Activate Page"

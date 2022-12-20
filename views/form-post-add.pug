@@ -1,46 +1,47 @@
 extends layout 
 
 block content 
-  h1= title 
-    span(style="font-size:.7rem;color:gray")  [#{postType}]
-  div.add-posts-nav
-    p 
-      a(href="/account/posts/add-post_text") Text Post 
-    p 
-      a(href="/account/posts/add-post_link") Link Post 
-    p
-      a(href="/account/posts/add-post_image") Image Post 
-    p
-      a(href="/account/posts/add-post_video") Video Post 
+  div.form-page
+    h1= title 
+      span(style="font-size:.7rem;color:gray")  [#{postType}]
+    div.add-posts-nav
+      p 
+        a(href="/account/posts/add-post_text") Text Post 
+      p 
+        a(href="/account/posts/add-post_link") Link Post 
+      p
+        a(href="/account/posts/add-post_image") Image Post 
+      p
+        a(href="/account/posts/add-post_video") Video Post 
 
-  if errors 
-    ul 
-      for error in errors 
-        li!= error.msg
+    if errors 
+      ul 
+        for error in errors 
+          li!= error.msg
 
-  form.form-wrapper(method='POST' action='/account/posts/add-post') 
-    input#postType(type="hidden" name="postType" value=postType required="true")
+    form.form-wrapper(method='POST' action='/account/posts/add-post') 
+      input#postType(type="hidden" name="postType" value=postType required="true")
 
-    div.form-control 
-      label(for="isPublic" style="margin-left:15px") Post Access 
-      select#isPublic(name="isPublic") 
-        option(value="false" selected) Subscribers Only 
-        option(value="true") Public Access  
+      div.form-control 
+        label(for="isPublic" style="margin-left:15px") Post Access 
+        select#isPublic(name="isPublic") 
+          option(value="false" selected) Subscribers Only 
+          option(value="true") Public Access  
 
-    div.form-control 
-      label(for="title" style="margin-left:15px") Post Title
-      input#title(type="text" name="title" required='true')
+      div.form-control 
+        label(for="title" style="margin-left:15px") Post Title
+        input#title(type="text" name="title" required='true')
 
-    div.form-control 
-      label(for="text" style="margin-left:15px") Text
-      textarea#text(name="text")
+      div.form-control 
+        label(for="text" style="margin-left:15px") Text
+        textarea#text(name="text")
 
-    div.form-control
-      if postType !== "text"
-        label(for="typeContent")= postType[0].toUpperCase() + postType.slice(1) + " URL"
-      input#typeContent(type=(postType === "text" ? "hidden" : "text") name="typeContent")
-  
-    div.form-control-btns 
-      a(href="/home") Cancel
-      button.btn(type="submit") Submit
+      div.form-control
+        if postType !== "text"
+          label(for="typeContent")= postType[0].toUpperCase() + postType.slice(1) + " URL"
+        input#typeContent(type=(postType === "text" ? "hidden" : "text") name="typeContent")
     
+      div.form-control-btns 
+        a(href="/home") Cancel
+        button.btn(type="submit") Submit
+      

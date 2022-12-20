@@ -1,29 +1,30 @@
 extends layout 
 
 block noUser
-  if errors.length > 0
-    ul
-      for error of errors
-        if error === "Incorrect username"
-          li No account was found with that email
-        else if error === "Incorrect password"
-          li= error + ". Reset?"
-          form(method="POST" action="/recover") 
-            input#email(type="text" name="email" required="true" placeholder="enter email")
-            button.btn.btn-primary(type="submit") Reset Password
-        else
-          li= error
-  if error 
-    p= error
+  div.form-page
+    if errors.length > 0
+      ul
+        for error of errors
+          if error === "Incorrect username"
+            li No account was found with that email
+          else if error === "Incorrect password"
+            li= error + ". Reset?"
+            form(method="POST" action="/recover") 
+              input#email(type="text" name="email" required="true" placeholder="enter email")
+              button.btn.btn-primary(type="submit") Reset Password
+          else
+            li= error
+    if error 
+      p= error
 
-  form.form-wrapper(method='POST' action='') 
-    h2(style='text-align:center')= title 
-    div.form-control 
-      label(for='username' style='margin-left:15px') Email 
-      input#username(type="email" name='username' required='true' placeholder='email@email.com')
-    div.form-control 
-      label(for='password' style='margin-left:15px') Password 
-      input#password(type="password" name='password' required='true' placeholder='********')
-    div.form-control-btns 
-      a(href="/") Cancel
-      button.btn(type="submit") Submit
+    form.form-wrapper(method='POST' action='') 
+      h2(style='text-align:center')= title 
+      div.form-control 
+        label(for='username' style='margin-left:15px') Email 
+        input#username(type="email" name='username' required='true' placeholder='email@email.com')
+      div.form-control 
+        label(for='password' style='margin-left:15px') Password 
+        input#password(type="password" name='password' required='true' placeholder='********')
+      div.form-control-btns 
+        a(href="/") Cancel
+        button.btn(type="submit") Submit

@@ -1,6 +1,6 @@
 const countryList = {
-  "United Kingdom": "GB",
   "United States": "US",
+  "United Kingdom": "GB",
   Afghanistan: "AF",
   "Aland Islands": "AX",
   Albania: "AL",
