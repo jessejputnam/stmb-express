@@ -128,3 +128,19 @@ footer {
   display: flex;
   column-gap: 10px;
 }
+
+@media only screen and (max-width: 740px) {
+  .footer-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-about > .address {
+    text-align: center;
+  }
+
+  .footer-about-links > ul {
+    flex-direction: column;
+    text-align: center;
+  }
+}
