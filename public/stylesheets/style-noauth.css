@@ -11,6 +11,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 5px 15px;
+  width: 100%;
 }
 
 .no-auth-header {
@@ -19,6 +20,8 @@
 
 .no-auth-header > .header-logo {
   filter: contrast(0);
+  display: flex;
+  align-items: center;
 }
 
 @media (hover: hover) {
@@ -34,10 +37,6 @@
   column-gap: 3vw;
   padding: 10px;
   max-width: 500px;
-}
-
-.no-auth-content {
-  padding: 0 15px;
 }
 
 .header-search-container > .form-control {
@@ -74,6 +73,84 @@
   .btn-search:hover {
     filter: brightness(90%);
   }
+}
+
+/* ###### HAMBURGER ######## */
+
+.hamburger {
+  height: 30px;
+  width: 40px;
+  display: none;
+  position: relative;
+}
+
+.bar {
+  border: solid 1px black;
+  width: 100%;
+  position: absolute;
+}
+
+.barMid {
+  top: 48%;
+  opacity: 1;
+  transition: opacity 0.1s linear;
+}
+
+.barTop {
+  top: 0;
+  transition: top 0.2s, transform 0.25s linear;
+}
+
+.barLow {
+  bottom: 0;
+  transition: top 0.2s linear, transform 0.25s linear;
+}
+
+.barMid-open {
+  opacity: 0;
+}
+
+.barTop-open {
+  transform: rotate(40deg);
+  /* top: 50%; */
+}
+
+.barLow-open {
+  transform: rotate(-40deg);
+  /* bottom: 41%; */
+}
+
+@media only screen and (max-width: 730px) {
+  .no-auth-header-wrapper {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  .header-search-container,
+  .no-auth-nav {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+}
+
+/* ################# # HEADER MODAL ################## */
+
+.mobile-modal {
+  position: fixed;
+  /* display: none; */
+  width: 100%;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.586);
+  backdrop-filter: blur(3px);
+}
+
+/* ################# # CONTENT ################## */
+
+.no-auth-content {
+  padding: 0 15px;
 }
 
 /* ################# # FOOTER ################## */

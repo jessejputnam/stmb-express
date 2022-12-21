@@ -7,6 +7,7 @@
   # Main
     ## Page View
     ## Posts
+  # Utils
 
 */
 
@@ -23,10 +24,15 @@
 */
 
 /* ##################### # FORMATTING ################## */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
   font-family: "Nunito Sans", sans-serif;
   letter-spacing: 0.03ch;
 }
@@ -91,7 +97,8 @@ ul {
   display: flex;
   flex-direction: column;
   row-gap: 5px;
-  width: 600px;
+  width: 100%;
+  max-width: 600px;
   margin: 0 auto;
 }
 
@@ -321,4 +328,15 @@ textarea {
   padding: 5px;
   display: flex;
   column-gap: 10px;
+}
+
+/* ##################### # MAIN ####################### */
+
+.hidden {
+  display: none;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
 }
