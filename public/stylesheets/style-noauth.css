@@ -79,13 +79,14 @@
 
 .hamburger {
   height: 30px;
-  width: 40px;
+  width: 44.5px;
   display: none;
   position: relative;
 }
 
 .bar {
   border: solid 1px black;
+  background-color: black;
   width: 100%;
   position: absolute;
 }
@@ -98,10 +99,12 @@
 
 .barTop {
   top: 0;
+  transform-origin: top left;
   transition: top 0.2s, transform 0.25s linear;
 }
 
 .barLow {
+  transform-origin: bottom left;
   bottom: 0;
   transition: top 0.2s linear, transform 0.25s linear;
 }
