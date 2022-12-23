@@ -9,6 +9,7 @@ const low_bar = document.querySelector(".barLow");
 
 hamburger.addEventListener("click", () => {
   if (hamburger.classList.contains("modal-open")) {
+    window.scrollTo(0, 0);
     header.classList.remove("sticky");
     modal.classList.add("hidden");
 
