@@ -94,23 +94,26 @@
 .barMid {
   top: 48%;
   opacity: 1;
-  transition: opacity 0.1s linear;
+  width: 100%;
+  /* transition: opacity 0.1s linear; */
+  transition: width 0.2s linear, opacity 0.2s linear;
 }
 
 .barTop {
   top: 0;
   transform-origin: top left;
-  transition: top 0.2s, transform 0.25s linear;
+  transition: transform 0.25s;
 }
 
 .barLow {
   transform-origin: bottom left;
   bottom: 0;
-  transition: top 0.2s linear, transform 0.25s linear;
+  transition: transform 0.25s;
 }
 
 .barMid-open {
   opacity: 0;
+  width: 0;
 }
 
 .barTop-open {
