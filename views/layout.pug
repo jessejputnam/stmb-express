@@ -18,6 +18,8 @@ html(lang='en')
 
     if !currentUser 
       link(rel="stylesheet", href="/stylesheets/style-noauth.css")
+    if currentUser 
+      link(rel="stylesheet", href="/stylesheets/style-auth.css")
     block styles
 
     //- JAVASCRIPTS
@@ -30,6 +32,7 @@ html(lang='en')
     block scripts 
   
   body 
+
     if !currentUser
       header.no-auth-header-wrapper
         div.no-auth-header
@@ -39,8 +42,6 @@ html(lang='en')
           nav.no-auth-nav
             p 
               a(href="/search/categories") Browse 
-            //- p 
-            //-   a(href="/search") Search 
             p 
               a(href="/register") Register
             p 
@@ -114,12 +115,19 @@ html(lang='en')
 
     else  
       div.app-wrapper 
+        header.mobile-header
+          div.hamburger
+            div.bar.barTop
+            div.bar.barMid
+            div.bar.barLow
         div.sidebar 
           nav.nav-bar 
             div.header-logo 
               img(src="/images/logo.png", alt="Logo")
+            div.header-logo-mobile 
+              img(src="/images/logo-mini.png", alt="Logo")
 
-            ul 
+            ul.sidebar-nav-list 
               li 
                 a(href="/home") 
                   div#home
@@ -219,6 +227,109 @@ html(lang='en')
                   li 
                     p(style="font-size:.6rem") [Please Verify Email]
 
+        div.mobile-modal
+          nav 
+            ul 
+              li 
+                a(href="/home") 
+                  div#home
+                    span(class="material-symbols-outlined") home
+                    p Home 
+              li 
+                a(href="/search/categories")
+                  div#browse
+                    span(class="material-symbols-outlined") category
+                    p Browse 
+              li 
+                a(href="/search")
+                  div#search
+                    span(class="material-symbols-outlined") search
+                    p Search 
+              li 
+                a(href="/home/settings")
+                  div#settings
+                    span(class="material-symbols-outlined") settings
+                    p Settings 
+              li 
+                a(href="/logout")
+                  div
+                    span(class="material-symbols-outlined") logout
+                    p Logout
+              //- hr(style='margin:10px')
+              li 
+                p(style="margin-left:15px")  ⸺ Creator Page ⸺
+
+              //- IF CREATOR
+              if currentUser.creator.stripeStatus
+                //- IF PAGE EXISTS
+                if currentUser.creator.page
+                  //- hr(style='margin:10px')
+                  li 
+                    a(href=`/${currentUser.creator.page}`) 
+                      div.view-page(id=currentUser.creator.page._id)
+                        span(class="material-symbols-outlined") web
+                        p View Page 
+                  li 
+                    a(href="/account/edit")
+                      div#edit-page
+                        span(class="material-symbols-outlined") edit
+                        p Edit Page
+                  li 
+                    a(href="/account/posts")
+                      div#posts
+                        span(class="material-symbols-outlined") post_add
+                        p Posts
+                  li 
+                    a(href="/account/memberships") 
+                      div#memberships
+                        span(class="material-symbols-outlined") payments
+                        p Memberships
+                  li 
+                    a(href="/account/analytics")
+                      div#analytics
+                        span(class="material-symbols-outlined") leaderboard
+                        p Analytics 
+
+                //- IF NO PAGE
+                else 
+                  //- IF ONBOARDING INCOMPLETE
+                  if !currentUser.creator.stripeOnboardComplete
+                    //- IF ONBOARDING NOT STARTED
+                    if !currentUser.creator.stripeId
+                      a(href="/account/onboard-user") Connect to Stripe
+                    //- IF ONBOARDING STARTED
+                    else 
+                      a(href="/account/onboard-user/refresh") Continue Connecting to Stripe
+
+                  //- IF ONBOARDING COMPLETE
+                  else 
+                    //- IF PAYMENTS ACTIVE
+                    if currentUser.creator.stripeStatus === "active" 
+                      form(method="POST" action="/account/create-page") 
+                        button.btn.btn-secondary(type="submit") Create Page
+                    
+                    //- IF PAYMENT ISSUE
+                    else 
+                      div 
+                        em Stripe Payment Issue
+                        p Status: 
+                          span= currentUser.creator.stripeStatus
+                        a(href="https://dashboard.stripe.com") Stripe Dashboard
+                    
+                    //- IF STRIPE REQUIRES INFO
+                    if currentUser.creator.stripeIssue 
+                      div 
+                        em Stripe requires attention 
+                        a(href="https://dashboard.stripe.com") Stripe Dashboard
+
+              //- IF NOT CREATOR
+              else 
+                if currentUser.isVerified
+                  li 
+                    a(href="/home/creator-signup") Become Creator
+                else 
+                  li 
+                    p(style="font-size:.6rem") [Please Verify Email]
 
         main.main-wrapper
           block content

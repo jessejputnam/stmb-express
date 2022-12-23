@@ -151,40 +151,6 @@ textarea {
   left: 0;
 }
 
-/* #################### # SIDEBAR ##################### */
-.sidebar {
-  padding: 20px;
-  width: 200px;
-  box-shadow: 1px 0 3px 0 rgba(0, 0, 0, 0.543);
-  height: 100vh;
-  z-index: 100;
-  background-color: #beccd9;
-}
-
-.sidebar > .nav-bar ul li a div {
-  padding: 8px 8px;
-  display: flex;
-  align-items: center;
-  border-radius: 8px;
-}
-
-.selected-sidebar-nav {
-  background-color: #b7c5d3;
-  color: #001331;
-  /* color: rgb(68, 68, 68); */
-}
-
-@media (hover: hover) {
-  .sidebar > .nav-bar ul li a div:hover {
-    background-color: #b7c5d3;
-  }
-}
-
-.sidebar > .nav-bar ul li a div span {
-  font-size: 0.98rem;
-  margin-right: 5px;
-}
-
 /* ##################### # MAIN ####################### */
 .app-wrapper {
   display: flex;

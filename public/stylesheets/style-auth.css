@@ -1,0 +1,202 @@
+/* #################### # SIDEBAR ##################### */
+
+.sidebar {
+  padding-top: 20px;
+  box-shadow: 1px 0 3px 0 rgba(0, 0, 0, 0.543);
+  height: 100vh;
+  z-index: 100;
+  background-color: white;
+}
+
+.nav-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.header-logo-mobile {
+  display: none;
+}
+
+.header-logo-mobile > img {
+  height: 50px;
+}
+
+.sidebar-nav-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar > nav ul li a div {
+  padding: 0 15px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.selected-sidebar-nav {
+  background-color: #d2e0ed5c;
+  border-top: inset 1px rgba(128, 128, 128, 0.142);
+  border-bottom: inset 1px rgba(128, 128, 128, 0.142);
+  color: #001331;
+}
+
+.mobile-header {
+  display: none;
+  z-index: 110;
+}
+
+@media (hover: hover) {
+  .sidebar > .nav-bar ul li a div:hover {
+    background-color: #e1e9f26f;
+  }
+}
+
+.sidebar > .nav-bar ul li a div span {
+  font-size: 1.5rem;
+  margin-right: 5px;
+}
+
+@media only screen and (max-width: 975px) {
+  .header-logo {
+    display: none;
+  }
+
+  .header-logo-mobile {
+    display: block;
+  }
+
+  .sidebar-nav-list > li > a > div > p {
+    display: none;
+  }
+
+  .sidebar > .nav-bar ul li a div span {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .app-wrapper {
+    flex-direction: column;
+  }
+
+  .main-wrapper {
+    padding-top: 50px;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .mobile-header {
+    box-shadow: 0px 1px 3px 0 rgba(0, 0, 0, 0.455);
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.794);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+}
+
+/* #################### # HAMBURGER ##################### */
+
+.hamburger {
+  height: 20px;
+  width: 29px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.bar {
+  border: solid 1px black;
+  background-color: black;
+  width: 100%;
+  position: absolute;
+}
+
+.barMid {
+  top: 45%;
+  opacity: 1;
+  width: 100%;
+  transition: width 0.2s linear, opacity 0.2s linear;
+}
+
+.barTop {
+  top: 0;
+  transform-origin: top left;
+  transition: transform 0.25s;
+}
+
+.barLow {
+  transform-origin: bottom left;
+  bottom: 0;
+  transition: transform 0.25s;
+}
+
+.barMid-open {
+  opacity: 0;
+  width: 0;
+}
+
+.barTop-open {
+  transform: rotate(40deg);
+}
+
+.barLow-open {
+  transform: rotate(-40deg);
+}
+
+/* #################### # MODAL ##################### */
+
+.mobile-modal {
+  position: fixed;
+  width: 100%;
+  height: 0;
+  background: rgb(255, 255, 255);
+  overflow: hidden;
+
+  transition: height 0.5s;
+}
+
+.modal-open {
+  height: 100vh;
+  z-index: 100;
+}
+
+.mobile-modal > nav {
+  margin-top: 100px;
+}
+
+.mobile-modal > nav > ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.mobile-modal > nav > ul > li {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+}
+
+.mobile-modal > nav > ul > li > a > div {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+@media only screen and (min-width: 600px) {
+  .mobile-modal {
+    display: none;
+  }
+}
