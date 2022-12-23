@@ -1,8 +1,9 @@
 extends layout
 
 block content
-  h1 Whoops! 
-  h2(style="margin-bottom:50px") Something went wrong:
-  h5= message
-  hr(style="margin:25px")
-  pre #{error.stack}
+  div.page-wrapper
+    h1 Whoops! 
+    h2(style="margin-bottom:50px") Something went wrong:
+    h5= message
+    hr(style="margin:25px")
+    pre #{error.stack}

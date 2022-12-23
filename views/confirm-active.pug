@@ -1,14 +1,15 @@
 extends layout 
 
 block content
-  h1= title 
+  div.page-wrapper
+    h1= title 
 
-  if page.active 
-    p Are you sure you want to deactivate your page? 
-    p Your current subscribers will still be subscribed, but new users will not be able to find your page and subscribe
-  else 
-    p Are you sure you want to reactivate your page?
-    p Your page will be viewable again by search and new users will be able to subscribe
+    if page.active 
+      p Are you sure you want to deactivate your page? 
+      p Your current subscribers will still be subscribed, but new users will not be able to find your page and subscribe
+    else 
+      p Are you sure you want to reactivate your page?
+      p Your page will be viewable again by search and new users will be able to subscribe
 
-  form.form-wrapper(method="POST" action='') 
-    button.btn.btn-primary(type='Submit')= page.active ? "Deactivate" : "Reactivate" 
+    form.form-wrapper(method="POST" action='') 
+      button.btn.btn-primary(type='Submit')= page.active ? "Deactivate" : "Reactivate" 

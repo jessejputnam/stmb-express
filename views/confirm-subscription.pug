@@ -4,27 +4,28 @@ block scripts
   script(type="module" src="/javascripts/confirmSubscription.js" defer)
 
 block content 
-  h1= title
+  div.page-wrapper
+    h1= title
 
-  p Try success test card 4242424242424242
+    p Try success test card 4242424242424242
 
-  p Try card with SCA 4000002500003155
+    p Try card with SCA 4000002500003155
 
-  hr
+    hr
 
-  form#subscribe-form
-    input#client-secret(type="hidden" name="client-secret" value=client_secret)
-    input#stripe-publishable-key(type="hidden" name="stripe-publishable-key" value=stripe_publishable_key)
-    input#creator-acct(type="hidden" name="creator-acct" value=creator_acct)
+    form#subscribe-form
+      input#client-secret(type="hidden" name="client-secret" value=client_secret)
+      input#stripe-publishable-key(type="hidden" name="stripe-publishable-key" value=stripe_publishable_key)
+      input#creator-acct(type="hidden" name="creator-acct" value=creator_acct)
 
-    label(for="name") Full Name 
-    input#name(type="text" placeholder="Barnabas Stoutcastle")
+      label(for="name") Full Name 
+      input#name(type="text" placeholder="Barnabas Stoutcastle")
 
-    div#card-element 
+      div#card-element 
 
-    button.btn.btn-primary(type="submit") Subscribe
-    
-  div 
-    form(method="POST" action=`/subscribe/confirm/${app_sub_id}/cancel`)
-      button.btn.btn-primary(type="submit") Cancel
-  div#messages
+      button.btn.btn-primary(type="submit") Subscribe
+      
+    div 
+      form(method="POST" action=`/subscribe/confirm/${app_sub_id}/cancel`)
+        button.btn.btn-primary(type="submit") Cancel
+    div#messages

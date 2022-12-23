@@ -4,38 +4,39 @@ block scripts
   script(type="module" src="/javascripts/postsScript.js" defer)
 
 block content 
-  h1= title 
+  div.page-wrapper
+    h1= title 
 
-  div 
-    a(href=`/account/posts/add-post_text`) Add Post
+    div 
+      a(href=`/account/posts/add-post_text`) Add Post
 
-  if !posts.length
-    div
-      em No posts yet
-  else 
-    each post in posts 
-      div.post-container
-        div.post-media
-          if post.type === "link" 
-            div
-              a.external-link(href=post.typeContent target="_blank" noreferrer)= post.typeContent
-              div.link-ogg-container
-                p.og-title Loading...
-                img.og-img(src="/images/post-placeholder.png", alt="External link image")
-                p.og-desc Loading...
+    if !posts.length
+      div
+        em No posts yet
+    else 
+      each post in posts 
+        div.post-container
+          div.post-media
+            if post.type === "link" 
+              div
+                a.external-link(href=post.typeContent target="_blank" noreferrer)= post.typeContent
+                div.link-ogg-container
+                  p.og-title Loading...
+                  img.og-img(src="/images/post-placeholder.png", alt="External link image")
+                  p.og-desc Loading...
 
 
-          if post.type === "image"
-            img(src=post.typeContent, alt="Post image")
+            if post.type === "image"
+              img(src=post.typeContent, alt="Post image")
 
-          if post.type === "video" 
-            iframe(width="560" height="315" src=post.typeContent title="Video player" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+            if post.type === "video" 
+              iframe(width="560" height="315" src=post.typeContent title="Video player" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
 
-        div.post-title
-          h4!= post.title 
+          div.post-title
+            h4!= post.title 
 
-        div.post-text
-          p!= post.text
+          div.post-text
+            p!= post.text
 
-        div 
-          a(href=`/account/posts/${post._id}`) Edit Post
+          div 
+            a(href=`/account/posts/${post._id}`) Edit Post
