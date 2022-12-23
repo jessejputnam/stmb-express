@@ -154,6 +154,7 @@ textarea {
   width: 100%;
   overflow-y: auto;
   height: 100vh;
+  background-color: #e5f1f175;
 }
 
 .page-wrapper {

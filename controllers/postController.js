@@ -101,7 +101,6 @@ exports.open_graph_get = async (req, res, next) => {
 
   try {
     const data = await ogs(options);
-    console.log(data.result);
 
     if (data.error === true) {
       return res.send(new Error("There was an error fetching site data"));
