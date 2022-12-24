@@ -54,13 +54,14 @@
 /* ########### # MAIN ############ */
 
 .page-view-main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 0 20px;
   max-width: 1000px;
 }
 
 .page-about {
-  /* text-align: center; */
-  margin: 0 auto;
   max-width: 500px;
 }
 
@@ -71,7 +72,6 @@
 .page-tiers-container {
   width: 90%;
   max-width: 1000px;
-  margin: 0 auto;
 }
 
 .tiers-wrapper {
@@ -109,7 +109,6 @@
 .page-posts-container {
   width: 90%;
   max-width: 1000px;
-  margin: 0 auto;
   position: relative;
 }
 
