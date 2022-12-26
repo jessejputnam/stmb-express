@@ -44,6 +44,14 @@
 
 .page-title > ul > li > a > img {
   height: 30px;
+  cursor: pointer;
+  filter: grayscale(60%);
+}
+
+@media (hover: hover) {
+  .page-title > ul > li > a > img:hover {
+    filter: grayscale(0);
+  }
 }
 
 .page-genres {
@@ -56,9 +64,10 @@
 .page-view-main-container {
   display: flex;
   flex-direction: column;
+  gap: 50px;
   align-items: center;
-  padding: 0 20px;
-  max-width: 1000px;
+  width: 100%;
+  /* max-width: 1000px; */
 }
 
 .page-about {
@@ -70,40 +79,77 @@
 }
 
 .page-tiers-container {
-  width: 90%;
-  max-width: 1000px;
+  /* max-width: 1000px; */
+  width: 100%;
 }
 
 .tiers-wrapper {
   min-height: 100px;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
   padding: 15px 0;
+  width: 100%;
 }
 
 .tier-wrapper {
-  width: 20%;
+  background: white;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  min-width: 200px;
-  border: solid 1px black;
-  padding: 5px;
-  row-gap: 5px;
+  max-width: 45%;
+  width: 30%;
+  min-width: 290px;
+  padding: 10px;
+  gap: 10px;
   position: relative;
-  padding-bottom: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.352);
+}
+
+@media only screen and (max-width: 699px) {
+  .tier-wrapper {
+    width: 100%;
+    min-width: none;
+    max-width: none;
+  }
+}
+
+.rewards-container {
+  padding-bottom: 20px;
+  position: relative;
+}
+
+.preview {
+  height: 100px;
+  overflow-y: hidden;
+}
+
+.remove-preview {
+  color: #34289f;
+  position: absolute;
+  bottom: -5px;
+  background-color: rgba(255, 255, 255, 0.335);
+  box-shadow: 0 -3px 2px 0 rgba(255, 255, 255, 0.647);
+  width: 95%;
+  text-align: center;
+  backdrop-filter: blur(2px);
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .remove-preview:hover {
+    color: #e8287a;
+  }
+}
+
+.reward {
+  color: rgb(98, 98, 98);
+  font-size: 0.9rem;
 }
 
 .membership-btn-container {
-  display: flex;
-  width: 67px;
-  justify-content: center;
-  position: absolute;
-  bottom: 0;
-  left: calc(50% - 33px);
-  padding: 10px 0;
+  margin: 0 auto;
 }
 
 .page-posts-container {

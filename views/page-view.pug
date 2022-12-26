@@ -1,5 +1,8 @@
 extends layout 
 
+block scripts 
+  script(type="module" src="/javascripts/pageviewScript.js" defer)
+
 block styles 
   link(rel="stylesheet", href="/stylesheets/style-pageview.css")
 
@@ -36,22 +39,23 @@ block content
             a()= ", " + page.genre[1].displayType 
           if page.genre.length > 2
             a()= ", " + page.genre[2].displayType 
+
       div.page-view-main-container
         div.page-about
           p!= page.description 
 
         div.page-tiers-container 
-          h3= curPageSub ? "My Membership" : "Membership Tiers"
+          h2= curPageSub ? "My Membership" : "Membership Tiers"
           
           div.tiers-wrapper
             if curPageSub
               div.tier-wrapper 
                 h3= curPageSub.membership.title
-                p= `$${curPageSub.membership.price}`
+                p= `$${curPageSub.membership.price} / month`
                 p= curPageSub.membership.description
                 ul 
                   each reward in curPageSub.membership.rewards   
-                    li!= "⏦ " + reward
+                    li.reward!= "⏦ " + reward
                 em= "Status: " + curPageSub.status
             else 
               if tiers.length > 0
@@ -61,27 +65,32 @@ block content
                 each membership in tiers   
                   div.tier-wrapper 
                     h3= membership.title 
-                    p= `$${membership.price}`
-                    p= membership.description
-                    ul 
-                      each reward in membership.rewards   
-                        li!= "⏦ " + reward
+
+                    p.center-txt= `$${membership.price} / month`
+
                     div.membership-btn-container
                       if !currentUser 
                         em(style="font-size:.7rem") Register to Subscribe!
                       else if !currentUser.isVerified
                         em(style="font-size:.7rem") Check email to verify
                       else if String(currentUser._id) === String(page.user._id)
-                        em Your Page
+                        button.btn.btn-secondary.btn-disabled(type="submit") My page
                       else 
                         form(method="POST" action=`/subscribe/add-subscription`) 
                           input#membershipId(type="hidden" name="membershipId" required="true" value=membership._id)
                           button.btn.btn-secondary(type="submit") Subscribe
-                  
 
+                    p= membership.description
+
+                    div.rewards-container.preview
+                      div.remove-preview
+                        p Show more
+                      ul 
+                        each reward in membership.rewards   
+                          li.reward!= "⏦ " + reward
 
         div.page-posts-container 
-          h3 Posts
+          h3 Recent Posts
 
           div.posts-wrapper
             if !currentUser || (!curPageSub && String(currentUser._id) !== String(page.user._id))
@@ -96,6 +105,6 @@ block content
                   //- img(src=post.image, alt="Post image")
                 div.post-header 
                   p= post.timestamp.toLocaleDateString()
-                  h3!= post.title 
+                  h4!= post.title 
                 div.post-text 
                   p!= post.text

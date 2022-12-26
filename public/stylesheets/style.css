@@ -45,6 +45,12 @@ h5 {
   font-family: "Ububntu", sans-serif;
 }
 
+h1,
+h2,
+h3 {
+  text-align: center;
+}
+
 h1 {
   font-size: 2.3rem;
   font-weight: 700;
@@ -77,10 +83,26 @@ ul {
   border: solid 2px #e8287a;
 }
 
+.btn-secondary {
+  background-color: #34289f;
+  border-color: #34289f;
+  border-radius: 5px;
+  padding: 0.3rem 1.1rem;
+}
+
+.btn-disabled {
+  border: inset 2px gray;
+  filter: grayscale(80%);
+}
+
 @media (hover: hover) {
   .btn:hover {
     background: white;
     color: #e8287a;
+  }
+
+  .btn-secondary:hover {
+    color: #34289f;
   }
 }
 
@@ -208,4 +230,8 @@ textarea {
 .sticky {
   position: sticky;
   top: 0;
+}
+
+.center-txt {
+  text-align: center;
 }
