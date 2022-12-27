@@ -95,6 +95,11 @@ ul {
   filter: grayscale(80%);
 }
 
+.btn-register {
+  background-color: #e8287a;
+  border-color: #e8287a;
+}
+
 @media (hover: hover) {
   .btn:hover {
     background: white;
@@ -105,10 +110,14 @@ ul {
     color: #34289f;
   }
 
+  .btn-register:hover {
+    color: #e8287a;
+    background-color: white;
+  }
+
   .btn-disabled:hover {
     background-color: #34289f;
-    color: white;
-    cursor: not-allowed;
+    color: rgb(230, 167, 167);
   }
 }
 
@@ -198,25 +207,40 @@ textarea {
 
 /* Individual Posts */
 .post-container {
-  min-height: 200px;
-  width: 600px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15px;
+  min-height: 100px;
+  width: 100%;
+  max-width: 600px;
   padding: 15px;
-  box-shadow: 0 0 3px 1px black;
+  box-shadow: 0 0 3px 0px rgba(0, 0, 0, 0.498);
   margin-bottom: 10px;
+  background-color: white;
 }
 
 .post-media {
-  height: 350px;
   overflow-y: hidden;
+  max-height: 400px;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.221);
+  padding: 5px;
+  border-radius: 5px;
 }
 
-.post-media > img {
+.post-media > iframe {
+  max-height: 315px;
+  height: 50vw;
+}
+
+.post-media > img,
+.post-media > iframe {
   width: 100%;
 }
 
 .link-ogg-container > img {
   width: 100%;
-  height: 250px;
   object-fit: contain;
 }
 
