@@ -70,7 +70,8 @@ block content
 
                     div.membership-btn-container
                       if !currentUser 
-                        em(style="font-size:.7rem") Register to Subscribe!
+                        a(href="/register") 
+                          button.btn.btn-secondary.btn-disabled(type="submit") Register to Subscribe!
                       else if !currentUser.isVerified
                         em(style="font-size:.7rem") Check email to verify
                       else if String(currentUser._id) === String(page.user._id)
@@ -100,7 +101,7 @@ block content
               div  
                 em No posts yet
             each post in posts 
-              div.post-wrapperdiv(style="margin-top:15px;border-bottom:solid 1px black;max-width:650px")  
+              div.post-wrapper 
                 div.post-img-container 
                   //- img(src=post.image, alt="Post image")
                 div.post-header 

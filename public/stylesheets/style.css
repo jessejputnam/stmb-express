@@ -104,6 +104,12 @@ ul {
   .btn-secondary:hover {
     color: #34289f;
   }
+
+  .btn-disabled:hover {
+    background-color: #34289f;
+    color: white;
+    cursor: not-allowed;
+  }
 }
 
 /* ########### ## FORMS ############ */
