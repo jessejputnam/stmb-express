@@ -224,8 +224,9 @@ textarea {
 .post-media {
   overflow-y: hidden;
   max-height: 400px;
+  background-color: rgb(247, 247, 247);
   box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.221);
-  padding: 5px;
+  padding: 10px;
   border-radius: 5px;
 }
 
@@ -254,7 +255,7 @@ textarea {
 /* ##################### # MAIN ####################### */
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .sticky {

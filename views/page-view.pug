@@ -45,7 +45,7 @@ block content
         div.page-about
           p!= page.description 
 
-        div.page-tiers-container 
+        div#tiers.page-tiers-container 
           h2= curPageSub ? "My Membership" : "Membership Tiers"
           
           div.tiers-wrapper
@@ -92,34 +92,71 @@ block content
                           li.reward!= "⏦ " + reward
 
         div.page-posts-container 
-          h3 Recent Posts
+          h2 Recent Posts
 
           div.posts-wrapper
-            if !currentUser || (!curPageSub && String(currentUser._id) !== String(page.user._id))
-              div.blur-shield 
-
             if !posts.length
               div  
                 em No posts yet
             each post in posts 
               div.post-container
-                div.post-media
-                  if post.type === "link" 
-                    div
-                      a.external-link(href=post.typeContent target="_blank" noreferrer)= post.typeContent
-                      div.link-ogg-container
-                        p.og-title Loading...
-                        img.og-img(src="/images/post-placeholder.png", alt="External link image")
-                        p.og-desc Loading...
+                if !currentUser || (!curPageSub && String(currentUser._id) !== String(page.user._id))
+                  if post.public 
+                    div.post-media(class=(post.type==="text" ? "hidden" : ""))
+                      if post.type === "link" 
+                        div
+                          a.external-link(href=post.typeContent target="_blank" noreferrer)= post.typeContent
+                          div.link-ogg-container
+                            p.og-title Loading...
+                            img.og-img(src="/images/post-placeholder.png", alt="External link image")
+                            p.og-desc Loading...
 
-                  if post.type === "image"
-                    img(src=post.typeContent, alt="Post image")
+                      if post.type === "image"
+                        img(src=post.typeContent, alt="Post image")
 
-                  if post.type === "video" 
-                    iframe(src=post.typeContent title="Video player" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+                      if post.type === "video" 
+                        iframe(src=post.typeContent title="Video player" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
 
-                div.post-title
-                  h4!= post.title 
+                    div.post-title
+                      p.timestamp= post.readableDate
+                      h3!= post.title 
 
-                div.post-text
-                  p!= post.text
+                    div.read-post
+                      p.read-post-btn Read Post
+
+                    div.post-text.hidden
+                      p!= post.text
+                  else  
+                    div.post-media.media-hidden
+                      div
+                        p 
+                          a(href="#tiers") 🔒 Subscribe to unlock
+                    div.post-title
+                      p.timestamp= post.readableDate
+                      h3!= post.title 
+
+                else 
+                  div.post-media(class=(post.type==="text" ? "hidden" : ""))
+                    if post.type === "link" 
+                      div
+                        a.external-link(href=post.typeContent target="_blank" noreferrer)= post.typeContent
+                        div.link-ogg-container
+                          p.og-title Loading...
+                          img.og-img(src="/images/post-placeholder.png", alt="External link image")
+                          p.og-desc Loading...
+
+                    if post.type === "image"
+                      img(src=post.typeContent, alt="Post image")
+
+                    if post.type === "video" 
+                      iframe(src=post.typeContent title="Video player" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+
+                  div.post-title
+                    p.timestamp= post.readableDate
+                    h3!= post.title 
+
+                  div.read-post
+                    p.read-post-btn Read Post
+
+                  div.post-text.hidden
+                    p!= post.text

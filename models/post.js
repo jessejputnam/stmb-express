@@ -21,4 +21,16 @@ const PostSchema = new Schema({
   typeContent: { type: String, default: null }
 });
 
+PostSchema.virtual("readableDate").get(function () {
+  return (
+    this.timestamp.toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric"
+    }) +
+    " at " +
+    this.timestamp.toLocaleTimeString()
+  );
+});
+
 module.exports = mongoose.model("Post", PostSchema);
