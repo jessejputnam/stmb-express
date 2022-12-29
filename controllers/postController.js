@@ -89,6 +89,9 @@ exports.edit_post_get = async (req, res, next) => {
 
 // Handle Open Graph call on GET
 exports.open_graph_get = async (req, res, next) => {
+  const placeholder_link =
+    "https://cdn.iconscout.com/icon/free/png-256/link-3114411-2598189.png";
+
   const site = req.params.id;
   const options = { url: site };
 
@@ -120,14 +123,14 @@ exports.open_graph_get = async (req, res, next) => {
           ? result.ogImage.url
           : result.twitterImage
           ? result.twitterImage.url
-          : "/images/post-placeholder.png"
+          : placeholder_link
       };
     } else {
       siteInfo = {
         name: "Not Found",
         description: "Not Found",
         url: site,
-        img: "/images/post-placeholder.png"
+        img: placeholder_link
       };
     }
 

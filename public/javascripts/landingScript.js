@@ -11,11 +11,6 @@ const example_a = document.querySelector("#ex-a");
 const example_b = document.querySelector("#ex-b");
 const example_c = document.querySelector("#ex-c");
 const example_d = document.querySelector("#ex-d");
-// const example_video_btn = document.querySelector("#video");
-// const example_podcast_btn = document.querySelector("#podcast");
-// const example_art_btn = document.querySelector("#art");
-// const example_music_btn = document.querySelector("#music");
-// const example_other_btn = document.querySelector("#other");
 
 // --------------------- Nav Buttons -----------------
 register_btn.addEventListener("click", () => {

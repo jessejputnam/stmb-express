@@ -90,6 +90,16 @@ ul {
   padding: 0.3rem 1.1rem;
 }
 
+.btn-tertiary {
+  min-width: unset;
+  background-color: #beccd993;
+  color: #001331;
+  padding: 4px 8px;
+  border-radius: 2rem;
+  margin: 5px 2px;
+  border: solid 2px #beccd993;
+}
+
 .btn-disabled {
   border: inset 2px gray;
   filter: grayscale(80%);
@@ -108,6 +118,12 @@ ul {
 
   .btn-secondary:hover {
     color: #34289f;
+  }
+
+  .btn-tertiary:hover {
+    background-color: white;
+    border: solid 2px #e8287a;
+    color: #e8287a;
   }
 
   .btn-register:hover {
@@ -130,6 +146,16 @@ ul {
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
+  background: white;
+  padding: 10px 15px 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.316);
+}
+
+@media only screen and (max-width: 600px) {
+  .form-wrapper {
+    border-radius: 0;
+  }
 }
 
 .form-control {
@@ -138,13 +164,17 @@ ul {
   row-gap: 7px;
 }
 
+.form-control > label {
+  margin-left: 15px;
+}
+
 .form-control > input,
 select,
 textarea {
   padding: 10px 15px;
   border-radius: 5px;
   border: none;
-  background-color: #beccd95b;
+  background-color: #ccd9ee70;
 }
 
 .form-control > textarea {
@@ -159,6 +189,8 @@ textarea {
   align-self: flex-end;
   align-items: center;
 }
+
+/* ########### ## HEADER LOGO ############ */
 
 .header-logo {
   overflow: hidden;
@@ -201,6 +233,13 @@ textarea {
   flex-direction: column;
   align-items: center;
   gap: 25px;
+}
+
+@media only screen and (max-width: 600px) {
+  .page-wrapper {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
 }
 
 /* ########### ## POSTS ############ */

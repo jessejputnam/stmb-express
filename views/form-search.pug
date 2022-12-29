@@ -16,17 +16,21 @@ block content
       h3 Browse by genre 
         ul.genres-container 
           each genre of genres
-            a(href=`/search?searchTerm=browse-genre+${genre.displayType}+${genre._id}`)
+            a.btn.btn-tertiary(href=`/search?searchTerm=browse-genre+${genre.displayType}+${genre._id}`)
               li= genre.displayType
         
     if pages
       hr(style="margin:10px;width:50%")
-      p Results for: #{searched_term}
       div.results-container
+        p(style="font-weight:bold;text-align:center;margin-bottom:10px") Results for: 
+          span(style="font-weight:normal") #{searched_term}
         ul
           if !pages.length
             p No results
           for page of pages
-            li
-              a(href=page.url) #{page.title} 
-                span(style="color:gray;font-size:.7rem") [#{page.genre.map(genre => genre.type).join(", ")}] 
+            a(href=page.url)
+              div.result-wrapper 
+                img(src=page.profileImg, alt="Profile Image")
+                div  
+                  h4= page.title 
+                  p= page.genre.map(genre => genre.type).join(", ")

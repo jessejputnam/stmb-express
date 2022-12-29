@@ -138,22 +138,6 @@
   padding: 10px 10px;
 }
 
-.example-nav-btn {
-  min-width: unset;
-  background-color: #beccd993;
-  color: #001331;
-  padding: 4px 8px;
-  border-radius: 2rem;
-  margin: 5px 2px;
-  border: solid 2px #beccd993;
-}
-
-@media (hover: hover) {
-  .example-nav-btn:hover {
-    filter: brightness(110%);
-  }
-}
-
 .example-nav-selected {
   background-color: white;
   border: solid 2px #e8287a;

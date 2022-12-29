@@ -4,3 +4,18 @@
   flex-wrap: wrap;
   gap: 15px;
 }
+
+.deactivate-page-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 25px;
+}
+
+@media only screen and (max-width: 600px) {
+  .page-wrapper {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}

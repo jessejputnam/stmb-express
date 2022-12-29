@@ -24,7 +24,10 @@ main {
 }
 
 .page-avatar-wrapper > img {
-  height: 100px;
+  height: 20vw;
+  width: 20vw;
+  max-height: 100px;
+  max-width: 100px;
   position: absolute;
   bottom: -15px;
   left: 10px;
@@ -184,6 +187,11 @@ main {
   flex-direction: column;
   align-items: center;
   gap: 25px;
+}
+
+.og-img {
+  height: 40vw;
+  max-height: 350px;
 }
 
 .timestamp {
