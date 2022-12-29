@@ -18,7 +18,7 @@ block content
           ul.genres-container 
             each genre of genres 
               li 
-                a(href=`/search?searchTerm=${genre.type}`)= genre.type
+                a(href=`/search?searchTerm=${genre.type}`)= genre.displayType
         
     if pages
       hr(style="margin:10px;width:50%")
