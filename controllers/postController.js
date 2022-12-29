@@ -109,11 +109,17 @@ exports.open_graph_get = async (req, res, next) => {
     const result = data.result;
     if (data.result.success) {
       siteInfo = {
-        name: result.ogSiteName ?? result.ogTitle ?? "Not Found",
+        name:
+          result.ogSiteName ??
+          result.ogTitle ??
+          result.twitterTitle ??
+          "Not Found",
         description: result.ogDescription ?? "Not Found",
         url: result.ogUrl ?? result.requestUrl ?? "Not Found",
         img: result.ogImage
           ? result.ogImage.url
+          : result.twitterImage
+          ? result.twitterImage.url
           : "/images/post-placeholder.png"
       };
     } else {
