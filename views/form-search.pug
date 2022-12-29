@@ -1,23 +1,28 @@
 extends layout 
 
+block styles 
+  link(rel="stylesheet", href="/stylesheets/style-search.css")
+
 block content 
   div.page-wrapper
     h1= title
-    p(style="color:red") To be added:
-    ul(style="margin:10px") 
-      li ✓ Filter options: (e.g. by genre, by region, any others?)
-      li ✓ Sort options: (e.g. by )
-      li ✓ Give default smart sorting -- thinking initially by country
 
-    div
+    div.search-page-input-container
       form.form-control(method="GET" action="")
         input#searchTerm(type="text" name="searchTerm" placeholder="Search for creators..." required autofocus)
-        button.btn.btn-search Search
+        button.btn.btn-search 🔍
 
-
+    if !pages
+      div
+        h3 Browse by genre 
+          ul.genres-container 
+            each genre of genres 
+              li 
+                a(href=`/search?searchTerm=${genre.type}`)= genre.type
+        
     if pages
-      hr(style="margin:25px")
-      div   
+      hr(style="margin:10px;width:50%")
+      div.results-container
         ul
           if !pages.length
             p No results

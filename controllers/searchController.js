@@ -3,6 +3,7 @@
 const getRegExps = require("../utils/getSearchRegEx");
 
 const Page = require("../models/page");
+const Genre = require("../models/genre");
 
 // Handle browse all pages on GET
 exports.display_all_pages_get = async (req, res, next) => {
@@ -25,20 +26,24 @@ exports.search_form_get = async (req, res, next) => {
 
   const regs = getRegExps(searchTerm);
 
-  // If no search yet, just display search form
-  if (!regs) {
-    return res.render("form-search", {
-      title: "Search for Creator Pages",
-      pages: null
-    });
-  }
-
   try {
+    const genres = await Genre.find({});
+    console.log(genres);
+
+    // If no search yet, just display search form
+    if (!regs) {
+      return res.render("form-search", {
+        title: "Find Creators",
+        genres,
+        pages: null
+      });
+    }
+
     const results = await Page.find({ title: regs }).populate("genre").exec();
     const activeResults = results.filter((page) => page.active);
 
     return res.render("form-search", {
-      title: "Search Results",
+      title: "Find Creators",
       pages: activeResults
     });
   } catch (err) {
