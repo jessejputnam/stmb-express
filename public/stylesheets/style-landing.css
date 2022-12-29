@@ -1,3 +1,5 @@
+/* ######### FORMAT ############ */
+
 .landing-page {
   margin-top: 15px;
   padding: 20px;
@@ -16,6 +18,8 @@
   width: 100%;
   max-width: 1400px;
 }
+
+/* ######### ABOUT ############ */
 
 .video-player {
   margin-top: 0px;
@@ -47,6 +51,8 @@
 .landing-about-container > p {
   text-align: center;
 }
+
+/* ######### CALL TO ACTION BOXES ############ */
 
 .call-to-action {
   display: flex;
@@ -94,6 +100,8 @@
     gap: 5px;
   }
 }
+
+/* ######### CREATOR EXAMPLES ############ */
 
 .creator-examples-container {
   margin-top: 50px;
@@ -174,6 +182,8 @@
   width: 100%;
 }
 
+/* ######### LINKED ARTICLES ############ */
+
 .articles-wrapper {
   margin-top: 15px;
   display: flex;
@@ -188,7 +198,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  /* align-items: center; */
+  text-align: center;
 }
 
 .article-container > img {
@@ -204,6 +214,8 @@
     max-height: 350px;
   }
 }
+
+/* ######### BOTTOM CALL TO ACTION ############ */
 
 .bottom-call-to-action {
   margin-top: 100px;
