@@ -22,20 +22,40 @@ exports.display_all_pages_get = async (req, res, next) => {
 
 // Handle display search form on GET
 exports.search_form_get = async (req, res, next) => {
+  // Get search query
   const searchTerm = req.query.searchTerm;
-
+  // Convert query to regex
   const regs = getRegExps(searchTerm);
 
   try {
+    // Get genres to populate genre browse
     const genres = await Genre.find({});
-    console.log(genres);
+    // Get type names for quick search later
+    // const genre_types = genres.map((genre) => genre.type);
 
     // If no search yet, just display search form
     if (!regs) {
       return res.render("form-search", {
         title: "Find Creators",
         genres,
-        pages: null
+        pages: null,
+        searchedTerm: null
+      });
+    }
+
+    // Determine if any genre searches are within search term
+    const genre_check = searchTerm.split(" ");
+    if (genre_check[0] === "browse-genre") {
+      const results = await Page.find({ genre: genre_check[2] })
+        .populate("genre")
+        .exec();
+      const activeResults = results.filter((page) => page.active);
+
+      return res.render("form-search", {
+        title: "Find Creators",
+        genres,
+        pages: activeResults,
+        searched_term: genre_check[1]
       });
     }
 
@@ -44,7 +64,9 @@ exports.search_form_get = async (req, res, next) => {
 
     return res.render("form-search", {
       title: "Find Creators",
-      pages: activeResults
+      genres,
+      pages: activeResults,
+      searched_term: searchTerm
     });
   } catch (err) {
     return next(err);

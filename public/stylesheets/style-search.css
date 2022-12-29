@@ -51,17 +51,17 @@ h1 {
   flex-wrap: wrap;
 }
 
-.genres-container > li {
+.genres-container > a {
   border-radius: 20px;
-  background-color: #00edf5be;
+  background-color: #b6dddfbe;
   box-shadow: 0 0 2px 0px rgba(0, 0, 0, 0.371);
   padding: 2px 10px;
   font-size: 0.9rem;
 }
 
 @media (hover: hover) {
-  .genres-container > li:hover {
-    filter: brightness(80%);
+  .genres-container > a:hover {
+    background-color: #4271df6c;
   }
 }
 

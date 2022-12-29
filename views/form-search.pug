@@ -12,16 +12,16 @@ block content
         input#searchTerm(type="text" name="searchTerm" placeholder="Search for creators..." required autofocus)
         button.btn.btn-search 🔍
 
-    if !pages
-      div
-        h3 Browse by genre 
-          ul.genres-container 
-            each genre of genres 
-              li 
-                a(href=`/search?searchTerm=${genre.type}`)= genre.displayType
+    div
+      h3 Browse by genre 
+        ul.genres-container 
+          each genre of genres
+            a(href=`/search?searchTerm=browse-genre+${genre.displayType}+${genre._id}`)
+              li= genre.displayType
         
     if pages
       hr(style="margin:10px;width:50%")
+      p Results for: #{searched_term}
       div.results-container
         ul
           if !pages.length
