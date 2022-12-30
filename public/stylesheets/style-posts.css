@@ -101,6 +101,35 @@
 
 /* ######### Posts Page ######### */
 
+.toggle-view-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.toggle-view-menu > div {
+  background-color: #001331;
+  border-radius: 20px;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.345);
+  display: flex;
+  gap: 5px;
+  padding: 0 5px;
+}
+
+.toggle-view-menu > div > button {
+  font-size: 0.8rem;
+  background-color: white;
+  border-color: black;
+}
+
+.toggle-view-selected {
+  background-color: #e8287a !important;
+  border-color: white !important;
+  color: white !important;
+}
+
 .abbr-posts-container {
   width: 100%;
   padding: 20px;
@@ -117,10 +146,30 @@
   padding: 10px;
   box-shadow: -3px 0 3px 0px rgba(0, 0, 0, 0.159);
   transition: box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 @media (hover: hover) {
   .abbr-post-wrapper:hover {
     box-shadow: -5px 0 3px 1px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.abbr-post-content > p {
+  font-size: 0.8rem;
+  color: rgb(163, 163, 163);
+}
+
+@media only screen and (max-width: 600px) {
+  .abbr-posts-container {
+    border-radius: 0;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .abbr-post-wrapper {
+    box-shadow: 0 0 3px 0.5px rgba(0, 0, 0, 0.27);
   }
 }
