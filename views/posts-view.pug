@@ -21,6 +21,9 @@ block content
         button#post-view.btn.btn-tertiary Post View
 
     div.abbr-posts-container
+      if !posts.length
+        p No posts yet...
+        
       each post in posts
         a(href=`posts/${post._id}`)
           div.abbr-post-wrapper
@@ -32,6 +35,9 @@ block content
               p!= post.text.slice(0, 50) + "..."
 
     div.posts-container.hidden
+      if !posts.length
+        p No posts yet...
+
       each post in posts 
         div.post-container(style="padding-top:40px")
 
