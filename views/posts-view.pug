@@ -1,5 +1,8 @@
 extends layout 
 
+block styles 
+  link(rel="stylesheet", href="/stylesheets/style-posts.css")
+
 block scripts 
   script(type="module" src="/javascripts/postsScript.js" defer)
 
@@ -13,29 +16,39 @@ block content
     if !posts.length
       div
         em No posts yet
-    else 
-      each post in posts 
-        div.post-container
-          div.post-media
-            if post.type === "link" 
-              div
-                a.external-link(href=post.typeContent target="_blank" noreferrer)= post.typeContent
-                div.link-ogg-container
-                  p.og-title Loading...
-                  img.og-img(src="/images/post-placeholder.png", alt="External link image")
-                  p.og-desc Loading...
+    else
+      div.abbr-posts-container
+        each post in posts
+          a(href=`posts/${post._id}`)
+            div.abbr-post-wrapper
+              div.post-title
+                p.timestamp= post.readableDate
+                h3!= post.title 
+              div.abbr-post-content 
+                em= post.type 
+                p!= post.text.slice(0, 50) + "..."
 
-            if post.type === "image"
-              img(src=post.typeContent, alt="Post image")
 
-            if post.type === "video" 
-              iframe(width="560" height="315" src=post.typeContent title="Video player" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+          //- div.post-media
+          //-   if post.type === "link" 
+          //-     div
+          //-       a.external-link(href=post.typeContent target="_blank" noreferrer)= post.typeContent
+          //-       div.link-ogg-container
+          //-         p.og-title Loading...
+          //-         img.og-img(src="/images/post-placeholder.png", alt="External link image")
+          //-         p.og-desc Loading...
 
-          div.post-title
-            h4!= post.title 
+          //-   if post.type === "image"
+          //-     img(src=post.typeContent, alt="Post image")
 
-          div.post-text
-            p!= post.text
+          //-   if post.type === "video" 
+          //-     iframe(width="560" height="315" src=post.typeContent title="Video player" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
 
-          div 
-            a(href=`/account/posts/${post._id}`) Edit Post
+          //- div.post-title
+          //-   h4!= post.title 
+
+          //- div.post-text
+          //-   p!= post.text
+
+          //- div 
+          //-   a(href=`/account/posts/${post._id}`) Edit Post

@@ -6,6 +6,7 @@ block scripts
 
 block styles 
   link(rel="stylesheet", href="/stylesheets/style-pageview.css")
+  link(rel="stylesheet", href="/stylesheets/style-posts.css")  
 
 block content 
   div.page-view-wrapper
@@ -98,9 +99,12 @@ block content
             if !posts.length
               div  
                 em No posts yet
+
             each post in posts 
+
               div.post-container
                 if !currentUser || (!curPageSub && String(currentUser._id) !== String(page.user._id))
+                
                   if post.public 
                     div.post-media(class=(post.type==="text" ? "hidden" : ""))
                       if post.type === "link" 

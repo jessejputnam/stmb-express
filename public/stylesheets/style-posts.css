@@ -1,0 +1,126 @@
+/* ######### Pageview Posts ######### */
+
+.post-container {
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15px;
+  min-height: 100px;
+  width: 100%;
+  max-width: 600px;
+  padding: 15px;
+  box-shadow: 0 0 3px 0px rgba(0, 0, 0, 0.498);
+  margin-bottom: 10px;
+  background-color: white;
+}
+
+.post-media {
+  overflow-y: hidden;
+  max-height: 400px;
+  background-color: rgb(247, 247, 247);
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.221);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.post-media > iframe {
+  max-height: 315px;
+  height: 50vw;
+}
+
+.post-media > img,
+.post-media > iframe {
+  width: 100%;
+}
+
+.link-ogg-container > img {
+  width: 100%;
+  object-fit: contain;
+}
+
+.og-img {
+  height: 40vw;
+  max-height: 350px;
+}
+
+.media-hidden {
+  height: 40vw;
+  max-height: 350px;
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/c/c0/Security-g90d809c5f_1920.jpg");
+  background-size: cover;
+}
+
+.media-hidden > div {
+  height: 100%;
+  width: 100%;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.media-hidden > div a {
+  color: white;
+  text-shadow: 1px 1px 1px black;
+}
+
+@media (hover: hover) {
+  .media-hidden > div a:hover {
+    color: #dc72a0;
+  }
+}
+
+.timestamp {
+  color: gray;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.post-title > h3 {
+  text-align: left;
+}
+
+.read-post {
+  color: #939fab;
+  background-color: white;
+  box-shadow: 0 -5px 2px 1px rgba(255, 255, 255, 0.944);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (hover: hover) {
+  .read-post p:hover {
+    color: #e8287a;
+    cursor: pointer;
+  }
+}
+
+/* ######### Posts Page ######### */
+
+.abbr-posts-container {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: white;
+  border-radius: 5px;
+  margin-top: 30px;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.34);
+}
+
+.abbr-post-wrapper {
+  padding: 10px;
+  box-shadow: -3px 0 3px 0px rgba(0, 0, 0, 0.159);
+  transition: box-shadow 0.3s;
+}
+
+@media (hover: hover) {
+  .abbr-post-wrapper:hover {
+    box-shadow: -5px 0 3px 1px rgba(0, 0, 0, 0.2);
+  }
+}
