@@ -20,46 +20,45 @@ block content
         button#list-view.btn.btn-tertiary.toggle-view-selected List View
         button#post-view.btn.btn-tertiary Post View
 
-    if !posts.length
-      div
-        em No posts yet
-    else
-      div.abbr-posts-container
-        each post in posts
-          a(href=`posts/${post._id}`)
-            div.abbr-post-wrapper
-              div.post-title
-                p.timestamp= post.readableDate
-                h3!= post.title 
-              div.abbr-post-content 
-                em= post.type[0].toUpperCase() + post.type.slice(1) + " Post"
-                p!= post.text.slice(0, 50) + "..."
+    div.abbr-posts-container
+      each post in posts
+        a(href=`posts/${post._id}`)
+          div.abbr-post-wrapper
+            div.post-title
+              p.timestamp= post.readableDate
+              h3!= post.title 
+            div.abbr-post-content 
+              em= post.type[0].toUpperCase() + post.type.slice(1) + " Post"
+              p!= post.text.slice(0, 50) + "..."
 
-      div.posts-container.hidden
-        each post in posts 
-          a(href=`posts/${post._id}`)
-            div.post-container
-              div.post-media(class=(post.type==="text" ? "hidden" : ""))
-                if post.type === "link" 
-                  div
-                    a.external-link(href=post.typeContent target="_blank" noreferrer)= post.typeContent
-                    div.link-ogg-container
-                      p.og-title Loading...
-                      img.og-img(src="/images/post-placeholder.png", alt="External link image")
-                      p.og-desc Loading...
+    div.posts-container.hidden
+      each post in posts 
+        div.post-container(style="padding-top:40px")
 
-                if post.type === "image"
-                  img(src=post.typeContent, alt="Post image")
+          a.edit-post-btn(href=`posts/${post._id}` style="margin:0 auto")
+            button.btn.btn-secondary Edit Post
 
-                if post.type === "video" 
-                  iframe(src=post.typeContent title="Video player" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+          div.post-media(class=(post.type==="text" ? "hidden" : ""))
+            if post.type === "link" 
+              div
+                a.external-link(href=post.typeContent target="_blank" noreferrer)= post.typeContent
+                div.link-ogg-container
+                  p.og-title Loading...
+                  img.og-img(src="/images/post-placeholder.png", alt="External link image")
+                  p.og-desc Loading...
 
-              div.post-title
-                p.timestamp= post.readableDate
-                h3!= post.title 
+            if post.type === "image"
+              img(src=post.typeContent, alt="Post image")
 
-              div.read-post
-                p.read-post-btn Read Post
+            if post.type === "video" 
+              iframe(src=post.typeContent title="Video player" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
 
-              div.post-text.hidden
-                p!= post.text
+          div.post-title
+            p.timestamp= post.readableDate
+            h3!= post.title 
+
+          div.read-post
+            p.read-post-btn Read Post
+
+          div.post-text.hidden
+            p!= post.text
