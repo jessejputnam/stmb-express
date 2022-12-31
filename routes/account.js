@@ -99,4 +99,7 @@ router.post("/posts/add-post", post_controller.add_post_post);
 // GET request for edit post
 router.get("/posts/:id", post_controller.edit_post_get);
 
+// POST request for edit post
+router.post("/posts/:id", post_controller.edit_post_post);
+
 module.exports = router;

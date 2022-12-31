@@ -40,7 +40,7 @@ const webhookRouter = require("./routes/webhook");
 const searchRouter = require("./routes/search");
 const homeRouter = require("./routes/home");
 const creatorRouter = require("./routes/account");
-const subscribeRouter = require("./routes/subscribe");
+const subscriptionRouter = require("./routes/subscription");
 const openGraphRouter = require("./routes/open-graph");
 
 const app = express();
@@ -123,7 +123,7 @@ app.use(express.urlencoded({ extended: false }));
 // ------------ Routes --------------- //
 app.use("/home", authCheckFalse, homeRouter);
 app.use("/account", authCheckFalse, isVerifiedCheck, creatorRouter);
-app.use("/subscribe", authCheckFalse, isVerifiedCheck, subscribeRouter);
+app.use("/subscription", authCheckFalse, isVerifiedCheck, subscriptionRouter);
 app.use("/search", searchRouter);
 app.use("/open-graph", openGraphRouter);
 app.use("/", indexRouter);

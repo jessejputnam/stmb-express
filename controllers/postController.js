@@ -79,13 +79,57 @@ exports.add_post_post = [
 exports.edit_post_get = async (req, res, next) => {
   const postId = req.params.id;
 
-  const post = await Post.findById(postId);
+  try {
+    const post = await Post.findById(postId);
 
-  return res.render("form-post-edit", {
-    title: "Edit Post",
-    post
-  });
+    return res.render("form-post-edit", {
+      title: `Edit ${post.type[0].toUpperCase() + post.type.slice(1)} Post`,
+      post
+    });
+  } catch (err) {
+    return next(err);
+  }
 };
+
+exports.edit_post_post = [
+  body("title", "Post title required").trim().isLength({ min: 1 }).escape(),
+  body("text").trim().escape(),
+
+  async (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      // There are errors, rerender
+      res.render("form-post-add", {
+        title: "Add Post",
+        errors: errors.array()
+      });
+      return;
+    }
+
+    // No errors, continue
+    const postId = req.params.id;
+
+    const publicAccess = req.body.public === "true" ? true : false;
+    const typeContent = req.body.typeContent;
+    const title = req.body.title;
+    const text = req.body.text;
+
+    try {
+      const post = await Post.findById(postId);
+      post.title = title;
+      post.text = text;
+      post.public = publicAccess;
+      post.typeContent = typeContent;
+
+      await post.save();
+
+      return res.redirect("/account/posts");
+    } catch (err) {
+      return next(err);
+    }
+  }
+];
 
 // Handle Open Graph call on GET
 exports.open_graph_get = async (req, res, next) => {

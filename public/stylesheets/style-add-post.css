@@ -1,0 +1,33 @@
+.page-wrapper > div {
+}
+
+.toggle-post-type {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.toggle-post-type > div {
+  background-color: #001331;
+  border-radius: 20px;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.345);
+  display: flex;
+  gap: 3px;
+  padding: 0 5px;
+}
+
+.toggle-post-type > div > a > button {
+  font-size: 0.8rem;
+  background-color: white;
+  border-color: black;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+.selected-type {
+  background-color: #e64b8e !important;
+  border-color: white !important;
+  color: white !important;
+}

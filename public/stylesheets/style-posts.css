@@ -107,6 +107,11 @@
   }
 }
 
+.post-text > p {
+  color: gray;
+  font-size: 0.9rem;
+}
+
 /* ######### Posts Page ######### */
 
 .toggle-view-menu {
@@ -133,7 +138,7 @@
 }
 
 .toggle-view-selected {
-  background-color: #e8287a !important;
+  background-color: #e64b8e !important;
   border-color: white !important;
   color: white !important;
 }
@@ -184,13 +189,17 @@
 
 .post-container > a > button {
   padding: 0;
-  background-color: #d64a8e;
+  color: #d64a8e;
+  background-color: white;
   border-color: #d64a8e;
 }
 
 @media (hover: hover) {
   .post-container > a > button:hover {
-    color: #d64a8e;
+    color: #34289f;
+    background-color: #d5e2ef;
+    border-color: #34289f;
+    cursor: pointer;
   }
 }
 

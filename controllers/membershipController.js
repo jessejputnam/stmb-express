@@ -134,8 +134,16 @@ exports.delete_membership_get = async (req, res, next) => {
   });
 };
 
+exports.delete_membership_get = async (req, res, next) => {
+  const subId = req.params.id;
+  try {
+  } catch (err) {
+    return next(err);
+  }
+};
+
 exports.delete_membership_post = async (req, res, next) => {
-  const membershipId = req.body.membershipId;
+  // const membershipId = req.body.membershipId;
   const accountId = req.user.creator.stripeId;
   const productId = req.body.productId;
   const priceId = req.body.priceId;

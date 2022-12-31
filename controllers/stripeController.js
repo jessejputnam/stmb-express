@@ -7,9 +7,9 @@ const Page = require("../models/page");
 
 const Stripe = require("stripe")(process.env.STRIPE_SECRET_TEST_KEY);
 
-// ###########################################################
+// #####################################################
 // Creator Accounts
-// ###########################################################
+// #####################################################
 
 // Handle onboarding creator on GET
 exports.stripe_onboard_get = async (req, res, next) => {
@@ -173,7 +173,7 @@ exports.create_subscription_post = async (req, res, next) => {
 
     await subscription.save();
 
-    return res.redirect(`/subscribe/confirm/${subscription._id}`);
+    return res.redirect(`/subscription/${subscription._id}/confirm`);
   } catch (err) {
     return next(err);
   }
@@ -210,6 +210,21 @@ exports.cancel_sub_signup_post = async (req, res, next) => {
   try {
     await Subscription.findByIdAndRemove(subId);
     return res.redirect("/home");
+  } catch (err) {
+    return next(err);
+  }
+};
+
+// Handle cancel subscription on GET
+exports.cancel_subscription_get = async (req, res, next) => {
+  const subId = req.params.id;
+
+  try {
+    const sub = await Subscription.findById(subId);
+
+    return res.render("confirm-delete-sub", {
+      subscription: sub
+    });
   } catch (err) {
     return next(err);
   }
