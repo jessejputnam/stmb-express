@@ -1,0 +1,35 @@
+extends layout 
+
+block styles 
+  link(rel="stylesheet", href="/stylesheets/style-membership.css")
+
+block scripts 
+  script(type="module" src="/javascripts/membershipsScript.js" defer)
+
+block content 
+  div.page-wrapper
+    h1 Delete Membership 
+
+    p Do you want to delete the follwing tier level?
+
+    form(method="POST" action="" style="display:flex;align-items:flex-end;gap:30px") 
+      a(href="/account/memberships") Cancel
+      button.btn.btn-secondary(type="submit" style="padding:2px") Delete
+
+    div.tiers-wrapper(style="padding-top:40px")
+      div.tier-wrapper 
+
+        h3= membership.title 
+
+        p.center-txt= `$${membership.price} / month`
+
+        hr(style="margin:0 auto;width:40%")
+
+        p= membership.description
+
+        div.rewards-container.preview
+          div.remove-preview
+            p Show more
+          ul 
+            each reward in membership.rewards   
+              li.reward!= "⏦ " + reward

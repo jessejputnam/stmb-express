@@ -1,0 +1,70 @@
+/* ########### MEMBERSHIPS ########### */
+
+.tiers-wrapper {
+  min-height: 100px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 15px 0;
+  width: 100%;
+}
+
+.tier-wrapper {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  max-width: 450px;
+  width: 30%;
+  min-width: 290px;
+  padding: 15px 15px 10px;
+  gap: 10px;
+  position: relative;
+  border-radius: 10px;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.352);
+}
+
+@media only screen and (max-width: 699px) {
+  .tier-wrapper {
+    width: 100%;
+    min-width: none;
+    max-width: none;
+  }
+}
+
+.rewards-container {
+  padding-bottom: 20px;
+  position: relative;
+  min-height: 75px;
+}
+
+.preview {
+  height: 75px;
+  overflow-y: hidden;
+}
+
+.remove-preview {
+  color: #34289f;
+  position: absolute;
+  bottom: -4px;
+  background-color: white;
+  box-shadow: 0 -5px 2px 1px rgba(255, 255, 255, 0.944);
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .remove-preview:hover {
+    color: #e8287a;
+  }
+}
+
+.reward {
+  color: rgb(98, 98, 98);
+  font-size: 0.9rem;
+}
+
+.membership-btn-container {
+  margin: 0 auto;
+}

@@ -126,24 +126,30 @@ exports.add_membership_post = [
 ];
 
 exports.delete_membership_get = async (req, res, next) => {
-  const membership = await Membership.findById(req.params.memberid);
-
-  return res.render("membership-delete", {
-    title: "Delete Membership",
-    membership: membership
-  });
-};
-
-exports.delete_membership_get = async (req, res, next) => {
-  const subId = req.params.id;
   try {
+    const membership = await Membership.findById(req.params.id);
+
+    return res.render("confirm-delete-membership", {
+      title: "Delete Membership",
+      membership: membership
+    });
   } catch (err) {
     return next(err);
   }
 };
 
+// exports.delete_membership_get = async (req, res, next) => {
+//   const id = req.params.id;
+//   try {
+//     const membership = await Membership.findById(id);
+
+//     return res.render();
+//   } catch (err) {
+//     return next(err);
+//   }
+// };
+
 exports.delete_membership_post = async (req, res, next) => {
-  // const membershipId = req.body.membershipId;
   const accountId = req.user.creator.stripeId;
   const productId = req.body.productId;
   const priceId = req.body.priceId;

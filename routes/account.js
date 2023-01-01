@@ -69,13 +69,13 @@ router.post(
 
 // GET request for delete membership
 router.get(
-  "/memberships/delete-membership/:memberid",
+  "/memberships/:id/delete",
   memberships_controller.delete_membership_get
 );
 
 // POST request for delete membership
 router.post(
-  "/memberships/delete-membership/:memberid",
+  "/memberships/:id/delete",
   memberships_controller.delete_membership_post
 );
 
@@ -86,10 +86,13 @@ router.get("/posts", post_controller.posts_display_get);
 
 // GET request for add text post
 router.get("/posts/add-post_text", post_controller.add_post_get);
+
 // GET request for add link post
 router.get("/posts/add-post_link", post_controller.add_post_get);
+
 // GET request for add image post
 router.get("/posts/add-post_image", post_controller.add_post_get);
+
 // GET request for add video post
 router.get("/posts/add-post_video", post_controller.add_post_get);
 
