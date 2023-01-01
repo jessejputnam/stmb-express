@@ -102,4 +102,10 @@ router.get("/posts/:id", post_controller.edit_post_get);
 // POST request for edit post
 router.post("/posts/:id", post_controller.edit_post_post);
 
+// GET request for delete post
+router.get("/posts/:id/delete", post_controller.delete_post_get);
+
+// POST request for delete post
+router.post("/posts/:id/delete", post_controller.delete_post_delete);
+
 module.exports = router;

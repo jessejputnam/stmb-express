@@ -183,3 +183,29 @@ exports.open_graph_get = async (req, res, next) => {
     return res.send(siteInfo);
   }
 };
+
+exports.delete_post_get = async (req, res, next) => {
+  const postId = req.params.id;
+
+  try {
+    const post = await Post.findById(postId);
+
+    return res.render("confirm-delete-post", {
+      post
+    });
+  } catch (err) {
+    return next(err);
+  }
+};
+
+exports.delete_post_delete = async (req, res, next) => {
+  const id = req.params.id;
+
+  try {
+    await Post.findByIdAndDelete(id);
+
+    return res.redirect("/account/posts");
+  } catch (err) {
+    return next(err);
+  }
+};
