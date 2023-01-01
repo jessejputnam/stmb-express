@@ -1,7 +1,9 @@
 extends layout 
 
+block scripts 
+  script(src="/javascripts/addMembershipScript.js" defer)
+
 block content
-  //- div.form-page
   div.page-wrapper
     if errors 
       ul 
@@ -23,11 +25,19 @@ block content
 
       div.form-control 
         label(for="desc" style="margin-left:15px") Description
-        input#desc(type="text" name="desc" required="true")
+        textarea#desc(name="desc", rows="4") 
+      
+      input#numRewards(type="hidden" name="numRewards" value=1)
 
-      div.form-control 
-        label(for="rewards" style="margin-left:15px") Rewards (separate rewards by ||)
-        input#rewards(type="text" name="rewards" required="true")
+      hr(style="width:40%;margin:20px auto")
+
+      div#add-rewards-container
+        div.add-reward-wrapper
+          p Rewards 
+          button#add-reward.btn.btn-tertiary(type="button" style="font-size:.8rem") + Reward
+
+        div.form-control 
+          input#reward-0(type="text" name="reward-0" required="true")
     
       div.form-control-btns 
         a(href="/account/memberships") Cancel

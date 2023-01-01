@@ -48,7 +48,7 @@ exports.add_membership_post = [
   body("title", "Tier title required").trim().isLength({ min: 1 }).escape(),
   body("price", "Price is required").trim().isInt({ min: 1 }),
   body("desc", "Decription is required").trim().isLength({ min: 1 }).escape(),
-  body("rewards", "Rewards must be specified")
+  body("reward-0", "At least one reward must be specified")
     .trim()
     .isLength({ min: 1 })
     .escape(),
@@ -58,6 +58,7 @@ exports.add_membership_post = [
 
     const user = req.user;
     const pageId = user.creator.page._id;
+    const num_rewards = Number(req.body.numRewards);
 
     if (!errors.isEmpty) {
       return res.render("form-membership-add", {
@@ -78,6 +79,14 @@ exports.add_membership_post = [
         return next(err);
       }
 
+      // Get rewards array
+      const rewards_arr = [];
+      for (let i = 0; i < num_rewards; i++) {
+        rewards_arr.push(req.body[`reward-${i}`]);
+      }
+
+      const rewards = rewards_arr.filter((reward) => reward.trim().length > 1);
+
       // Make app obj
       const membership = new Membership({
         stripePriceId: null,
@@ -87,7 +96,7 @@ exports.add_membership_post = [
         title: req.body.title,
         imgUrl: req.body.imgUrl || null,
         description: req.body.desc,
-        rewards: req.body.rewards.split("||").map((reward) => reward.trim())
+        rewards
       });
 
       // Make Stripe obj
@@ -138,17 +147,6 @@ exports.delete_membership_get = async (req, res, next) => {
   }
 };
 
-// exports.delete_membership_get = async (req, res, next) => {
-//   const id = req.params.id;
-//   try {
-//     const membership = await Membership.findById(id);
-
-//     return res.render();
-//   } catch (err) {
-//     return next(err);
-//   }
-// };
-
 exports.delete_membership_post = async (req, res, next) => {
   const accountId = req.user.creator.stripeId;
   const productId = req.body.productId;
@@ -161,6 +159,7 @@ exports.delete_membership_post = async (req, res, next) => {
       { active: false },
       { stripeAccount: accountId }
     );
+
     await Stripe.prices.update(
       priceId,
       { active: false },
