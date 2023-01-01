@@ -10,18 +10,22 @@
   width: 100%;
 }
 
-.tier-wrapper {
-  background: white;
-  display: flex;
-  flex-direction: column;
-  max-width: 450px;
+.tier-container {
+  min-height: 300px;
   width: 30%;
   min-width: 290px;
+  max-width: 450px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.352);
+}
+
+.tier-wrapper {
+  display: flex;
+  flex-direction: column;
   padding: 15px 15px 10px;
   gap: 10px;
   position: relative;
-  border-radius: 10px;
-  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.352);
 }
 
 @media only screen and (max-width: 699px) {
@@ -32,26 +36,40 @@
   }
 }
 
+.membership-desc {
+  font-size: 0.95rem;
+}
+
 .rewards-container {
   padding-bottom: 20px;
   position: relative;
-  min-height: 75px;
 }
 
 .preview {
-  height: 75px;
+  height: 300px;
   overflow-y: hidden;
 }
 
 .remove-preview {
   color: #34289f;
   position: absolute;
-  bottom: -4px;
-  background-color: white;
-  box-shadow: 0 -5px 2px 1px rgba(255, 255, 255, 0.944);
-  width: 100%;
+  bottom: 0;
+  padding-bottom: 10px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.952),
+    rgba(255, 255, 255, 0.947),
+    rgba(255, 255, 255, 0.92),
+    rgba(255, 255, 255, 0.819),
+    rgba(255, 255, 255, 0.621)
+  );
+  box-shadow: 0 0px 5px 5px rgba(255, 255, 255, 0.764);
+  width: 90%;
   text-align: center;
   cursor: pointer;
+  z-index: 10;
 }
 
 @media (hover: hover) {

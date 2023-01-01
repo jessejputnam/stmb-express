@@ -52,46 +52,54 @@ block content
           
           div.tiers-wrapper
             if curPageSub
-              div.tier-wrapper 
-                h3= curPageSub.membership.title
-                p= `$${curPageSub.membership.price} / month`
-                p= curPageSub.membership.description
-                ul 
-                  each reward in curPageSub.membership.rewards   
-                    li.reward!= "⏦ " + reward
-                em= "Status: " + curPageSub.status
+              div.tier-container
+                div.tier-wrapper.preview 
+                  h3!= curPageSub.membership.title
+                  p= `$${curPageSub.membership.price} / month`
+                  p!= curPageSub.membership.description
+
+                  div.remove-preview
+                    p Show more
+
+                  div.rewards-container
+                    ul 
+                      each reward in curPageSub.membership.rewards   
+                        li.reward!= "⏦ " + reward
+                    em= "Status: " + curPageSub.status
             else 
               if tiers.length > 0
 
                 - tiers.sort((a, b) => a.price - b.price)
 
-                each membership in tiers   
-                  div.tier-wrapper 
-                    h3= membership.title 
+                each membership in tiers  
+                  div.tier-container
+                    div.tier-wrapper.preview
+                      h3!= membership.title 
 
-                    p.center-txt= `$${membership.price} / month`
+                      p.center-txt= `$${membership.price} / month`
 
-                    div.membership-btn-container
-                      if !currentUser 
-                        a(href="/register") 
-                          button.btn.btn-secondary.btn-register(type="submit") Register to Subscribe!
-                      else if !currentUser.isVerified
-                        em(style="font-size:.7rem") Check email to verify
-                      else if String(currentUser._id) === String(page.user._id)
-                        button.btn.btn-secondary.btn-disabled(type="submit") My page
-                      else 
-                        form(method="POST" action=`/subscribe/add-subscription`) 
-                          input#membershipId(type="hidden" name="membershipId" required="true" value=membership._id)
-                          button.btn.btn-secondary(type="submit") Subscribe
+                      div.membership-btn-container
+                        if !currentUser 
+                          a(href="/register") 
+                            button.btn.btn-secondary.btn-register(type="submit") Register to Subscribe!
+                        else if !currentUser.isVerified
+                          em(style="font-size:.7rem") Check email to verify
+                        else if String(currentUser._id) === String(page.user._id)
+                          button.btn.btn-secondary.btn-disabled(type="submit") My page
+                        else 
+                          form(method="POST" action=`/subscribe/add-subscription`) 
+                            input#membershipId(type="hidden" name="membershipId" required="true" value=membership._id)
+                            button.btn.btn-secondary(type="submit") Subscribe
 
-                    p= membership.description
+                      p.membership-desc!= membership.description
 
-                    div.rewards-container.preview
                       div.remove-preview
                         p Show more
-                      ul 
-                        each reward in membership.rewards   
-                          li.reward!= "⏦ " + reward
+
+                      div.rewards-container
+                        ul 
+                          each reward in membership.rewards   
+                            li.reward!= "⏦ " + reward
 
         div.page-posts-container 
           h2 Recent Posts

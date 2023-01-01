@@ -20,24 +20,26 @@ block content
 
     div.tiers-wrapper
       each membership in memberships 
-        div.tier-wrapper 
-          div.membership-btn-container
-            a(href=`/account/memberships/${membership._id}/delete`)
-              button.btn.btn-secondary(style="padding:2px") Delete 
+        div.tier-container
+          div.tier-wrapper.preview 
+            div.membership-btn-container
+              a(href=`/account/memberships/${membership._id}/delete`)
+                button.btn.btn-secondary(style="padding:2px") Delete 
 
-          hr(style="margin:0 auto;width:40%")
+            hr(style="margin:0 auto;width:40%")
 
-          h3= membership.title 
+            h3!= membership.title 
 
-          p.center-txt= `$${membership.price} / month`
+            p.center-txt= `$${membership.price} / month`
 
-          p= membership.description
+            p.membership-desc!= membership.description
 
-          div.rewards-container.preview
             div.remove-preview
-              p Show more
-            ul 
-              each reward in membership.rewards   
-                li.reward!= "⏦ " + reward
+                p Show more
+
+            div.rewards-container
+              ul 
+                each reward in membership.rewards   
+                  li.reward!= "⏦ " + reward
 
 

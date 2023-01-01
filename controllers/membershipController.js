@@ -87,7 +87,7 @@ exports.add_membership_post = [
 
       const rewards = rewards_arr.filter((reward) => reward.trim().length > 1);
 
-      // Make app obj
+      // Make membership obj
       const membership = new Membership({
         stripePriceId: null,
         stripeProductId: null,
