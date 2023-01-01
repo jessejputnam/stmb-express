@@ -180,6 +180,7 @@
   width: 30%;
   max-width: 375px;
   display: flex;
+  justify-content: space-between;
   flex-direction: column;
   gap: 10px;
   text-align: center;

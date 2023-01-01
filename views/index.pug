@@ -10,7 +10,8 @@ block noUser
   main.landing-page   
     h1 Creativity connected through community
 
-    button#register.btn.btn-primary Get Connected
+    a(href="/register") 
+      button.btn.btn-primary Get Connected
     
     div.video-player.landing-item-container
       iframe(src="https://www.youtube.com/embed/rD7Gux8R2DA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
@@ -26,14 +27,16 @@ block noUser
         div.info-container
           h2 Become a Creator
           p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        button#register.btn Become Creator
+        a(href="/register") 
+          button.btn.btn-primary Become Creator
       div.action-container
         div.img-container
           img(src="https://live-patreon-marketing.pantheonsite.io/wp-content/uploads/2022/08/Group-32962-2.png", alt="")
         div.info-container
           h2 Support Creators
           p Viverra suspendisse potenti nullam ac. Sit amet nisl purus in mollis nunc sed id semper. 
-        button#browse.btn Browse Creators
+        a(href="http://localhost:8080/search") 
+          button.btn.btn-primary Browse Creators
       div.action-container
         div.img-container
           img(src="https://live-patreon-marketing.pantheonsite.io/wp-content/uploads/2022/08/Group-32964-2.png", alt="")
@@ -86,4 +89,5 @@ block noUser
 
       div.bottom-call-to-action.landing-item-container
         h1 Want to be a part of the future?
-        button#register.btn Get Started
+        a(href="/register") 
+          button.btn.btn-primary Get Started
