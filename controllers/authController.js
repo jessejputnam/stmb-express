@@ -4,12 +4,16 @@ const passport = require("passport");
 const { body, validationResult } = require("express-validator");
 
 const User = require("../models/user");
+const Subscription = require("../models/subscription");
 const Token = require("../models/token");
 
 const sendEmail = require("../utils/sendEmail");
 const sendVerificationEmail = require("../utils/sendVerificationEmail");
 
 const countryCodes = require("../utils/countryCodes");
+
+// //! FOR DELETING EXCESS TEST ACCOUNTS
+// const Stripe = require("stripe")(process.env.STRIPE_SECRET_TEST_KEY);
 
 // ######################################################
 // ######################################################
@@ -19,6 +23,26 @@ const countryCodes = require("../utils/countryCodes");
 // Display Landing Page on GET
 exports.index_get = (req, res, next) => {
   return res.render("index", { title: "Smash the Motherboard" });
+};
+
+// Display User Home page on GET
+exports.user_home_get = async (req, res, next) => {
+  //! FOR DELETING EXCESS TEST ACCOUNTS
+  // await Stripe.accounts.del("acct_1M4Usf2fKNHCRH9J");
+
+  const subscriptions = await Subscription.find({ user: req.user._id })
+    .populate("page")
+    .populate("membership")
+    .exec();
+
+  const active = subscriptions.filter((sub) => sub.status !== "canceled");
+  const inactive = subscriptions.filter((sub) => sub.status === "canceled");
+
+  res.render("user-home", {
+    title: "Home",
+    active,
+    inactive
+  });
 };
 
 // ################# REGISTERING ##################
@@ -311,8 +335,6 @@ exports.reset_password_post = async (req, res, next) => {
     if (err) return next(err);
   }
 };
-
-// ################# SUBSCRIPTIONS ##################
 
 // ################### SETTINGS ##################
 

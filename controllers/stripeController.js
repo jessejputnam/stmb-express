@@ -220,9 +220,13 @@ exports.cancel_subscription_get = async (req, res, next) => {
   const subId = req.params.id;
 
   try {
-    const sub = await Subscription.findById(subId);
+    const sub = await Subscription.findById(subId)
+      .populate("membership")
+      .populate("page")
+      .exec();
 
-    return res.render("confirm-delete-sub", {
+    return res.render("confirm-cancel-sub", {
+      title: "Cancel Subscription",
       subscription: sub
     });
   } catch (err) {
@@ -233,10 +237,17 @@ exports.cancel_subscription_get = async (req, res, next) => {
 // Handle cancel subscription on POST
 exports.cancel_subscription_post = async (req, res, next) => {
   const creatorId = req.body.creatorId;
-  const stripeSubId = req.body.stripeSubId;
+  const subId = req.params.id;
+
+  console.log(creatorId);
 
   try {
-    const creator = await User.findById(creatorId);
+    const creator_promise = User.findById(creatorId);
+    const sub_promise = Subscription.findById(subId);
+    const [creator, sub] = await Promise.all([creator_promise, sub_promise]);
+
+    const stripeSubId = sub.stripeSubscriptionId;
+
     await Stripe.subscriptions.del(stripeSubId, {
       stripeAccount: creator.creator.stripeId
     });

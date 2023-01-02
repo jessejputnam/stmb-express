@@ -1,29 +1,11 @@
 "use strict";
 
-// Nav Buttons
-const register_btn = document.querySelector("#register");
-const browse_btn = document.querySelector("#browse");
-const about_btn = document.querySelector("#about");
-
 // Examples Section
 const examples_btns = document.querySelectorAll(".example-nav-btn");
 const example_a = document.querySelector("#ex-a");
 const example_b = document.querySelector("#ex-b");
 const example_c = document.querySelector("#ex-c");
 const example_d = document.querySelector("#ex-d");
-
-// --------------------- Nav Buttons -----------------
-register_btn.addEventListener("click", () => {
-  location.href = "/register";
-});
-
-browse_btn.addEventListener("click", () => {
-  location.href = "/search/categories";
-});
-
-about_btn.addEventListener("click", () => {
-  location.href = "/about";
-});
 
 // ---------------- Example Creators Section -------------
 examples_btns.forEach((btn) => {

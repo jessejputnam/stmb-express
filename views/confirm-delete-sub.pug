@@ -1,8 +1,0 @@
-extends layout 
-
-block content 
-  div.page-wrapper
-    form.form(method="POST" action="/subscribe/cancel-subscription") 
-      input#creatorId(type='hidden' name="creatorId" value=sub.page.user)
-      input#stripeSubId(type='hidden' name="stripeSubId" value=sub.stripeSubscriptionId)
-      button.btn.btn-secondary(type="submit") Cancel

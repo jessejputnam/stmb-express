@@ -1,31 +1,60 @@
 extends layout 
 
+block styles 
+  link(rel="stylesheet", href="/stylesheets/style-userhome.css")
+
 block content 
   div.page-wrapper
-    h1= title 
-    div 
-      p This is the page of #{currentUser.firstname + " " + currentUser.lastname}
-      p(style="margin-bottom:20px")= currentUser.username
-      p Creator: !{currentUser.creator ? currentUser.creator.name : null}
-      p Page: #{currentUser.creator.page}
-      p Region: #{country_names[currentUser.region]}
+    h1 Hey, #{currentUser.firstname}!
 
     if !currentUser.isVerified 
+      p Please check email and verify account.
+
       form(method="POST" action="/verify/resend") 
         input#email(type="hidden" name="email" required="true" value=currentUser.username)
         button.btn.btn-primary(type="submit") Resend Verification Email
 
-    div 
-      if subs 
-        each sub in subs 
-          hr
-          p Subscription: 
-          a(href=`/${sub.page._id}`)= sub.page.title 
-          p Tier: #{sub.membership ? sub.membership.title : "Membership Tier Deleted"}
-          p Status: #{sub.status}
-          div 
-            if sub.status !== "canceled"
-              a(href=`/subscription/${sub._id}/delete`)
-                button.btn.btn-secondary(type="submit") Cancel
-          if !sub.membership
-            p(style="color:red") Attn: Creator deleted membership
+    h3 My Subscriptions
+    
+    div.toggle-view-menu
+      div
+        button#active-view.btn.btn-tertiary.toggle-view-selected Active
+        button#inactive-view.btn.btn-tertiary Inactive
+
+    div#active-subs.subscriptions-container
+      if !active.length
+        a(href="/search")
+          button.btn.btn-secondary Find Creators!
+
+      each sub in active 
+        div.subscription-wrapper
+          p 
+            a(href=`/${sub.page._id}` style="color:#1059ff")= sub.page.title 
+              span(class=(sub.status === "active" ? "active" : "warning"))  (#{sub.status})
+
+          div.subscription-info    
+            em(style="font-size:.9rem") #{sub.membership ? ` - ${sub.membership.title} -` : "Membership Tier Deleted"}
+          
+            div 
+              if sub.status !== "canceled"
+                a(href=`/subscription/${sub._id}/cancel`)
+                  button.btn.btn-secondary.btn-sub(type="submit") Cancel
+              if !sub.membership
+                p(style="color:red") Attn: Creator deleted membership
+    
+    div#inactive-subs.subscriptions-container.hidden
+      each sub in inactive 
+        div.subscription-wrapper
+          p 
+            a(href=`/${sub.page._id}` style="color:#1059ff")= sub.page.title 
+              span(class=(sub.status === "active" ? "active" : "warning"))  (#{sub.status})
+
+          div.subscription-info    
+            em(style="font-size:.9rem") #{sub.membership ? ` - ${sub.membership.title} -` : "Membership Tier Deleted"}
+          
+            div 
+              if sub.status !== "canceled"
+                a(href=`/subscription/${sub._id}/delete`)
+                  button.btn.btn-secondary.btn-sub(type="submit") Cancel
+              if !sub.membership
+                p(style="color:red") Attn: Creator deleted membership

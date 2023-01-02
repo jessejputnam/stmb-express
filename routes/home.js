@@ -3,9 +3,6 @@
 const express = require("express");
 const router = express.Router();
 
-// //! FOR DELETING EXCESS TEST ACCOUNTS
-// const Stripe = require("stripe")(process.env.STRIPE_SECRET_TEST_KEY);
-
 const isVerifiedCheck = require("../middlewares/isVerifiedCheck");
 
 const auth_controller = require("../controllers/authController");
@@ -17,21 +14,7 @@ const Subscription = require("../models/subscription");
 /* -------------------- HOMEPAGE ------------------ */
 
 // GET request for display user home
-router.get("/", async function (req, res, next) {
-  //! FOR DELETING EXCESS TEST ACCOUNTS
-  // await Stripe.accounts.del("acct_1M4Usf2fKNHCRH9J");
-
-  const subscriptions = await Subscription.find({ user: req.user._id })
-    .populate("page")
-    .populate("membership")
-    .exec();
-
-  res.render("user-home", {
-    title: "Home",
-    country_names: countryNames,
-    subs: subscriptions
-  });
-});
+router.get("/", auth_controller.user_home_get);
 
 // GET request when user has not email verified yet
 router.get("/not-verified", (req, res, next) => {

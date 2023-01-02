@@ -1,0 +1,11 @@
+extends layout 
+
+block content 
+  div.page-wrapper
+    h1= title
+
+    p Confirm: cancel #{subscription.membership.title} subscription to #{subscription.page.title}?
+
+    form.form(method="POST" action="") 
+      input(type="hidden" name="creatorId" value=subscription.page.user)
+      button.btn.btn-secondary(type="submit") Cancel Subscription
