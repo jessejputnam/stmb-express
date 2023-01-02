@@ -19,8 +19,6 @@ const stripe = await Stripe(stripePublishableKey, {
   stripeAccount: creatorAcct
 });
 
-//? Customize
-
 const elements = stripe.elements();
 const cardElement = elements.create("card", {
   style: {
@@ -66,7 +64,7 @@ form.addEventListener("submit", async (e) => {
       } else {
         // Redirect customer to their account page
         setMessage("Payment accepted. Redirecting to confirmation...");
-        window.location.href = `/subscriptions/${sub_id}/success`;
+        window.location.href = `/subscription/${sub_id}/success`;
       }
     });
 });
