@@ -3,22 +3,25 @@
 const active_btn = document.querySelector("#active-view");
 const inactive_btn = document.querySelector("#inactive-view");
 
+const active_subs = document.querySelector("#active-subs");
+const inactive_subs = document.querySelector("#inactive-subs");
+
 // Toggle View Buttons
 
-list_btn.addEventListener("click", () => {
-  if (list_btn.classList.contains("toggle-view-selected")) return;
+active_btn.addEventListener("click", () => {
+  if (active_btn.classList.contains("toggle-view-selected")) return;
 
-  list_btn.classList.add("toggle-view-selected");
-  post_btn.classList.remove("toggle-view-selected");
-  posts_abbr.classList.remove("hidden");
-  posts_full.classList.add("hidden");
+  active_btn.classList.add("toggle-view-selected");
+  inactive_btn.classList.remove("toggle-view-selected");
+  active_subs.classList.remove("hidden");
+  inactive_subs.classList.add("hidden");
 });
 
-post_btn.addEventListener("click", () => {
-  if (post_btn.classList.contains("toggle-view-selected")) return;
+inactive_btn.addEventListener("click", () => {
+  if (inactive_btn.classList.contains("toggle-view-selected")) return;
 
-  post_btn.classList.add("toggle-view-selected");
-  list_btn.classList.remove("toggle-view-selected");
-  posts_full.classList.remove("hidden");
-  posts_abbr.classList.add("hidden");
+  inactive_btn.classList.add("toggle-view-selected");
+  active_btn.classList.remove("toggle-view-selected");
+  inactive_subs.classList.remove("hidden");
+  active_subs.classList.add("hidden");
 });

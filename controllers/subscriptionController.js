@@ -17,3 +17,15 @@ exports.subscription_success_get = async (req, res, next) => {
     return next(err);
   }
 };
+
+exports.subscription_delete_post = async (req, res, next) => {
+  const subId = req.params.id;
+
+  try {
+    await Subscription.findByIdAndRemove(subId);
+
+    res.redirect("/home");
+  } catch (err) {
+    return next(err);
+  }
+};

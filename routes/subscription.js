@@ -25,4 +25,7 @@ router.get("/:id/cancel", stripe_controller.cancel_subscription_get);
 // POST request for cancel subscription
 router.post("/:id/cancel", stripe_controller.cancel_subscription_post);
 
+// POST request for delete inactive subscription
+router.post("/:id/delete", subscription_controller.subscription_delete_post);
+
 module.exports = router;

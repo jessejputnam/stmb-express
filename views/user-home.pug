@@ -1,5 +1,8 @@
 extends layout 
 
+block scripts  
+  script(src="/javascripts/userhomeScript.js" defer)
+
 block styles 
   link(rel="stylesheet", href="/stylesheets/style-userhome.css")
 
@@ -36,11 +39,8 @@ block content
             em(style="font-size:.9rem") #{sub.membership ? ` - ${sub.membership.title} -` : "Membership Tier Deleted"}
           
             div 
-              if sub.status !== "canceled"
-                a(href=`/subscription/${sub._id}/cancel`)
-                  button.btn.btn-secondary.btn-sub(type="submit") Cancel
-              if !sub.membership
-                p(style="color:red") Attn: Creator deleted membership
+              a(href=`/subscription/${sub._id}/cancel`)
+                button.btn.btn-secondary.btn-sub(type="submit") Cancel
     
     div#inactive-subs.subscriptions-container.hidden
       each sub in inactive 
@@ -53,8 +53,7 @@ block content
             em(style="font-size:.9rem") #{sub.membership ? ` - ${sub.membership.title} -` : "Membership Tier Deleted"}
           
             div 
-              if sub.status !== "canceled"
-                a(href=`/subscription/${sub._id}/delete`)
-                  button.btn.btn-secondary.btn-sub(type="submit") Cancel
-              if !sub.membership
-                p(style="color:red") Attn: Creator deleted membership
+              form(method="POST" action=`/subscription/${sub._id}/delete`)
+                button.btn.btn-secondary.btn-sub(type="submit") Delete Inactive
+          if !sub.membership
+            p(style="color:red;font-size:.7rem;margin-top:-10px") Attn: Creator deleted membership tier
