@@ -3,6 +3,7 @@
 import "https://js.stripe.com/v3/";
 
 const form = document.querySelector("#subscribe-form");
+const sub_id = document.querySelector("#app-sub-id").value;
 const clientSecret = document.querySelector("#client-secret").value;
 const stripePublishableKey = document.querySelector(
   "#stripe-publishable-key"
@@ -21,7 +22,28 @@ const stripe = await Stripe(stripePublishableKey, {
 //? Customize
 
 const elements = stripe.elements();
-const cardElement = elements.create("card");
+const cardElement = elements.create("card", {
+  style: {
+    base: {
+      iconColor: "#02c7ff",
+      color: "black",
+      fontWeight: "500",
+      fontFamily: "Roboto, Open Sans, Segoe UI, sans-serif",
+      fontSize: "16px",
+      fontSmoothing: "antialiased",
+      ":-webkit-autofill": {
+        color: "#fce883"
+      },
+      "::placeholder": {
+        color: "#87BBFD"
+      },
+      invalid: {
+        iconColor: "#FFC7EE",
+        color: "#FFC7EE"
+      }
+    }
+  }
+});
 cardElement.mount("#card-element");
 
 form.addEventListener("submit", async (e) => {
@@ -43,8 +65,8 @@ form.addEventListener("submit", async (e) => {
         setMessage(`Payment failed: ${result.error.message}`);
       } else {
         // Redirect customer to their account page
-        setMessage("Success! Redirecting to your account.");
-        window.location.href = "/home";
+        setMessage("Payment accepted. Redirecting to confirmation...");
+        window.location.href = `/subscriptions/${sub_id}/success`;
       }
     });
 });

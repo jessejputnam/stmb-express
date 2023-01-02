@@ -27,9 +27,5 @@ block content
             if sub.status !== "canceled"
               a(href=`/subscription/${sub._id}/delete`)
                 button.btn.btn-secondary(type="submit") Cancel
-              //- form.form(method="POST" action="/subscribe/cancel-subscription") 
-              //-   input#creatorId(type='hidden' name="creatorId" value=sub.page.user)
-              //-   input#stripeSubId(type='hidden' name="stripeSubId" value=sub.stripeSubscriptionId)
-              //-   button.btn.btn-secondary(type="submit") Cancel
           if !sub.membership
             p(style="color:red") Attn: Creator deleted membership

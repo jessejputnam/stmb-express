@@ -3,7 +3,6 @@
 const { body, validationResult } = require("express-validator");
 const Stripe = require("stripe")(process.env.STRIPE_SECRET_TEST_KEY);
 
-const User = require("../models/user");
 const Page = require("../models/page");
 const Membership = require("../models/membership");
 

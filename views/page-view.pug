@@ -87,7 +87,7 @@ block content
                         else if String(currentUser._id) === String(page.user._id)
                           button.btn.btn-secondary.btn-disabled(type="submit") My page
                         else 
-                          form(method="POST" action=`/subscribe/add-subscription`) 
+                          form(method="POST" action=`/subscription/add`) 
                             input#membershipId(type="hidden" name="membershipId" required="true" value=membership._id)
                             button.btn.btn-secondary(type="submit") Subscribe
 
