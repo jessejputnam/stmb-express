@@ -148,11 +148,15 @@ exports.delete_membership_get = async (req, res, next) => {
 };
 
 exports.delete_membership_post = async (req, res, next) => {
+  const membershipId = req.params.id;
   const accountId = req.user.creator.stripeId;
-  const productId = req.body.productId;
-  const priceId = req.body.priceId;
 
   try {
+    const membership = await Membership.findById(membershipId);
+
+    const productId = membership.stripeProductId;
+    const priceId = membership.stripePriceId;
+
     // Archive product and price on stripe
     await Stripe.products.update(
       productId,
@@ -166,7 +170,7 @@ exports.delete_membership_post = async (req, res, next) => {
       { stripeAccount: accountId }
     );
 
-    res.redirect("/");
+    res.redirect("/account/memberships");
   } catch (err) {
     return next(err);
   }

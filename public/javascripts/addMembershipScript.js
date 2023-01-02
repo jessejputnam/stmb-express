@@ -27,4 +27,5 @@ btn_add_reward.addEventListener("click", () => {
   num_rewards.value++;
   // Append to rewards container
   rewards_container.appendChild(input);
+  input.children[0].focus();
 });
