@@ -316,7 +316,7 @@ textarea {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 5px 15px;
 }
 
 .flex-v {

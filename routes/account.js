@@ -7,8 +7,13 @@ const page_controller = require("../controllers/pageController");
 const memberships_controller = require("../controllers/membershipController");
 const post_controller = require("../controllers/postController");
 const stripe_controller = require("../controllers/stripeController");
+const subscription_controller = require("../controllers/subscriptionController");
 
 const upload_img = require("../utils/imageUpload");
+
+/* ------------------ ANALYTICS ---------------- */
+// GET request for analytics
+router.get("/analytics", subscription_controller.analytics_get);
 
 /* ------------------ STRIPE ONBOARDING ---------------- */
 

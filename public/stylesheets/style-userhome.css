@@ -1,4 +1,8 @@
 @media only screen and (min-width: 601px) {
+  .page-wrapper {
+    align-items: flex-start;
+  }
+
   .page-wrapper > h1 {
     text-align: left;
     align-self: flex-start;
@@ -6,7 +10,6 @@
 }
 
 .toggle-view-menu {
-  align-self: center;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,6 +17,8 @@
   gap: 10px;
   margin-bottom: 10px;
   z-index: 7;
+  width: 100%;
+  max-width: 800px;
 }
 
 .toggle-view-menu > div {
@@ -40,14 +45,14 @@
 .subscriptions-container {
   width: 100%;
   max-width: 800px;
-  margin: -85px auto 0;
+  margin-top: -85px;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 10px;
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.596);
-  padding: 60px 15px 15px;
+  padding: 60px 15px 35px;
 }
 
 .subscription-wrapper {
@@ -69,6 +74,10 @@
 }
 
 @media only screen and (max-width: 600px) {
+  .subscriptions-container {
+    border-radius: 0;
+  }
+
   .subscription-wrapper {
     align-items: center;
     padding: 5px 5px;
