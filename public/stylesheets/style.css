@@ -248,30 +248,7 @@ textarea {
   }
 }
 
-/* ############### # Additions/Actions ################# */
-
-.hidden {
-  display: none !important;
-}
-
-.sticky {
-  position: sticky;
-  top: 0;
-}
-
-.center-txt {
-  text-align: center;
-}
-
-.active {
-  color: #00b84d;
-  font-size: 0.7rem;
-}
-
-.warning {
-  color: #f18d1e;
-  font-size: 0.7rem;
-}
+/* ############### # LOADER ################# */
 
 .loader {
   border: 9px solid #f3f3f3;
@@ -300,4 +277,44 @@ textarea {
   100% {
     transform: rotate(360deg);
   }
+}
+
+/* ############### # Additions/Actions ################# */
+
+.hidden {
+  display: none !important;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+}
+
+.center-txt {
+  text-align: center;
+}
+
+.active {
+  color: #00b84d;
+  font-size: 0.7rem;
+}
+
+.warning {
+  color: #f18d1e;
+  font-size: 0.7rem;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.normal {
+  font-weight: normal;
+}
+
+.flex-h {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
 }
