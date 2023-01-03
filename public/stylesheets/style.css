@@ -318,3 +318,9 @@ textarea {
   flex-wrap: wrap;
   gap: 15px;
 }
+
+.flex-v {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}

@@ -28,8 +28,6 @@ const UserSchema = new Schema(
     resetPasswordExpires: { type: Date, required: false },
 
     creator: {
-      name: String,
-      genre: String,
       page: { type: Schema.Types.ObjectId, ref: "Page" },
       stripeId: { type: String },
       stripeOnboardComplete: { type: Boolean },

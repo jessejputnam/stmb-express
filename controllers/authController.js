@@ -11,6 +11,7 @@ const sendEmail = require("../utils/sendEmail");
 const sendVerificationEmail = require("../utils/sendVerificationEmail");
 
 const countryCodes = require("../utils/countryCodes");
+const countryNames = require("../utils/countryNames");
 
 // //! FOR DELETING EXCESS TEST ACCOUNTS
 // const Stripe = require("stripe")(process.env.STRIPE_SECRET_TEST_KEY);
@@ -339,5 +340,8 @@ exports.reset_password_post = async (req, res, next) => {
 // ################### SETTINGS ##################
 
 exports.display_settings_get = (req, res, next) => {
-  res.render("settings");
+  res.render("settings", {
+    title: "Settings",
+    countryNames: countryNames
+  });
 };

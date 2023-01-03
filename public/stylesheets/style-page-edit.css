@@ -3,6 +3,13 @@
   align-items: center;
 }
 
+@media only screen and (min-width: 601px) {
+  .page-wrapper {
+    align-items: flex-start;
+    max-width: 800px;
+  }
+}
+
 .heading-container {
   text-align: left;
   max-width: 600px;
@@ -19,13 +26,6 @@
 .page-wrapper > form,
 .page-wrapper > div {
   margin-bottom: 15px;
-}
-
-@media only screen and (min-width: 601px) {
-  .page-wrapper {
-    align-items: flex-start;
-    max-width: 800px;
-  }
 }
 
 .form-wrapper {

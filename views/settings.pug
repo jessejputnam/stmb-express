@@ -8,12 +8,32 @@ block content
     h1 Settings
 
     div.settings-container
-      div 
+      div.flex-v 
+        h3 Personal
         p.bold Name: 
           span.normal #{currentUser.firstname} #{currentUser.lastname}
         p.bold  Email: 
           span.normal= currentUser.username
+            span(class=(currentUser.isVerified ? "active" : "warning"))= currentUser.isVerified ? " ✅ verified" : " ❌ not verified"
+        p.bold  Country: 
+          span.normal= countryNames[currentUser.region]
+
       hr(style="width:40%;margin:15px auto")
+
+      if currentUser.creator.page
+        div.flex-v  
+          h3 Creator 
+          p.bold
+            a.normal(href="https://dashboard.stripe.com/login" target="_blank" noreferrer) Stripe Dashboard
+          if currentUser.creator.stripeIssue
+            p.bold Stripe Error: 
+              span.normal.warning ❌ There is an issue: please go to Stripe Dashboard
+          p.bold Stripe Status: 
+            span.normal(class=(currentUser.creator.stripeStatus === "active" ? "active" : "warning")) #{currentUser.creator.stripeStatus}
+
+
+      hr(style="width:40%;margin:15px auto")
+
       div.flex-h   
         p.bold Reset Password:
         form(method="POST" action="/recover") 
