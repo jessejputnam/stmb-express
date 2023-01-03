@@ -4,6 +4,10 @@ import "https://js.stripe.com/v3/";
 
 const form = document.querySelector("#subscribe-form");
 const sub_id = document.querySelector("#app-sub-id").value;
+const sub_btn = document.querySelector("#sub-btn");
+const cancel_btn = document.querySelector("#cancel-btn");
+const loader = document.querySelector(".loader");
+
 const clientSecret = document.querySelector("#client-secret").value;
 const stripePublishableKey = document.querySelector(
   "#stripe-publishable-key"
@@ -48,6 +52,11 @@ form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const nameInput = document.getElementById("name");
 
+  // Hide other options
+  sub_btn.classList.add("hidden");
+  cancel_btn.classList.add("hidden");
+  loader.classList.remove("hidden");
+
   // Create payment method and confirm payment intent
   stripe
     .confirmCardPayment(clientSecret, {
@@ -61,6 +70,11 @@ form.addEventListener("submit", async (e) => {
     .then((result) => {
       if (result.error) {
         setMessage(`Payment failed: ${result.error.message}`);
+
+        // Reshow options on failure
+        sub_btn.classList.remove("hidden");
+        cancel_btn.classList.remove("hidden");
+        loader.classList.add("hidden");
       } else {
         // Redirect customer to their account page
         setMessage("Payment accepted. Redirecting to confirmation...");

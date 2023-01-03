@@ -87,16 +87,6 @@
   }
 }
 
-.active {
-  color: #14cc60;
-  font-size: 0.7rem;
-}
-
-.warning {
-  color: #f18d1e;
-  font-size: 0.7rem;
-}
-
 .btn-sub {
   padding: 1px;
   min-width: unset;

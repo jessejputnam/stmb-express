@@ -51,11 +51,17 @@ block content
           h2= curPageSub ? "My Membership" : "Membership Tiers"
           
           div.tiers-wrapper
+            //- Currently subscribed to page
             if curPageSub
               div.tier-container
                 div.tier-wrapper.preview 
                   h3!= curPageSub.membership.title
-                  p= `$${curPageSub.membership.price} / month`
+
+                  p.center-txt= `$${curPageSub.membership.price} / month`
+
+                  div.membership-btn-container
+                    em(class=(curPageSub.status === "active" ? "active" : "warning") style="font-size:.8rem")= curPageSub.status
+
                   p!= curPageSub.membership.description
 
                   div.remove-preview
@@ -65,7 +71,8 @@ block content
                     ul 
                       each reward in curPageSub.membership.rewards   
                         li.reward!= "⏦ " + reward
-                    em= "Status: " + curPageSub.status
+
+            //- Not subscribed to page
             else 
               if tiers.length > 0
 
@@ -79,13 +86,17 @@ block content
                       p.center-txt= `$${membership.price} / month`
 
                       div.membership-btn-container
+                        //- Not signed in
                         if !currentUser 
                           a(href="/register") 
-                            button.btn.btn-secondary.btn-register(type="submit") Register to Subscribe!
+                            button.btn.btn-secondary Register to Subscribe!
+                        //- Signed in, but not verified
                         else if !currentUser.isVerified
                           em(style="font-size:.7rem") Check email to verify
+                        //- Signed in, and personal page
                         else if String(currentUser._id) === String(page.user._id)
-                          button.btn.btn-secondary.btn-disabled(type="submit") My page
+                          button.btn.btn-secondary.btn-disabled My page
+                        //- Signed in, capable of subbing
                         else 
                           form(method="POST" action=`/subscription/add`) 
                             input#membershipId(type="hidden" name="membershipId" required="true" value=membership._id)

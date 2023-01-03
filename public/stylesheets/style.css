@@ -262,3 +262,42 @@ textarea {
 .center-txt {
   text-align: center;
 }
+
+.active {
+  color: #00b84d;
+  font-size: 0.7rem;
+}
+
+.warning {
+  color: #f18d1e;
+  font-size: 0.7rem;
+}
+
+.loader {
+  border: 9px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 9px solid #1059ff;
+  width: 62px;
+  height: 62px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
