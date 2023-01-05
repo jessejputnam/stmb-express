@@ -1,11 +1,15 @@
 extends layout 
 
+block scripts 
+  script(type="module" src="/javascripts/formScript.js" defer)
+
 block content 
   div.page-wrapper
     h1= title
 
     p Confirm: cancel #{subscription.membership.title} subscription to #{subscription.page.title}?
 
-    form.form(method="POST" action="") 
+    form.form.form-control-btns(method="POST" action="") 
       input(type="hidden" name="creatorId" value=subscription.page.user)
-      button.btn.btn-secondary(type="submit") Cancel Subscription
+      button#action-btn.btn.btn-secondary(type="submit") Cancel Subscription
+    div.loader.hidden
