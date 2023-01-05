@@ -1,5 +1,8 @@
 extends layout 
 
+block scripts 
+  script(src="/javascripts/formScript.js" defer)
+
 block content
   div.page-wrapper
     if errors 
@@ -11,28 +14,34 @@ block content
 
     form.form-wrapper(method='POST' action='') 
       h2(style="text-align:center")= title
+
       div.form-control 
         label(for="projectName" style="margin-left:15px") Project Name
         input#projectName(type="text" name="projectName" required='true')
+
       div.form-control 
         label(for="genre1" style="margin-left:15px") Genre 1
         select#genre1(name="genre1")
           option(value="" disabled hidden selected)
           each genre in genres 
             option(value=genre._id ) !{`${genre.type[0].toUpperCase()}${genre.type.slice(1)}`}
+
       div.form-control 
         label(for="genre2" style="margin-left:15px") Genre 2
         select#genre2(name="genre2")
           option(value="" selected)
           each genre in genres 
             option(value=genre._id ) !{`${genre.type[0].toUpperCase()}${genre.type.slice(1)}`}
+
       div.form-control 
         label(for="genre3" style="margin-left:15px") Genre 3
         select#genre3(name="genre3")
           option(value="" selected)
           each genre in genres 
             option(value=genre._id ) !{`${genre.type[0].toUpperCase()}${genre.type.slice(1)}`}
+
       div.form-control-btns 
         a(href="/home") Cancel
-        button.btn(type="submit") Submit
+        button#action-btn.btn(type="submit") Submit
+      div.loader.hidden
       

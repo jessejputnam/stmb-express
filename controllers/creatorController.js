@@ -56,6 +56,7 @@ exports.become_creator_post = [
 
       const user = await User.findById(req.user._id);
       user.creator = {};
+
       user.creator.name = req.body.projectName;
       user.creator.genre = genres;
       user.creator.stripeStatus = "pending";

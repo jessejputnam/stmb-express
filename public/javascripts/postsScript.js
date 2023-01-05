@@ -12,7 +12,6 @@ read_post_btns.forEach((btn) => {
     const post_text_container = post_container.children[idx];
     post_text_container.classList.remove("hidden");
     clicked.parentElement.classList.add("hidden");
-    console.log(clicked.parentElement);
   });
 });
 

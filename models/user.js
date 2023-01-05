@@ -7,6 +7,7 @@ const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 
 const Token = require("../models/token");
+const { ObjectId } = require("mongodb");
 
 // USER MODEL
 const UserSchema = new Schema(
@@ -28,6 +29,8 @@ const UserSchema = new Schema(
     resetPasswordExpires: { type: Date, required: false },
 
     creator: {
+      genre: [{ type: Schema.Types.ObjectId, ref: "Genre" }],
+      name: String,
       page: { type: Schema.Types.ObjectId, ref: "Page" },
       stripeId: { type: String },
       stripeOnboardComplete: { type: Boolean },

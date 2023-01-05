@@ -5,6 +5,7 @@ block styles
 
 block scripts 
   script(type="module" src="/javascripts/postsScript.js" defer)
+  script(type="module" src="/javascripts/formScript.js" defer)
 
 block content 
   div.page-wrapper
@@ -35,8 +36,7 @@ block content
       div.post-text
         p!= post.text
 
-
-
-    form(method="POST" action="" style="display:flex;align-items:flex-end;gap:30px") 
+    form.form-control-btns(method="POST" action="" style="display:flex;align-items:flex-end;gap:30px") 
       a(href="/account/posts") Cancel
-      button.btn.btn-secondary(type="submit") Delete
+      button#action-btn.btn.btn-secondary(type="submit") Delete
+    div.loader.hidden

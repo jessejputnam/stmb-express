@@ -1,5 +1,8 @@
 extends layout 
 
+block scripts 
+  script(src="/javascripts/formScript.js" defer)
+
 block styles 
   link(rel="stylesheet", href="/stylesheets/style-add-post.css")
 
@@ -50,5 +53,6 @@ block content
     
       div.form-control-btns 
         a(href="/account/posts") Cancel
-        button.btn(type="submit") Submit
+        button#action-btn.btn(type="submit") Submit
+      div.loader.hidden
       

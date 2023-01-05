@@ -153,13 +153,13 @@ html(lang='en')
                   div
                     span(class="material-symbols-outlined") logout
                     p Logout
+
               hr(style='margin:10px')
 
               //- IF CREATOR
               if currentUser.creator.stripeStatus
                 //- IF PAGE EXISTS
                 if currentUser.creator.page
-                  //- hr(style='margin:10px')
                   li 
                     a(href=`/${currentUser.creator.page}`) 
                       div.view-page(id=currentUser.creator.page._id)
@@ -192,7 +192,11 @@ html(lang='en')
                   if !currentUser.creator.stripeOnboardComplete
                     //- IF ONBOARDING NOT STARTED
                     if !currentUser.creator.stripeId
-                      a(href="/account/onboard-user") Connect to Stripe
+                      li
+                        a(href="/account/onboard-user") 
+                          div 
+                            span.material-symbols-outlined link
+                            p(style="font-size:.8rem") Connect Stripe
                     //- IF ONBOARDING STARTED
                     else 
                       a(href="/account/onboard-user/refresh") Continue Connecting to Stripe
@@ -202,30 +206,41 @@ html(lang='en')
                     //- IF PAYMENTS ACTIVE
                     if currentUser.creator.stripeStatus === "active" 
                       form(method="POST" action="/account/create-page") 
-                        button.btn.btn-secondary(type="submit") Create Page
+                        button.btn.btn-addpage.btn-sidebar(type="submit")
+                          span.material-symbols-outlined note_add
+                          p(style="margin-left:-10px") Create Page
+
                     
                     //- IF PAYMENT ISSUE
                     else 
-                      div 
-                        em Stripe Payment Issue
-                        p Status: 
-                          span= currentUser.creator.stripeStatus
-                        a(href="https://dashboard.stripe.com") Stripe Dashboard
+                      li 
+                        a(href="https://dashboard.stripe.com" target="_blank" noreferrer)       
+                          div 
+                            span.material-symbols-outlined.warning warning
+                            p.warning(style="font-size:.8rem") Stripe Status: #{currentUser.creator.stripeStatus}
                     
                     //- IF STRIPE REQUIRES INFO
                     if currentUser.creator.stripeIssue 
-                      div 
-                        em Stripe requires attention 
-                        a(href="https://dashboard.stripe.com") Stripe Dashboard
+                      li 
+                        a(href="https://dashboard.stripe.com" target="_blank" noreferrer)       
+                          div 
+                            span.material-symbols-outlined.warning warning 
+                            p(style="font-size:.8rem")  Stripe requires attention 
 
               //- IF NOT CREATOR
               else 
                 if currentUser.isVerified
-                  li 
-                    a(href="/home/creator-signup") Become Creator
+                  li(style="margin-top:30px") 
+                    a(href="/home/creator-signup")
+                      div(style="padding:0 0 0 10px") 
+                        span.material-symbols-outlined add_circle 
+                        p(style="font-size:.8rem") Become Creator
                 else 
                   li 
-                    p(style="font-size:.6rem") [Please Verify Email]
+                    a()
+                      div
+                        span.material-symbols-outlined.warning forward_to_inbox
+                        p.warning(style="font-size:.6rem") [Please Verify Email]
 
         div.mobile-modal
           nav 
@@ -255,7 +270,7 @@ html(lang='en')
                   div
                     span(class="material-symbols-outlined") logout
                     p Logout
-              //- hr(style='margin:10px')
+
               li 
                 p(style="margin-left:15px")  ⸺ Creator Page ⸺
 
@@ -263,7 +278,6 @@ html(lang='en')
               if currentUser.creator.stripeStatus
                 //- IF PAGE EXISTS
                 if currentUser.creator.page
-                  //- hr(style='margin:10px')
                   li 
                     a(href=`/${currentUser.creator.page}`) 
                       div.view-page(id=currentUser.creator.page._id)
@@ -306,30 +320,38 @@ html(lang='en')
                     //- IF PAYMENTS ACTIVE
                     if currentUser.creator.stripeStatus === "active" 
                       form(method="POST" action="/account/create-page") 
-                        button.btn.btn-secondary(type="submit") Create Page
+                        button.btn.btn-addpage(type="submit")
+                          span.material-symbols-outlined note_add
+                          p(style="margin-left:5px") Create Page
+
                     
                     //- IF PAYMENT ISSUE
                     else 
-                      div 
-                        em Stripe Payment Issue
-                        p Status: 
-                          span= currentUser.creator.stripeStatus
-                        a(href="https://dashboard.stripe.com") Stripe Dashboard
+                      li 
+                        a(href="https://dashboard.stripe.com" target="_blank" noreferrer)       
+                          div.flex-h 
+                            span(style="color:red").material-symbols-outlined  warning
+                            p.warning(style="font-size:1rem") Stripe Status: #{currentUser.creator.stripeStatus}
                     
                     //- IF STRIPE REQUIRES INFO
                     if currentUser.creator.stripeIssue 
-                      div 
-                        em Stripe requires attention 
-                        a(href="https://dashboard.stripe.com") Stripe Dashboard
+                      li 
+                        a(href="https://dashboard.stripe.com" target="_blank" noreferrer)       
+                          div 
+                            span(style="color:red").material-symbols-outlined warning 
+                            p  Stripe requires attention 
 
               //- IF NOT CREATOR
               else 
                 if currentUser.isVerified
                   li 
-                    a(href="/home/creator-signup") Become Creator
+                    a(href="/home/creator-signup")
+                      div 
+                        span.material-symbols-outlined add_circle 
+                        p Become Creator
                 else 
                   li 
-                    p(style="font-size:.6rem") [Please Verify Email]
+                    p.warning(style="font-size:.6rem") [Please Verify Email]
 
         main.main-wrapper
           block content

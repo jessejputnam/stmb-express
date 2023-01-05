@@ -105,6 +105,36 @@
   }
 }
 
+.btn-addpage {
+  min-width: unset;
+  background-color: inherit;
+  color: #6d6d6d;
+  display: flex;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-sidebar {
+  padding: 0 5px 0 12px;
+}
+
+@media (hover: hover) {
+  .btn-addpage:hover {
+    color: #373737;
+  }
+}
+
+@media only screen and (max-width: 975px) {
+  .btn-sidebar {
+    padding: 0 0 0 12px;
+  }
+
+  .btn-sidebar > p {
+    display: none;
+  }
+}
+
 /* #################### # HAMBURGER ##################### */
 
 .hamburger {

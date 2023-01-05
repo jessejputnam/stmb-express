@@ -59,7 +59,6 @@ h1 {
 a {
   color: #6d6d6d;
   text-decoration: none;
-  text-decoration: none;
 }
 
 @media (hover: hover) {
@@ -258,6 +257,7 @@ textarea {
   height: 62px;
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
+  margin: 10px auto 5px;
 }
 
 /* Safari */

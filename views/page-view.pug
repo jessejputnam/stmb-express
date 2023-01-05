@@ -92,7 +92,7 @@ block content
                             button.btn.btn-secondary Register to Subscribe!
                         //- Signed in, but not verified
                         else if !currentUser.isVerified
-                          em(style="font-size:.7rem") Check email to verify
+                          em.warning(style="font-size:.7rem") Check email to verify
                         //- Signed in, and personal page
                         else if String(currentUser._id) === String(page.user._id)
                           button.btn.btn-secondary.btn-disabled My page

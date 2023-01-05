@@ -2,6 +2,8 @@ extends layout
 
 block scripts 
   script(src="/javascripts/addMembershipScript.js" defer)
+  script(src="/javascripts/formScript.js" defer)
+  
 
 block content
   div.page-wrapper
@@ -41,5 +43,5 @@ block content
     
       div.form-control-btns 
         a(href="/account/memberships") Cancel
-        button.btn(type="submit") Submit
-      
+        button#action-btn.btn(type="submit") Submit
+      div.loader.hidden

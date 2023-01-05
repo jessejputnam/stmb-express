@@ -21,9 +21,9 @@ exports.page_get = async (req, res, next) => {
   // the user is the owner and returns that answer
   const isOwnPage = !req.user
     ? false
-    : req.user.creator
-    ? String(req.user.creator.page._id) === pageId
-    : false;
+    : !req.user.creator.page
+    ? false
+    : String(req.user.creator.page._id) === pageId;
 
   try {
     const page = await Page.findById(pageId).populate("genre").exec();
