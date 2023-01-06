@@ -42,6 +42,7 @@ const homeRouter = require("./routes/home");
 const creatorRouter = require("./routes/account");
 const subscriptionRouter = require("./routes/subscription");
 const openGraphRouter = require("./routes/open-graph");
+const fetchPostRouter = require("./routes/post-fetch");
 
 const app = express();
 const sessionStore = new MongoDBStore({
@@ -126,6 +127,7 @@ app.use("/account", authCheckFalse, isVerifiedCheck, creatorRouter);
 app.use("/subscription", authCheckFalse, isVerifiedCheck, subscriptionRouter);
 app.use("/search", searchRouter);
 app.use("/open-graph", openGraphRouter);
+app.use("/posts", fetchPostRouter);
 app.use("/", indexRouter);
 
 // catch 404 and forward to error handler

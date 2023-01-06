@@ -21,6 +21,7 @@ block content
         button#post-view.btn.btn-tertiary Post View
 
     div.abbr-posts-container
+
       if !posts.length
         p No posts yet...
         
@@ -47,7 +48,7 @@ block content
           div.post-media(class=(post.type==="text" ? "hidden" : ""))
             if post.type === "link" 
               div
-                a.external-link(href=post.typeContent target="_blank" noreferrer)= post.typeContent
+                a.external-link(href=post.typeContent target="_blank" rel="noreferrer nofollow")= post.typeContent
                 div.link-ogg-container
                   p.og-title Loading...
                   img.og-img(src="/images/post-placeholder.png", alt="External link image")
@@ -68,3 +69,10 @@ block content
 
           div.post-text.hidden
             p!= post.text
+
+    button#load-more.btn.btn-tertiary(type="submit") Load More
+    div.loader.hidden(style="height:30px;width:30px;border-width:4px")
+    input#totalPages(type="hidden" name="totalPages" value=total_pages)
+    input#page(type="hidden" name="page" value="1")
+    input#limit(type="hidden" name="limit" value=limit)
+    input#pageId(type="hidden" name="pageId" value=currentUser.creator.page)

@@ -7,14 +7,28 @@ const Post = require("../models/post");
 
 // Handle display posts on GET
 exports.posts_display_get = async (req, res, next) => {
+  const limit = 2;
+
   try {
-    const posts = await Post.find({ user: req.user })
+    const posts_promise = Post.find({ user: req.user })
       .sort({ timestamp: "desc" })
+      .limit(limit)
       .exec();
+
+    const posts_count_promise = Post.countDocuments({ user: req.user });
+
+    const [posts, posts_count] = await Promise.all([
+      posts_promise,
+      posts_count_promise
+    ]);
+
+    const total_pages = Math.ceil(posts_count / limit);
 
     return res.render("posts-view", {
       title: "Posts",
-      posts: posts
+      posts: posts,
+      limit,
+      total_pages
     });
   } catch (err) {
     return next(err);
@@ -208,4 +222,21 @@ exports.delete_post_delete = async (req, res, next) => {
   } catch (err) {
     return next(err);
   }
+};
+
+// Handle load more posts on GET
+exports.fetch_posts_get = async (req, res, next) => {
+  const page_id = req.params.id;
+  const limit = Number(req.params.limit);
+  const page_num = Number(req.params.num);
+
+  console.log([page_id, limit, page_num]);
+
+  const posts = await Post.find({ pageId: page_id })
+    .sort({ timestamp: "desc" })
+    .limit(limit)
+    .skip((page_num - 1) * limit)
+    .exec();
+
+  return res.send(posts);
 };
