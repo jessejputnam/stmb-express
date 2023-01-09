@@ -17,9 +17,9 @@ html(lang='en')
     link(rel='stylesheet', href='/stylesheets/style.css')
 
     if !currentUser 
-      link(rel="stylesheet", href="/stylesheets/style-noauth.css")
+      link(rel="stylesheet", href="/stylesheets/noauth.css")
     if currentUser 
-      link(rel="stylesheet", href="/stylesheets/style-auth.css")
+      link(rel="stylesheet", href="/stylesheets/auth.css")
     block styles
 
     //- JAVASCRIPTS

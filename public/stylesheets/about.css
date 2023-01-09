@@ -1,0 +1,34 @@
+.page-wrapper {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.top-section-wrapper {
+  display: flex;
+  gap: 25px;
+}
+
+.top-section-wrapper > img {
+  width: 35vw;
+  max-width: 500px;
+  border-radius: 10px;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.684);
+}
+
+@media only screen and (max-width: 600px) {
+  .top-section-wrapper {
+    flex-direction: column-reverse;
+  }
+
+  .top-section-wrapper > img {
+    width: 100%;
+  }
+}

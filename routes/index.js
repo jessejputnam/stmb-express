@@ -21,7 +21,9 @@ router.get("/", authCheck, auth_controller.index_get);
 
 // GET request for view page
 router.get("/about", (req, res, next) => {
-  return res.render("pages/about");
+  return res.render("pages/about", {
+    title: "About STMB"
+  });
 });
 
 /* -------------------- Authentication ---------------- */
