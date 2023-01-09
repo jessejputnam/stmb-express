@@ -17,6 +17,13 @@ const stripe_controller = require("../controllers/stripeController");
 // GET request for landing page.
 router.get("/", authCheck, auth_controller.index_get);
 
+/* ----------------- About Page --------------- */
+
+// GET request for view page
+router.get("/about", (req, res, next) => {
+  return res.render("pages/about");
+});
+
 /* -------------------- Authentication ---------------- */
 
 // GET request for register

@@ -82,7 +82,7 @@ exports.page_get = async (req, res, next) => {
     }
 
     // Successful, so render
-    return res.render("page-view", {
+    return res.render("pages/page-view", {
       title: page.title,
       page,
       tiers,
@@ -144,7 +144,7 @@ exports.edit_page_get = async (req, res, next) => {
     }
 
     // Successful, so render
-    return res.render("form-page-edit", {
+    return res.render("forms/page-edit", {
       title: "Edit Page",
       page: page,
       genres
@@ -180,7 +180,7 @@ exports.edit_page_post = [
 
         const [genres, page] = await Promise.all([genresPromise, pagePromise]);
 
-        res.render("form-page-edit", {
+        res.render("forms/page-edit", {
           title: "Edit Page",
           page,
           genres,
@@ -271,7 +271,7 @@ exports.page_activate_get = async (req, res, next) => {
 
     const title = isActive ? "Deactivate Page?" : "Activate Page?";
 
-    return res.render("confirm-active", {
+    return res.render("confirms/active", {
       title: title,
       page: page
     });

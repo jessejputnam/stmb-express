@@ -9,7 +9,7 @@ exports.subscription_success_get = async (req, res, next) => {
       .exec();
     const creator = subscription.page.title;
 
-    res.render("success-message", {
+    res.render("messages/success", {
       title: "Successfully subscribed!",
       message: `You have successfully subscribed to ${creator}. It may take a few minutes for your subscription to appear active.`
     });
@@ -54,7 +54,7 @@ exports.analytics_get = async (req, res, next) => {
       subs_by_membership[title].push(sub);
     });
 
-    return res.render("analytics", {
+    return res.render("pages/analytics", {
       title: "Analytics",
       subs,
       subs_by_membership

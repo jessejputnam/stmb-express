@@ -30,12 +30,10 @@ exports.search_form_get = async (req, res, next) => {
   try {
     // Get genres to populate genre browse
     const genres = await Genre.find({});
-    // Get type names for quick search later
-    // const genre_types = genres.map((genre) => genre.type);
 
     // If no search yet, just display search form
     if (!regs) {
-      return res.render("form-search", {
+      return res.render("pages/search", {
         title: "Find Creators",
         genres,
         pages: null,
@@ -51,7 +49,7 @@ exports.search_form_get = async (req, res, next) => {
         .exec();
       const activeResults = results.filter((page) => page.active);
 
-      return res.render("form-search", {
+      return res.render("pages/search", {
         title: "Find Creators",
         genres,
         pages: activeResults,
@@ -62,7 +60,7 @@ exports.search_form_get = async (req, res, next) => {
     const results = await Page.find({ title: regs }).populate("genre").exec();
     const activeResults = results.filter((page) => page.active);
 
-    return res.render("form-search", {
+    return res.render("pages/search", {
       title: "Find Creators",
       genres,
       pages: activeResults,

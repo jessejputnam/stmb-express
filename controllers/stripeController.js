@@ -189,7 +189,7 @@ exports.confirm_subscription_get = async (req, res, next) => {
       .exec();
     const creator = await User.findById(subscription.page.user);
 
-    res.render("confirm-subscription", {
+    res.render("confirms/subscription", {
       title: "Finalize Subscription",
       stripe_publishable_key: process.env.STRIPE_PUBLISHABLE_KEY,
       client_secret: subscription.temp,
@@ -225,7 +225,7 @@ exports.cancel_subscription_get = async (req, res, next) => {
       .populate("page")
       .exec();
 
-    return res.render("confirm-cancel-sub", {
+    return res.render("confirms/cancel-sub", {
       title: "Cancel Subscription",
       subscription: sub
     });
@@ -263,7 +263,7 @@ exports.subscription_cancelled_get = async (req, res, next) => {
   try {
     const page = await Page.findById(req.params.id);
 
-    res.render("success-message", {
+    res.render("messages/success", {
       title: "Subscription Cancelled",
       message: `You have successfully unsubscribed from ${page.title}`
     });

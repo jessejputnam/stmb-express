@@ -24,7 +24,7 @@ exports.posts_display_get = async (req, res, next) => {
 
     const total_pages = Math.ceil(posts_count / limit);
 
-    return res.render("posts-view", {
+    return res.render("pages/posts-view", {
       title: "Posts",
       posts: posts,
       limit,
@@ -39,7 +39,7 @@ exports.posts_display_get = async (req, res, next) => {
 exports.add_post_get = (req, res, next) => {
   const postType = req.url.split("_")[1];
 
-  return res.render("form-post-add", {
+  return res.render("forms/post-add", {
     title: "Add Post",
     postType
   });
@@ -55,7 +55,7 @@ exports.add_post_post = [
 
     if (!errors.isEmpty()) {
       // There are errors, rerender
-      res.render("form-post-add", {
+      res.render("forms/post-add", {
         title: "Add Post",
         errors: errors.array()
       });
@@ -96,7 +96,7 @@ exports.edit_post_get = async (req, res, next) => {
   try {
     const post = await Post.findById(postId);
 
-    return res.render("form-post-edit", {
+    return res.render("forms/post-edit", {
       title: `Edit ${post.type[0].toUpperCase() + post.type.slice(1)} Post`,
       post
     });
@@ -114,7 +114,7 @@ exports.edit_post_post = [
 
     if (!errors.isEmpty()) {
       // There are errors, rerender
-      res.render("form-post-add", {
+      res.render("forms/post-add", {
         title: "Add Post",
         errors: errors.array()
       });
@@ -204,7 +204,7 @@ exports.delete_post_get = async (req, res, next) => {
   try {
     const post = await Post.findById(postId);
 
-    return res.render("confirm-delete-post", {
+    return res.render("confirms/delete-post", {
       post
     });
   } catch (err) {

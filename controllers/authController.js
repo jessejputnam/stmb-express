@@ -23,7 +23,7 @@ const countryNames = require("../utils/countryNames");
 
 // Display Landing Page on GET
 exports.index_get = (req, res, next) => {
-  return res.render("index", { title: "Smash the Motherboard" });
+  return res.render("pages/index", { title: "Smash the Motherboard" });
 };
 
 // Display User Home page on GET
@@ -31,26 +31,30 @@ exports.user_home_get = async (req, res, next) => {
   //! FOR DELETING EXCESS TEST ACCOUNTS
   // await Stripe.accounts.del("acct_1M4Usf2fKNHCRH9J");
 
-  const subscriptions = await Subscription.find({ user: req.user._id })
-    .populate("page")
-    .populate("membership")
-    .exec();
+  try {
+    const subscriptions = await Subscription.find({ user: req.user._id })
+      .populate("page")
+      .populate("membership")
+      .exec();
 
-  const active = subscriptions.filter((sub) => sub.status !== "canceled");
-  const inactive = subscriptions.filter((sub) => sub.status === "canceled");
+    const active = subscriptions.filter((sub) => sub.status !== "canceled");
+    const inactive = subscriptions.filter((sub) => sub.status === "canceled");
 
-  res.render("user-home", {
-    title: "Home",
-    active,
-    inactive
-  });
+    return res.render("pages/user-home", {
+      title: "Home",
+      active,
+      inactive
+    });
+  } catch (err) {
+    return next(err);
+  }
 };
 
 // ################# REGISTERING ##################
 
 // Display sign up on GET
 exports.signup_get = (req, res, next) => {
-  return res.render("form-sign-up", {
+  return res.render("forms/sign-up", {
     title: "STMB Register",
     country_list: countryCodes
   });
@@ -84,7 +88,7 @@ exports.sign_up_post = [
 
     if (!errors.isEmpty()) {
       // There are errors, rerender
-      return res.render("form-sign-up", {
+      return res.render("forms/sign-up", {
         title: "STMB Register",
         errors: errors.array()
       });
@@ -94,7 +98,7 @@ exports.sign_up_post = [
       // Check if user exists
       const found_user = await User.find({ username: req.body.username });
       if (found_user.length > 0) {
-        return res.render("form-sign-up", {
+        return res.render("forms/sign-up", {
           title: "STMB Register",
           error: "Email is already in use"
         });
@@ -114,7 +118,7 @@ exports.sign_up_post = [
       await sendVerificationEmail(user, req, next);
 
       // Successful, redirect to verification reminder
-      return res.render("success-message", {
+      return res.render("messages/success", {
         title: "Check email",
         message:
           "A verification email has been sent to " +
@@ -131,7 +135,7 @@ exports.sign_up_post = [
 
 // Handle login on GET
 exports.login_get = (req, res, next) => {
-  res.render("form-log-in", {
+  res.render("forms/log-in", {
     title: "STMB Log In",
     errors: req.flash("error")
   });
@@ -286,7 +290,7 @@ exports.reset_password_get = async (req, res, next) => {
       return next(err);
     }
 
-    return res.render("form-password-reset", {
+    return res.render("forms/password-reset", {
       user: user
     });
   } catch (err) {
@@ -328,7 +332,7 @@ exports.reset_password_post = async (req, res, next) => {
 
     await sendEmail({ to, from, subject, html });
 
-    return res.render("success-message", {
+    return res.render("messages/success", {
       title: "Update success",
       message: "Your password has been updated"
     });
@@ -340,7 +344,7 @@ exports.reset_password_post = async (req, res, next) => {
 // ################### SETTINGS ##################
 
 exports.display_settings_get = (req, res, next) => {
-  res.render("settings", {
+  res.render("pages/settings", {
     title: "Settings",
     countryNames: countryNames
   });

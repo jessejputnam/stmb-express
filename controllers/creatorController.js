@@ -15,7 +15,7 @@ exports.become_creator_get = async (req, res, next) => {
     }
 
     // Successful, so render
-    return res.render("form-become-creator", {
+    return res.render("forms/become-creator", {
       title: "Become Creator",
       genres: genres
     });
@@ -44,7 +44,7 @@ exports.become_creator_post = [
         const genres = await Genre.find({}, "type").exec();
 
         // Successful, so render
-        return res.render("form-become-creator", {
+        return res.render("forms/become-creator", {
           title: "Become Creator",
           genres: genres
         });

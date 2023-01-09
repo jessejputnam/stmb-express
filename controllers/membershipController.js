@@ -26,7 +26,7 @@ exports.display_memberships_get = async (req, res, next) => {
 
     const memberships = await Membership.find({ page: page });
 
-    return res.render("memberships-view", {
+    return res.render("pages/memberships-view", {
       title: "Memberships",
       memberships
     });
@@ -36,7 +36,7 @@ exports.display_memberships_get = async (req, res, next) => {
 };
 
 exports.add_membership_get = (req, res, next) => {
-  return res.render("form-membership-add", {
+  return res.render("forms/membership-add", {
     title: "Add Membership"
   });
 };
@@ -60,7 +60,7 @@ exports.add_membership_post = [
     const num_rewards = Number(req.body.numRewards);
 
     if (!errors.isEmpty) {
-      return res.render("form-membership-add", {
+      return res.render("forms/membership-add", {
         title: "Add Membership",
         errors: errors.array()
       });
@@ -137,7 +137,7 @@ exports.delete_membership_get = async (req, res, next) => {
   try {
     const membership = await Membership.findById(req.params.id);
 
-    return res.render("confirm-delete-membership", {
+    return res.render("confirms/delete-membership", {
       title: "Delete Membership",
       membership: membership
     });
