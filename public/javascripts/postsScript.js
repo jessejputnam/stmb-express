@@ -7,7 +7,7 @@ const read_post_btns = document.querySelectorAll(".read-post-btn");
 read_post_btns.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     const clicked = e.target;
-    const post_container = clicked.parentElement.parentElement;
+    const post_container = clicked.closest(".post-container");
     const idx = post_container.children.length - 1;
     const post_text_container = post_container.children[idx];
     post_text_container.classList.remove("hidden");
