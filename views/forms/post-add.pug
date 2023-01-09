@@ -2,6 +2,7 @@ extends ../layout
 
 block scripts 
   script(src="/javascripts/formScript.js" defer)
+  script(src="/javascripts/postAddScript.js" defer)
 
 block styles 
   link(rel="stylesheet", href="/stylesheets/add-post.css")
@@ -36,7 +37,7 @@ block content
         label(for="isPublic" style="margin-left:15px") Post Access 
         select#isPublic(name="isPublic") 
           option(value="false" selected) Subscribers Only 
-          option(value="true") Public Access  
+          option(value="true") Public Access 
 
       div.form-control 
         label(for="title" style="margin-left:15px") Post Title
@@ -50,6 +51,11 @@ block content
         if postType !== "text"
           label(for="typeContent")= postType[0].toUpperCase() + postType.slice(1) + " URL"
         input#typeContent(type=(postType === "text" ? "hidden" : "text") name="typeContent")
+
+      if postType === "image"
+        div.form-control 
+          label(for="") 
+          button.btn.btn-tertiary ➕ Add Link
     
       div.form-control-btns 
         a(href="/account/posts") Cancel

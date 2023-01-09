@@ -18,7 +18,8 @@ const PostSchema = new Schema({
     required: true,
     default: "text"
   },
-  typeContent: { type: String, default: null }
+  typeContent: { type: String, default: null },
+  external_link: { type: String, default: null }
 });
 
 PostSchema.virtual("readableDate").get(function () {
