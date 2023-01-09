@@ -40,10 +40,14 @@ exports.posts_display_get = async (req, res, next) => {
 // Handle add post on GET
 exports.add_post_get = (req, res, next) => {
   const postType = req.url.split("_")[1];
+  const imgType = postType === "image" ? req.url.split("_")[2] : null;
+  const otherType = imgType === "url" ? "upload" : "url";
 
   return res.render("forms/post-add", {
     title: "Add Post",
-    postType
+    postType,
+    imgType,
+    otherType
   });
 };
 

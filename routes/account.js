@@ -10,6 +10,7 @@ const stripe_controller = require("../controllers/stripeController");
 const subscription_controller = require("../controllers/subscriptionController");
 
 const upload_img = require("../utils/imageUpload");
+const upload_img_sm = require("../utils/imageUploadSmall");
 
 /* ------------------ ANALYTICS ---------------- */
 // GET request for analytics
@@ -44,7 +45,7 @@ router.post(
 // POST request for change page profile image
 router.post(
   "/update/profileImg",
-  upload_img.single("profileImg"),
+  upload_img_sm.single("profileImg"),
   page_controller.set_profile_img_post
 );
 
@@ -95,8 +96,11 @@ router.get("/posts/add-post_text", post_controller.add_post_get);
 // GET request for add link post
 router.get("/posts/add-post_link", post_controller.add_post_get);
 
-// GET request for add image post
-router.get("/posts/add-post_image", post_controller.add_post_get);
+// GET request for add url image post
+router.get("/posts/add-post_image_url", post_controller.add_post_get);
+
+// GET request for add upload image post
+router.get("/posts/add-post_image_upload", post_controller.add_post_get);
 
 // GET request for add video post
 router.get("/posts/add-post_video", post_controller.add_post_get);

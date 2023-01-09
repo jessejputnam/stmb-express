@@ -20,7 +20,7 @@ block content
           button.btn.btn-tertiary(class=(postType === "text" ? "selected-type" : "")) Text
         a(href="/account/posts/add-post_link")
           button.btn.btn-tertiary(class=(postType === "link" ? "selected-type" : "")) Link
-        a(href="/account/posts/add-post_image")
+        a(href="/account/posts/add-post_image_url")
           button.btn.btn-tertiary(class=(postType === "image" ? "selected-type" : "")) Image
         a(href="/account/posts/add-post_video")
           button.btn.btn-tertiary(class=(postType === "video" ? "selected-type" : "")) Video
@@ -49,7 +49,9 @@ block content
 
       div.form-control
         if postType !== "text"
-          label(for="typeContent")= postType[0].toUpperCase() + postType.slice(1) + " URL"
+          label(for="typeContent")= postType[0].toUpperCase() + postType.slice(1) + " URL" 
+            if imgType 
+              a(style="font-size:.8rem" href=`/account/posts/add-post_${postType}_${otherType}`)= otherType === "url" ? " (Use a URL)" : " (Upload instead)" 
         input#typeContent(type=(postType === "text" ? "hidden" : "text") name="typeContent")
 
       if postType === "image"
