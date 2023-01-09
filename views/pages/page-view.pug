@@ -124,8 +124,9 @@ block content
 
               div.post-container
                 if !currentUser || (!curPageSub && String(currentUser._id) !== String(page.user._id))
-                
-                  if post.public 
+
+                  //- Public Post
+                  if post.public
                     div.post-media(class=(post.type==="text" ? "hidden" : ""))
                       if post.type === "link" 
                         div
@@ -149,7 +150,11 @@ block content
                       p.read-post-btn Read Post
 
                     div.post-text.hidden
+                      if post.external_link 
+                        a.external-link(href=post.external_link target="_blank" rel="noreferrer nofollow")= post.external_link
                       p!= post.text
+
+                  //- Private Post view by public
                   else  
                     div.post-media.media-hidden
                       div
@@ -159,6 +164,7 @@ block content
                       p.timestamp= post.readableDate
                       h3!= post.title 
 
+                //- Private Post viewed by subs
                 else 
                   div.post-media(class=(post.type==="text" ? "hidden" : ""))
                     if post.type === "link" 
@@ -183,4 +189,6 @@ block content
                     p.read-post-btn Read Post
 
                   div.post-text.hidden
+                    if post.external_link 
+                      a.external-link(href=post.external_link target="_blank" rel="noreferrer nofollow")= post.external_link
                     p!= post.text

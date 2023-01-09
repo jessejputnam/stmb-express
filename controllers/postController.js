@@ -69,6 +69,7 @@ exports.add_post_post = [
     const userPageId = String(req.user.creator.page._id);
     const postType = req.body.postType;
     const publicAccess = req.body.isPublic;
+    const externalLink = req.body.externalLink || null;
     const typeContent = req.body.typeContent;
 
     const post = new Post({
@@ -78,6 +79,7 @@ exports.add_post_post = [
       title: req.body.title,
       text: req.body.text,
       type: postType,
+      external_link: externalLink,
       typeContent
     });
 
@@ -130,12 +132,14 @@ exports.edit_post_post = [
     const typeContent = req.body.typeContent;
     const title = req.body.title;
     const text = req.body.text;
+    const external_link = req.body.externalLink || null;
 
     try {
       const post = await Post.findById(postId);
       post.title = title;
       post.text = text;
       post.public = publicAccess;
+      post.external_link = external_link;
       post.typeContent = typeContent;
 
       await post.save();

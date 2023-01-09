@@ -48,7 +48,7 @@ block content
           div.post-media(class=(post.type==="text" ? "hidden" : ""))
             if post.type === "link" 
               div
-                a.external-link(href=post.typeContent target="_blank" rel="noreferrer nofollow")= post.typeContent
+                a.external-link.ogg-link(href=post.typeContent target="_blank" rel="noreferrer nofollow")= post.typeContent
                 div.link-ogg-container
                   p.og-title Loading...
                   img.og-img(src="/images/post-placeholder.png", alt="External link image")
@@ -68,6 +68,8 @@ block content
             p.read-post-btn Read Post
 
           div.post-text.hidden
+            if post.external_link 
+              a.external-link(href=post.external_link target="_blank" rel="noreferrer nofollow")= post.external_link
             p!= post.text
 
     button#load-more.btn.btn-tertiary(type="submit" class=(total_pages < 2 ? "hidden" : "")) Load More

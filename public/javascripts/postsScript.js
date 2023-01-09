@@ -1,6 +1,7 @@
 "use strict";
 
-const externalLinks = document.querySelectorAll(".external-link");
+const external_links = document.querySelectorAll(".external-link");
+const ogg_links = document.querySelectorAll(".ogg-link");
 const read_post_btns = document.querySelectorAll(".read-post-btn");
 
 // Unhide post text
@@ -16,7 +17,7 @@ read_post_btns.forEach((btn) => {
 });
 
 // Warning about external link for user's caution
-externalLinks.forEach((link) => {
+external_links.forEach((link) => {
   link.addEventListener("click", (e) => {
     const allow = confirm("This link takes you to an external site");
 
@@ -25,7 +26,7 @@ externalLinks.forEach((link) => {
 });
 
 // Fetch open graph data
-externalLinks.forEach(async (link) => {
+ogg_links.forEach(async (link) => {
   const linkUrl = link.href.split("://")[1].split("/")[0];
   const linkDiv = link.parentElement.children[1];
 

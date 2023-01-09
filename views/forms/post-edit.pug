@@ -29,6 +29,11 @@ block content
         select#public(name="public") 
           option(value="true" selected=(post.public ? "selected" : false)) Public
           option(value="false" selected=(!post.public ? "selected" : false)) Private
+
+      if post.external_link
+        div.form-control 
+          label(for="externalLink" style="margin-left:15px") External Link
+          input#exernalLink(type="text" name="externalLink" value=post.external_link)
     
       div.form-control-btns 
         a(href="/account/posts") Cancel

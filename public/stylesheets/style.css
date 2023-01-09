@@ -141,7 +141,7 @@ ul {
 .form-wrapper {
   display: flex;
   flex-direction: column;
-  row-gap: 5px;
+  row-gap: 10px;
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
@@ -160,7 +160,7 @@ ul {
 .form-control {
   display: flex;
   flex-direction: column;
-  row-gap: 7px;
+  row-gap: 2px;
 }
 
 .form-control > label {

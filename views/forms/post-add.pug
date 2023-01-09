@@ -1,8 +1,8 @@
 extends ../layout 
 
 block scripts 
-  script(src="/javascripts/formScript.js" defer)
-  script(src="/javascripts/postAddScript.js" defer)
+  script(type="module" src="/javascripts/formScript.js" defer)
+  script(type="module" src="/javascripts/postAddScript.js" defer)
 
 block styles 
   link(rel="stylesheet", href="/stylesheets/add-post.css")
@@ -54,8 +54,11 @@ block content
 
       if postType === "image"
         div.form-control 
-          label(for="") 
-          button.btn.btn-tertiary ➕ Add Link
+          label(for="externalLink") (Optional) Add link to post
+          div.form-control.add-link-container.hidden
+            input#externalLink(type="text" placeholder="http://checkoutthislink.io" name="externalLink" style="margin-top:5px")
+            button(type="button")#removeLink.btn.btn-tertiary ⓧ
+          button#add-link.btn.btn-tertiary(type="button" style="border-radius:5px;margin-top:0px") ➕ Add Link
     
       div.form-control-btns 
         a(href="/account/posts") Cancel

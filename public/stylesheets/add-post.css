@@ -28,3 +28,15 @@
   border-color: white !important;
   color: white !important;
 }
+
+.add-link-container {
+  position: relative;
+}
+
+#removeLink {
+  position: absolute;
+  top: 4px;
+  right: 0;
+  background-color: unset;
+  border: none;
+}
