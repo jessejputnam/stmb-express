@@ -7,7 +7,7 @@
   justify-content: center;
   gap: 15px;
   min-height: 100px;
-  width: 100%;
+  width: 100vw;
   max-width: 600px;
   padding: 15px;
   box-shadow: 0 0 3px 0px rgba(0, 0, 0, 0.498);

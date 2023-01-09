@@ -7,12 +7,13 @@ const Post = require("../models/post");
 
 // Handle display posts on GET
 exports.posts_display_get = async (req, res, next) => {
-  const limit = 2;
+  // Set limit
+  const pagination_limit = 10;
 
   try {
     const posts_promise = Post.find({ user: req.user })
       .sort({ timestamp: "desc" })
-      .limit(limit)
+      .limit(pagination_limit)
       .exec();
 
     const posts_count_promise = Post.countDocuments({ user: req.user });
@@ -22,12 +23,13 @@ exports.posts_display_get = async (req, res, next) => {
       posts_count_promise
     ]);
 
-    const total_pages = Math.ceil(posts_count / limit);
+    const total_pages = Math.ceil(posts_count / pagination_limit);
+    console.log(total_pages);
 
     return res.render("pages/posts-view", {
       title: "Posts",
       posts: posts,
-      limit,
+      limit: pagination_limit,
       total_pages
     });
   } catch (err) {
