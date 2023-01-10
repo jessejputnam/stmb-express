@@ -61,7 +61,8 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       "script-src": ["'self'", "js.stripe.com/v3/"],
-      "frame-src": ["*"],
+      "frame-src": ["www.youtube.com"],
+      "frame-ancestors": ["'self'"],
       "img-src": ["'self'", "stmb-imgs.s3.us-west-2.amazonaws.com/", "*"]
     }
   })
