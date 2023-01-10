@@ -25,7 +25,6 @@ exports.posts_display_get = async (req, res, next) => {
     ]);
 
     const total_pages = Math.ceil(posts_count / pagination_limit);
-    console.log(total_pages);
 
     return res.render("pages/posts-view", {
       title: "Posts",

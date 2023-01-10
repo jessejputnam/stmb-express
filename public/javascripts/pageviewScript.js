@@ -1,10 +1,5 @@
 "use strict";
-
-const list_btn = document.querySelector("#list-view");
-const post_btn = document.querySelector("#post-view");
-
-const posts_abbr = document.querySelector(".abbr-posts-container");
-const posts_full = document.querySelector(".posts-container");
+const posts_container = document.querySelector(".posts-wrapper");
 
 const load_more_btn = document.querySelector("#load-more");
 const page_num_input = document.querySelector("#page");
@@ -12,25 +7,6 @@ const page_limit_input = document.querySelector("#limit");
 const page_id = document.querySelector("#pageId").value;
 const total_pages = Number(document.querySelector("#totalPages").value);
 const loader = document.querySelector(".loader");
-
-// Toggle View Buttons
-list_btn.addEventListener("click", () => {
-  if (list_btn.classList.contains("toggle-view-selected")) return;
-
-  list_btn.classList.add("toggle-view-selected");
-  post_btn.classList.remove("toggle-view-selected");
-  posts_abbr.classList.remove("hidden");
-  posts_full.classList.add("hidden");
-});
-
-post_btn.addEventListener("click", () => {
-  if (post_btn.classList.contains("toggle-view-selected")) return;
-
-  post_btn.classList.add("toggle-view-selected");
-  list_btn.classList.remove("toggle-view-selected");
-  posts_full.classList.remove("hidden");
-  posts_abbr.classList.add("hidden");
-});
 
 // Fetch more pages of posts
 load_more_btn.addEventListener("click", async () => {
@@ -58,11 +34,8 @@ load_more_btn.addEventListener("click", async () => {
 
   // Build and attach posts to page
   data.forEach(async (post) => {
-    const abbr_post = makeAbbrPost(post);
-    posts_abbr.append(abbr_post);
-
     const full_post = makePost(post);
-    posts_full.append(full_post);
+    posts_container.append(full_post);
 
     // Add ogg fetch to Link post
     if (post.type === "link") {

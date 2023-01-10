@@ -27,6 +27,8 @@ exports.page_get = async (req, res, next) => {
 
   try {
     const page = await Page.findById(pageId).populate("genre").exec();
+    // Set limit
+    const pagination_limit = 10;
 
     // If no page is found
     if (!page) {
@@ -37,11 +39,20 @@ exports.page_get = async (req, res, next) => {
 
     const postsPromise = Post.find({ pageId: pageId })
       .sort({ timestamp: "desc" })
+      .limit(pagination_limit)
       .exec();
+
+    const postsCountPromise = Post.countDocuments({ user: req.user });
 
     const tiersPromise = Membership.find({ page: pageId });
 
-    const [posts, tiers] = await Promise.all([postsPromise, tiersPromise]);
+    const [posts, posts_count, tiers] = await Promise.all([
+      postsPromise,
+      postsCountPromise,
+      tiersPromise
+    ]);
+
+    const total_pages = Math.ceil(posts_count / pagination_limit);
 
     let curPageSub;
 
@@ -87,7 +98,10 @@ exports.page_get = async (req, res, next) => {
       page,
       tiers,
       posts,
-      curPageSub
+      curPageSub,
+      limit: pagination_limit,
+      total_pages,
+      page_id: page._id
     });
   } catch (err) {
     return next(err);
