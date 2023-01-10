@@ -27,6 +27,7 @@ const UserSchema = new Schema(
     isVerified: { type: Boolean, default: false },
     resetPasswordToken: { type: String, required: false },
     resetPasswordExpires: { type: Date, required: false },
+    messages: [{ type: String }],
 
     creator: {
       genre: [{ type: Schema.Types.ObjectId, ref: "Genre" }],

@@ -50,6 +50,18 @@ exports.user_home_get = async (req, res, next) => {
   }
 };
 
+// Clear alert messages on POST
+exports.clear_messages_post = async (req, res, next) => {
+  const user_id = req.user._id;
+
+  try {
+    await User.findByIdAndUpdate(user_id, { messages: [] });
+    return res.redirect("/home");
+  } catch (err) {
+    return next(err);
+  }
+};
+
 // ################# REGISTERING ##################
 
 // Display sign up on GET

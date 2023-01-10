@@ -11,9 +11,21 @@ block content
     h1 Hey, #{currentUser.firstname}!
 
     if currentUser.creator.stripeIssue
-      p.bold Stripe Error: 
-        span.normal.warning ❌ There is an issue: please go to 
-          a.normal(href="https://dashboard.stripe.com/login" target="_blank" noreferrer) Stripe Dashboard
+      div.stripe-error-container
+        p.bold Stripe Error: 
+          span.normal.warning ❌ There is an issue: please go to 
+            a.normal(href="https://dashboard.stripe.com/login" target="_blank" noreferrer) Stripe Dashboard
+
+    if currentUser.messages.length    
+      div.attention-container
+        div.flex-h
+          p(style="color:gray;font-size:.9rem") Attention:
+          form(method="POST" action="/home/clear-messages") 
+            button.btn.btn-tertiary Clear Messages
+        ul
+        each message of currentUser.messages
+          li.warning(style="margin-left:10px")= message
+
 
     if !currentUser.isVerified 
       p Please check email and verify account.

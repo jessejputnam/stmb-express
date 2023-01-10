@@ -9,6 +9,46 @@
   }
 }
 
+.stripe-error-container {
+  border-radius: 10px;
+  box-shadow: 0 0 3px 0 rgba(255, 0, 0, 0.548);
+  padding: 10px;
+  background-color: rgba(255, 155, 155, 0.292);
+}
+
+.attention-container {
+  border-radius: 10px;
+  box-shadow: 0 0 3px 0 rgba(255, 119, 0, 0.548);
+  padding: 10px;
+  background-color: rgba(255, 202, 155, 0.292);
+  min-width: 387.5px;
+}
+
+@media only screen and (max-width: 600px) {
+  .stripe-error-container {
+    border-radius: 0;
+  }
+
+  .attention-container {
+    border-radius: 0;
+    width: 100%;
+  }
+}
+
+.attention-container > div {
+  justify-content: space-between;
+}
+
+.attention-container > div > form > button {
+  min-width: unset;
+  padding: 2px 4px;
+  font-size: 0.7rem;
+  border-color: rgba(245, 196, 153, 0.636);
+  color: rgba(247, 143, 52, 0.867);
+  border-radius: 5px;
+  background-color: unset;
+}
+
 .toggle-view-menu {
   display: flex;
   flex-direction: column;

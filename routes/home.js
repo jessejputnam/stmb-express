@@ -8,9 +8,6 @@ const isVerifiedCheck = require("../middlewares/isVerifiedCheck");
 const auth_controller = require("../controllers/authController");
 const creator_controller = require("../controllers/creatorController");
 
-const countryNames = require("../utils/countryNames");
-const Subscription = require("../models/subscription");
-
 /* -------------------- HOMEPAGE ------------------ */
 
 // GET request for display user home
@@ -43,6 +40,13 @@ router.post(
   "/creator-signup",
   isVerifiedCheck,
   creator_controller.become_creator_post
+);
+
+// POST request for clear attention messages
+router.post(
+  "/clear-messages",
+  isVerifiedCheck,
+  auth_controller.clear_messages_post
 );
 
 module.exports = router;

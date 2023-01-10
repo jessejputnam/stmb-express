@@ -154,10 +154,14 @@ router.post("/connect", async (req, res, next) => {
 
           // Loop over subscriptions
           if (subscriptions.length) {
+            console.log("######### IF STATEMEMNT #########");
             for (let sub of subscriptions) {
+              console.log("######### FOR LOOP #########");
               const creatorId = sub.page.user;
               const stripeSubId = sub.stripeSubscriptionId;
+              const sub_user = sub.user;
 
+              console.log("@@@@@@ 11111111 @@@@@@@@", sub_user);
               // Delete Stripe subscription
               const creator = await User.findById(creatorId);
 
@@ -165,11 +169,23 @@ router.post("/connect", async (req, res, next) => {
                 stripeAccount: creator.creator.stripeId
               });
 
-              // Update subscription object to give customer a warning
-              sub.membership = null;
-              await sub.save();
+              console.log("@@@@@@ 222222222 @@@@@@@@", sub_user);
+
+              // Add alert message to affected subscriber
+              console.log("@@@@@@ CHECKING @@@@@@@@", sub_user);
+              // const user = await User.findById(sub_user);
+              await User.findByIdAndUpdate(
+                sub.user,
+                {
+                  $push: {
+                    messages: `${sub.page.title} has deleted a membership tier you were subscribed to.`
+                  }
+                },
+                { upsert: true }
+              );
             }
           }
+          console.log("COMPLETED &&&&&&&&&&&&&&&#&#&#&#");
         }
       } catch (err) {
         return next(err);
