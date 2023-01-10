@@ -108,6 +108,13 @@ router.get("/posts/add-post_video", post_controller.add_post_get);
 // POST request for add post
 router.post("/posts/add-post", post_controller.add_post_post);
 
+// POST request for add image upload post
+router.post(
+  "/posts/add-post-upload",
+  upload_img_sm.single("postImg"),
+  post_controller.add_post_upload_post
+);
+
 // GET request for edit post
 router.get("/posts/:id", post_controller.edit_post_get);
 

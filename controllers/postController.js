@@ -2,6 +2,7 @@
 
 const { body, validationResult } = require("express-validator");
 const ogs = require("open-graph-scraper");
+const s3UploadPost = require("../middlewares/s3UploadPost");
 
 const Post = require("../models/post");
 
@@ -91,6 +92,71 @@ exports.add_post_post = [
       await post.save();
 
       return res.redirect("/account/posts");
+    } catch (err) {
+      return next(err);
+    }
+  }
+];
+
+// Handle add image upload post on POST
+exports.add_post_upload_post = [
+  body("title", "Post title required").trim().isLength({ min: 1 }).escape(),
+  body("text").trim().escape(),
+
+  async (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      // There are errors, rerender
+      res.render("forms/post-add", {
+        title: "Add Post",
+        errors: errors.array()
+      });
+      return;
+    }
+
+    // No errors, continue
+    const userId = req.user._id;
+    const userPageId = String(req.user.creator.page._id);
+    const postType = req.body.postType;
+    const publicAccess = req.body.isPublic;
+    const externalLink = req.body.externalLink || null;
+    let typeContent =
+      "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg";
+
+    const post = new Post({
+      user: userId,
+      pageId: userPageId,
+      public: publicAccess,
+      title: req.body.title,
+      text: req.body.text,
+      type: postType,
+      external_link: externalLink,
+      typeContent
+    });
+
+    // IMAGE UPLOAD
+    try {
+      const result = await s3UploadPost(req.file, post._id);
+
+      if (result.errorMsg) {
+        const err = new Error(result.errorMsg);
+        err.status = 404;
+        return next(err);
+      }
+
+      post.typeContent = result.Location;
+
+      await post.save();
+
+      return res.redirect("/account/posts");
+    } catch (err) {
+      return next(err);
+    }
+
+    try {
+      // await post.save();
+      // return res.redirect("/account/posts");
     } catch (err) {
       return next(err);
     }

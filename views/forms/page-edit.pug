@@ -68,15 +68,17 @@ block content
     div.img-upload-container(style="margin-top:-7px")
       form.form-wrapper(method="POST" action="update/profileImg" enctype="multipart/form-data")
         div.form-control
-          label(for="profileImg") Profile Image
-          input#profileImg(type="file" name="profileImg" accept="image/png, image/jpeg, image/jpg, image/webp")
+          label(for="profileImg") Profile Image 
+            span(style="font-size:.8rem; color:gray") (< 500KB)
+          input#profileImg(type="file" name="profileImg" accept="image/png, image/jpeg, image/jpg, image/webp" required)
         button.btn.btn-secondary(type="submit") Upload Image
 
 
       form.form-wrapper(method="POST" action="update/bannerImg" enctype="multipart/form-data")
         div.form-control
-          label(for="bannerImg") Banner Image
-          input#bannerImg(type="file" name="bannerImg" accept="image/png, image/jpeg, image/jpg, image/webp")
+          label(for="bannerImg") Banner Image 
+            span(style="font-size:.8rem; color:gray") (< 1MB )
+          input#bannerImg(type="file" name="bannerImg" accept="image/png, image/jpeg, image/jpg, image/webp" required)
         button.btn.btn-secondary(type="submit") Upload Image
 
       hr(style="margin:25px")

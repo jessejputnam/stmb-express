@@ -16,6 +16,16 @@
   position: relative;
 }
 
+.external-link {
+  color: #06b5e6;
+  font-size: 0.8rem;
+}
+@media (hover: hover) {
+  .external-link:hover {
+    color: #0096bf;
+  }
+}
+
 @media only screen and (max-width: 600px) {
   .post-container {
     border-radius: 0;

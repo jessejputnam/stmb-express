@@ -19,10 +19,13 @@ block content
         label(for="text" style="margin-left:15px") Text
         textarea#text(name="text" rows="6")!= post.text
 
-      if post.type !== "text" 
+      if post.type !== "text"
         div.form-control 
           label(for="typeContent" style="margin-left:15px") #{post.type[0].toUpperCase() + post.type.slice(1)} Url
-          input#typeContent(type="text" name="typeContent" required='true' value=post.typeContent)
+          if post.typeContent.split(".")[0] === "https://stmb-imgs"
+            input#typeContent(type="text" name="typeContent" required='true' value=post.typeContent style="background:inherit; color:gray" readonly)
+          else
+            input#typeContent(type="text" name="typeContent" required='true' value=post.typeContent)
 
       div.form-control 
         label(for="public" style="margin-left:15px") Post Visibility

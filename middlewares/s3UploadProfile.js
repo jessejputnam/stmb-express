@@ -10,10 +10,10 @@ const bucketName = process.env.AWS_BUCKET_NAME;
 const s3UploadProfile = async (file, pageId) => {
   const s3 = new S3();
 
-  // Delete previous image if not placeholder
   try {
     const page = await Page.findById(pageId);
 
+    // Delete previous image if not placeholder
     if (page.profileImg.includes("http")) {
       const key = filterUrl(page.profileImg);
 

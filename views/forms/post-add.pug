@@ -30,40 +30,78 @@ block content
         for error in errors 
           li!= error.msg
 
-    form.form-wrapper(method='POST' action='/account/posts/add-post') 
-      input#postType(type="hidden" name="postType" value=postType required="true")
+    //- ########### Image Upload Post ##################
+    if imgType && otherType === "url"
+      form.form-wrapper(method='POST' action='/account/posts/add-post-upload' enctype="multipart/form-data") 
+        input#postType(type="hidden" name="postType" value=postType required="true")
 
-      div.form-control 
-        label(for="isPublic" style="margin-left:15px") Post Access 
-        select#isPublic(name="isPublic") 
-          option(value="false" selected) Subscribers Only 
-          option(value="true") Public Access 
+        div.form-control 
+          label(for="isPublic" style="margin-left:15px") Post Access 
+          select#isPublic(name="isPublic") 
+            option(value="false" selected) Subscribers Only 
+            option(value="true") Public Access 
 
-      div.form-control 
-        label(for="title" style="margin-left:15px") Post Title
-        input#title(type="text" name="title" required='true')
+        div.form-control 
+          label(for="title" style="margin-left:15px") Post Title
+          input#title(type="text" name="title" required='true')
 
-      div.form-control 
-        label(for="text" style="margin-left:15px") Text
-        textarea#text(name="text")
+        div.form-control 
+          label(for="text" style="margin-left:15px") Text
+          textarea#text(name="text")
 
-      div.form-control
-        if postType !== "text"
+        div.form-control
           label(for="typeContent")= postType[0].toUpperCase() + postType.slice(1) + " URL" 
-            if imgType 
-              a(style="font-size:.8rem" href=`/account/posts/add-post_${postType}_${otherType}`)= otherType === "url" ? " (Use a URL)" : " (Upload instead)" 
-        input#typeContent(type=(postType === "text" ? "hidden" : "text") name="typeContent")
+            a(style="font-size:.8rem" href=`/account/posts/add-post_${postType}_${otherType}`)= " (Use URL link instead)" 
+          input#postImg(type="file" name="postImg" accept="image/png, image/jpeg, image/jpg, image/webp" required)
 
-      if postType === "image"
         div.form-control 
           label(for="externalLink") (Optional) Add link to post
           div.form-control.add-link-container.hidden
             input#externalLink(type="text" placeholder="http://checkoutthislink.io" name="externalLink" style="margin-top:5px")
             button(type="button")#removeLink.btn.btn-tertiary ⓧ
           button#add-link.btn.btn-tertiary(type="button" style="border-radius:5px;margin-top:0px") ➕ Add Link
-    
-      div.form-control-btns 
-        a(href="/account/posts") Cancel
-        button#action-btn.btn(type="submit") Submit
-      div.loader.hidden
       
+        div.form-control-btns 
+          a(href="/account/posts") Cancel
+          button#action-btn.btn(type="submit") Submit
+        div.loader.hidden
+
+    //- ########### All Other Posts ##################
+    else
+      form.form-wrapper(method='POST' action='/account/posts/add-post') 
+        input#postType(type="hidden" name="postType" value=postType required="true")
+
+        div.form-control 
+          label(for="isPublic" style="margin-left:15px") Post Access 
+          select#isPublic(name="isPublic") 
+            option(value="false" selected) Subscribers Only 
+            option(value="true") Public Access 
+
+        div.form-control 
+          label(for="title" style="margin-left:15px") Post Title
+          input#title(type="text" name="title" required='true')
+
+        div.form-control 
+          label(for="text" style="margin-left:15px") Text
+          textarea#text(name="text")
+
+        div.form-control
+          if postType !== "text"
+            label(for="typeContent")= postType[0].toUpperCase() + postType.slice(1) + " URL" 
+              if imgType 
+                a(style="font-size:.8rem" href=`/account/posts/add-post_${postType}_${otherType}`)= " (Upload instead)" 
+          input#typeContent(type=(postType === "text" ? "hidden" : "text") name="typeContent" required)
+
+        if postType === "image"
+          div.form-control 
+            label(for="externalLink") (Optional) Add link to post
+            div.form-control.add-link-container.hidden
+              input#externalLink(type="text" placeholder="http://checkoutthislink.io" name="externalLink" style="margin-top:5px")
+              button(type="button")#removeLink.btn.btn-tertiary ⓧ
+            button#add-link.btn.btn-tertiary(type="button" style="border-radius:5px;margin-top:0px") ➕ Add Link
+      
+        div.form-control-btns 
+          a(href="/account/posts") Cancel
+          button#action-btn.btn(type="submit") Submit
+        div.loader.hidden
+        
