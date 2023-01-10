@@ -20,6 +20,7 @@
   color: #06b5e6;
   font-size: 0.8rem;
 }
+
 @media (hover: hover) {
   .external-link:hover {
     color: #0096bf;

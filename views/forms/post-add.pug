@@ -25,6 +25,10 @@ block content
         a(href="/account/posts/add-post_video")
           button.btn.btn-tertiary(class=(postType === "video" ? "selected-type" : "")) Video
 
+    if ["image", "video", "link"].includes(postType)
+      div 
+        p All URLs must begin with http:// or https://
+
     if errors 
       ul 
         for error in errors 
