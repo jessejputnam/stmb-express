@@ -21,51 +21,57 @@ load_more_btn.addEventListener("click", async () => {
   load_more_btn.classList.add("hidden");
   loader.classList.remove("hidden");
 
-  // Fetch next page of results
-  const response = await fetch(`/posts/${page_id}/${page_limit}/${page_num}`);
-  const data = await response.json();
+  try {
+    // Fetch next page of results
+    const response = await fetch(`/posts/${page_id}/${page_limit}/${page_num}`);
+    const data = await response.json();
 
-  // Unhide read more button
-  load_more_btn.classList.remove("hidden");
-  loader.classList.add("hidden");
+    // Unhide read more button
+    load_more_btn.classList.remove("hidden");
+    loader.classList.add("hidden");
 
-  // Update HTML input with current page value
-  page_num_input.value = page_num;
+    // Update HTML input with current page value
+    page_num_input.value = page_num;
 
-  // Build and attach posts to page
-  data.forEach(async (post) => {
-    const full_post = makePost(post);
-    posts_container.append(full_post);
+    // Build and attach posts to page
+    data.forEach(async (post) => {
+      const full_post = makePost(post);
+      posts_container.append(full_post);
 
-    // Add ogg fetch to Link post
-    if (post.type === "link") {
-      const linkUrl = full_post.children[1].children[0].children[0].href
-        .split("://")[1]
-        .split("/")[0];
-      const linkDiv = full_post.children[1].children[0].children[1];
+      // Add ogg fetch to Link post
+      if (post.type === "link") {
+        const linkUrl = full_post.children[1].children[0].children[0].href
+          .split("://")[1]
+          .split("/")[0];
+        const linkDiv = full_post.children[1].children[0].children[1];
 
-      try {
-        const result = await fetch(
-          `http://localhost:8080/open-graph/${linkUrl}`
-        );
+        try {
+          const result = await fetch(
+            `http://localhost:8080/open-graph/${linkUrl}`
+          );
 
-        if (!result.ok) return;
+          if (!result.ok) return;
 
-        const data = await result.json();
+          const data = await result.json();
 
-        linkDiv.children[0].textContent = data.name;
-        linkDiv.children[1].src = data.img;
-        linkDiv.children[2].textContent = data.description;
-      } catch (err) {
-        console.error(err);
+          linkDiv.children[0].textContent = data.name;
+          linkDiv.children[1].src = data.img;
+          linkDiv.children[2].textContent = data.description;
+        } catch (err) {
+          console.error(err);
+          return;
+        }
       }
-    }
-  });
+    });
 
-  // Disable load more if no more to load
-  if (page_num >= total_pages) {
-    load_more_btn.classList.add("hidden");
-    load_more_btn.disabled = true;
+    // Disable load more if no more to load
+    if (page_num >= total_pages) {
+      load_more_btn.classList.add("hidden");
+      load_more_btn.disabled = true;
+    }
+  } catch (err) {
+    console.error(err);
+    return;
   }
 });
 

@@ -31,19 +31,58 @@ exports.user_home_get = async (req, res, next) => {
   //! FOR DELETING EXCESS TEST ACCOUNTS
   // await Stripe.accounts.del("acct_1M4Usf2fKNHCRH9J");
 
+  // Set limit
+  const pagination_limit = 10;
+
   try {
-    const subscriptions = await Subscription.find({ user: req.user._id })
+    const subs_active_promise = Subscription.find({
+      user: req.user._id,
+      status: { $ne: "canceled" }
+    })
+      .limit(pagination_limit)
       .populate("page")
       .populate("membership")
       .exec();
 
-    const active = subscriptions.filter((sub) => sub.status !== "canceled");
-    const inactive = subscriptions.filter((sub) => sub.status === "canceled");
+    const subs_inactive_promise = Subscription.find({
+      user: req.user._id,
+      status: "canceled"
+    })
+      .limit(pagination_limit)
+      .populate("page")
+      .populate("membership")
+      .exec();
+
+    const subs_count_active_promise = Subscription.countDocuments({
+      user: req.user,
+      status: { $ne: "canceled" }
+    });
+
+    const subs_count_inactive_promise = Subscription.countDocuments({
+      user: req.user,
+      status: "canceled"
+    });
+
+    const [subs_active, subs_inactive, subs_count_active, subs_count_inactive] =
+      await Promise.all([
+        subs_active_promise,
+        subs_inactive_promise,
+        subs_count_active_promise,
+        subs_count_inactive_promise
+      ]);
+
+    const total_pages_active = Math.ceil(subs_count_active / pagination_limit);
+    const total_pages_inactive = Math.ceil(
+      subs_count_inactive / pagination_limit
+    );
 
     return res.render("pages/user-home", {
       title: "Home",
-      active,
-      inactive
+      limit: pagination_limit,
+      active: subs_active,
+      inactive: subs_inactive,
+      total_pages_active,
+      total_pages_inactive
     });
   } catch (err) {
     return next(err);

@@ -42,11 +42,11 @@ block content
         button#inactive-view.btn.btn-tertiary Inactive
 
     div#active-subs.subscriptions-container
-      if !active.length
-        a(href="/search" style="margin: 0 auto")
-          button.btn.btn-secondary Find Creators!
-
       div#active-subs-container
+        if !active.length
+          a(href="/search" style="margin: 0 auto")
+            button.btn.btn-secondary Find Creators!
+
         each sub in active 
           div.subscription-wrapper
             p 
@@ -54,17 +54,17 @@ block content
                 span(class=(sub.status === "active" ? "active" : "warning"))  (#{sub.status})
 
             div.subscription-info    
-              em(style="font-size:.9rem") #{sub.membership ? ` - ${sub.membership.title} -` : "Membership Tier Deleted"}
+              em(style="font-size:.9rem") #{sub.membership ? `Membership: ${sub.membership.title}` : "Membership Tier Deleted"}
             
               div 
                 a(href=`/subscription/${sub._id}/cancel`)
-                  button.btn.btn-secondary.btn-sub(type="submit") Cancel
+                  button.btn.btn-secondary.btn-sub Cancel
 
       div(style="margin:0 auto")
         button#load-more-active.btn.btn-tertiary(type="submit" class=(total_pages_active < 2 ? "hidden" : "")) Load More
         div.loader.hidden(style="height:30px;width:30px;border-width:4px")
-        input#totalPagesActive(type="hidden" name="totalPagesActive" value=total_pages_active)
-        input#pageActive(type="hidden" name="pageActive" value="1")
+        input#total-pages-active(type="hidden" name="total-pages-active" value=total_pages_active)
+        input#page-active(type="hidden" name="page-active" value="1")
     
     div#inactive-subs.subscriptions-container.hidden
       div#inactive-subs-container
@@ -84,10 +84,10 @@ block content
               p(style="color:red;font-size:.7rem;margin-top:-10px") Attn: Creator deleted membership tier
 
       div(style="margin:0 auto")
-        button#load-more-inctive.btn.btn-tertiary(type="submit" class=(total_pages_inactive < 2 ? "hidden" : "") style="margin:0 auto") Load More
+        button#load-more-inactive.btn.btn-tertiary(type="submit" class=(total_pages_inactive < 2 ? "hidden" : "") style="margin:0 auto") Load More
         div.loader.hidden(style="height:30px;width:30px;border-width:4px")
-        input#totalPagesInactive(type="hidden" name="totalPagesInactive" value=total_pages_inactive)
-        input#pageInactive(type="hidden" name="pageInactive" value="1")
+        input#total-pages-inactive(type="hidden" name="total-pages-inactive" value=total_pages_inactive)
+        input#page-inactive(type="hidden" name="page-inactive" value="1")
 
     input#limit(type="hidden" name="limit" value=limit)
     input#userId(type="hidden" name="userId" value=currentUser._id)

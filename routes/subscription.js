@@ -28,4 +28,7 @@ router.post("/:id/cancel", stripe_controller.cancel_subscription_post);
 // POST request for delete inactive subscription
 router.post("/:id/delete", subscription_controller.subscription_delete_post);
 
+// GET request fror load next page of subs
+router.get("/:id/:status/:limit/:num", subscription_controller.fetch_subs_get);
+
 module.exports = router;
