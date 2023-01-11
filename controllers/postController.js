@@ -236,7 +236,7 @@ exports.open_graph_get = async (req, res, next) => {
     }
 
     const result = data.result;
-    console.log(result);
+    
     if (result.success) {
       let og_image;
 
@@ -258,14 +258,14 @@ exports.open_graph_get = async (req, res, next) => {
           result.ogTitle ??
           result.twitterTitle ??
           "Not Found",
-        description: result.ogDescription ?? "Not Found",
-        url: result.ogUrl ?? result.requestUrl ?? "Not Found",
+        description: result.ogDescription ?? "...",
+        url: result.ogUrl ?? result.requestUrl ?? "...",
         img: og_image
       };
     } else {
       siteInfo = {
-        name: "Not Found",
-        description: "Not Found",
+        name: "...",
+        description: "...",
         url: site,
         img: placeholder_link
       };
@@ -308,8 +308,6 @@ exports.fetch_posts_get = async (req, res, next) => {
   const page_id = req.params.id;
   const limit = Number(req.params.limit);
   const page_num = Number(req.params.num);
-
-  console.log([page_id, limit, page_num]);
 
   const posts = await Post.find({ pageId: page_id })
     .sort({ timestamp: "desc" })

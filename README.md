@@ -44,7 +44,7 @@
 ### :camera: Screenshots
 
 <div align="center"> 
-  <img src="https://placehold.co/600x400?text=Your+Screenshot+here" alt="screenshot" />
+  <img src="/stmb-collage.jpg" alt="screenshot" />
 </div>
 
 <!-- TechStack -->
@@ -126,12 +126,6 @@ To set up testing webhook endpoints
   stripe listen --forward-connect-to http://localhost:8080/webhook/connect
 ```
 
-To run tests, run the following command
-
-```bash
-  TBD
-```
-
 <!-- Run Locally -->
 
 ### :running: Run Locally
@@ -187,8 +181,6 @@ function App() {
 - [ ] Figure out region list
 - [ ] Determine sanitize and validate reqs on page/user/creator/membership
 - [ ] Format emails and wording/branding
-- [ ] Check async performance: switch to parallel asynchonicity?
-- [ ] How do user post access work? Viewing privileged posts
 
 #### Before Going Live:
 
@@ -209,111 +201,59 @@ function App() {
 
 - [x] Initial set up
 
-  - [x] Initialize dependencies and dev environment
-
 - [x] Database set up
-
-  - [x] MoongoDB server creation
-  - [x] Connect to database
-  - [x] Database Schema set up
-    - [x] User Model
-    - [x] Creator Page Model
-    - [x] Post Model
-    - [x] Membership Model
-    - [x] Genre Model
-    - [x] Subscription Model
 
 - [x] Security set up
 
-  - [x] Local Strategy
-  - [x] Email verification
-  - [x] Set up session storage
-  - [x] Session storage
-    - [x] Session cookie set up
-    - [x] Set 24hr session signout timer
-    - [x] Set up session storage
+- [x] Controllers set up
 
-- [ ] Controllers set up
+  - [x] Auth
 
-  - [ ] Auth
-    - [x] Register user
-      - [x] Email verification
-    - [x] Login
-    - [x] Reset password
-    - [x] Email verification
   - [ ] Creator
-    - [x] Hide creator page
+
     - [x] Creator sign up
       - [ ] Info box for if genre not found, contact admin
     - [x] Connecting Stripe account
-      - [x] Onboarding
+
   - [ ] Page
 
     - [x] Page viewing
-      - [x] Hidden/Visible aspects based on whether its your page
     - [x] Page editing
-
-      - [ ] Images
-      - [x] Description/handles
-
     - [ ] Posts
-      - [x] Posts viewing as creator
-      - [ ] Post viewing as user
-        - [x] as subscribed
-        - [ ] as public
-      - [x] Adding posts
-      - [ ] Adding images to posts
-      - [ ] Adding embed to posts
-      - [ ] Adding paragraphs for post (Blog-like?)
-      - [ ] Editing posts
-      - [ ] Deleting posts
+      - [ ] video
+        - [ ] embed more than youtube?
+        - [ ] check security issue with CSP for iframe
+      - [x] image
+      - [x] link
+      - [x] text
     - [x] Membership creation
     - [x] Page creation
 
-  - [ ] Memberships
+  - [x] Memberships
 
     - [x] Create membership
-      - [x] Create Stripe product and price
     - [x] Delete membership
-      - [x] Delete stripe priceID in Stripe as well
-      - [x] Cancels all current subs with membership ID
-        - [ ] Send notification to subs/users
+    - [x] Edit membership
 
-  - [ ] Subscriptions
+  - [x] Subscriptions
 
     - [x] Create subscriptions
-      - [x] Tie to stripe
     - [x] Delete/Cancel subscriptions
-    - [ ] Filter subscriptions by status
+    - [x] Filter subscriptions by status
 
-  - [ ] Search
-    - [ ] By name
-    - [ ] By genre
-    - [ ] By region
+  - [x] Search
+    - [x] By name
+    - [x] By genre
 
-- [ ] File Storage Set up
+- [x] File Storage Set up (AWS s3)
 
-  - [ ] Banner images
-  - [ ] Profile images
-
-- [ ] Stripe set up
+- [x] Stripe set up
 
   - [x] Connect stripe
   - [x] Stripe accounts
 
     - [x] Creator account onboarding
-      - [x] Stripe connect create account
-      - [x] Account Link between STMB database and Stripe database
-      - [x] Handle success
-      - [x] Handle refresh
-        - [x] Refresh using accountID in creator obj
-      - [x] Handle complete stripe account/payment_intent ready
     - [x] Stripe users
-      - [x] Create user accounts on checkout
-      - [x] Subscription logic
-        - [x] Add subscription
-        - [x] Sub payment
-        - [x] Sub cancel
 
   - [ ] Set up webhooks to listen for changes
 
@@ -331,18 +271,6 @@ function App() {
       - [ ] Renewal failure (invoice.payment_failed)
       - [x] customer.subscription.deleted
       - [x] Membership gets deleted
-
-- [ ] Views set up
-
-  - [ ] Header (no user)
-  - [ ] Sidebar (user)
-  - [ ] Landing Page
-  - [ ] Search page
-  - [ ] Creator page
-  - [ ] Become creator page
-  - [ ] Creator Options
-    - [ ] Edit page
-    - [ ] Analytics
 
 <!-- FAQ -->
 

@@ -239,8 +239,6 @@ exports.cancel_subscription_post = async (req, res, next) => {
   const creatorId = req.body.creatorId;
   const subId = req.params.id;
 
-  console.log(creatorId);
-
   try {
     const creator_promise = User.findById(creatorId);
     const sub_promise = Subscription.findById(subId);
