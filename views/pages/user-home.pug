@@ -58,6 +58,11 @@ block content
             div 
               a(href=`/subscription/${sub._id}/cancel`)
                 button.btn.btn-secondary.btn-sub(type="submit") Cancel
+
+      button#load-more-active.btn.btn-tertiary(type="submit" class=(total_pages_active < 2 ? "hidden" : "") style="margin:0 auto") Load More
+      div.loader.hidden(style="height:30px;width:30px;border-width:4px")
+      input#totalPagesActive(type="hidden" name="totalPagesActive" value=total_pages_active)
+      input#pageActive(type="hidden" name="pageActive" value="1")
     
     div#inactive-subs.subscriptions-container.hidden
       each sub in inactive 
@@ -74,3 +79,11 @@ block content
                 button.btn.btn-secondary.btn-sub(type="submit") Delete Inactive
           if !sub.membership
             p(style="color:red;font-size:.7rem;margin-top:-10px") Attn: Creator deleted membership tier
+
+      button#load-more-inctive.btn.btn-tertiary(type="submit" class=(total_pages_inactive < 2 ? "hidden" : "") style="margin:0 auto") Load More
+      div.loader.hidden(style="height:30px;width:30px;border-width:4px")
+      input#totalPagesInactive(type="hidden" name="totalPagesInactive" value=total_pages_inactive)
+      input#pageInactive(type="hidden" name="pageInactive" value="1")
+
+    input#limit(type="hidden" name="limit" value=limit)
+    input#userId(type="hidden" name="userId" value=currentUser._id)

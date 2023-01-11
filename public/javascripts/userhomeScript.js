@@ -25,3 +25,5 @@ inactive_btn.addEventListener("click", () => {
   inactive_subs.classList.remove("hidden");
   active_subs.classList.add("hidden");
 });
+
+// Fetch more pages of subs
