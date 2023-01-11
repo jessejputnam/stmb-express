@@ -152,13 +152,6 @@ exports.add_post_upload_post = [
     } catch (err) {
       return next(err);
     }
-
-    try {
-      // await post.save();
-      // return res.redirect("/account/posts");
-    } catch (err) {
-      return next(err);
-    }
   }
 ];
 
@@ -229,8 +222,8 @@ exports.open_graph_get = async (req, res, next) => {
   const options = { url: site };
 
   let siteInfo = {
-    name: "Not Found",
-    description: "Not Found",
+    name: "...",
+    description: "...",
     url: site,
     img: "/images/post-placeholder.png"
   };
@@ -243,7 +236,22 @@ exports.open_graph_get = async (req, res, next) => {
     }
 
     const result = data.result;
-    if (data.result.success) {
+    console.log(result);
+    if (result.success) {
+      let og_image;
+
+      if (result.ogImage) {
+        og_image = Array.isArray(result.ogImage)
+          ? result.ogImage[0].url
+          : result.ogImage.url;
+      } else if (result.twitterImage) {
+        og_image = Array.isArray(result.twitterImage)
+          ? result.twitterImage[0].url
+          : result.twitterImage.url;
+      } else {
+        og_image = placeholder_link;
+      }
+
       siteInfo = {
         name:
           result.ogSiteName ??
@@ -252,11 +260,7 @@ exports.open_graph_get = async (req, res, next) => {
           "Not Found",
         description: result.ogDescription ?? "Not Found",
         url: result.ogUrl ?? result.requestUrl ?? "Not Found",
-        img: result.ogImage
-          ? result.ogImage.url
-          : result.twitterImage
-          ? result.twitterImage.url
-          : placeholder_link
+        img: og_image
       };
     } else {
       siteInfo = {
