@@ -90,8 +90,17 @@
   flex-direction: column;
   gap: 10px;
   background-color: white;
-  border-radius: 10px;
+  border-radius: 5px;
   box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.596);
+}
+
+#active-subs-container,
+#inactive-subs-container {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
   padding: 60px 15px 15px;
 }
 
