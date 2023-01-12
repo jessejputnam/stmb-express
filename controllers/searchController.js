@@ -22,6 +22,10 @@ exports.display_all_pages_get = async (req, res, next) => {
 
 // Handle display search form on GET
 exports.search_form_get = async (req, res, next) => {
+  const pg_num = !req.query.page ? 1 : Number(req.query.page);
+  // Set limit
+  const pagination_limit = 1;
+
   // Get search query
   const searchTerm = req.query.searchTerm;
   // Convert query to regex
@@ -41,30 +45,79 @@ exports.search_form_get = async (req, res, next) => {
       });
     }
 
+    let results_promise;
+    let total_results_count_promise;
+    let searched_term;
+
     // Determine if any genre searches are within search term
     const genre_check = searchTerm.split(" ");
+
     if (genre_check[0] === "browse-genre") {
-      const results = await Page.find({ genre: genre_check[2] })
+      results_promise = Page.find({
+        genre: genre_check[2],
+        active: true
+      })
+        .limit(pagination_limit)
+        .skip((pg_num - 1) * pagination_limit)
         .populate("genre")
         .exec();
-      const activeResults = results.filter((page) => page.active);
 
-      return res.render("pages/search", {
-        title: "Find Creators",
-        genres,
-        pages: activeResults,
-        searched_term: genre_check[1]
-      });
+      total_results_count_promise = Page.countDocuments({
+        genre: genre_check[2],
+        active: true
+      })
+        .populate("genre")
+        .exec();
+
+      searched_term = genre_check[1];
+    } else {
+      results_promise = Page.find({ title: regs, active: true })
+        .limit(pagination_limit)
+        .skip((pg_num - 1) * pagination_limit)
+        .populate("genre")
+        .exec();
+
+      total_results_count_promise = Page.countDocuments({
+        title: regs,
+        active: true
+      })
+        .populate("genre")
+        .exec();
+
+      searched_term = searchTerm;
     }
 
-    const results = await Page.find({ title: regs }).populate("genre").exec();
-    const activeResults = results.filter((page) => page.active);
+    const [results, total_results_count] = await Promise.all([
+      results_promise,
+      total_results_count_promise
+    ]);
+    // if (genre_check[0] === "browse-genre") {
+    //   const results = await Page.find({ genre: genre_check[2] })
+    //     .populate("genre")
+    //     .exec();
+    //   const activeResults = results.filter((page) => page.active);
+
+    //   return res.render("pages/search", {
+    //     title: "Find Creators",
+    //     genres,
+    //     pages: activeResults,
+    //     searched_term: genre_check[1]
+    //   });
+    // }
+
+    // const results = await Page.find({ title: regs }).populate("genre").exec();
+    // const activeResults = results.filter((page) => page.active);
+
+    const total_pages = Math.ceil(total_results_count / pagination_limit);
 
     return res.render("pages/search", {
       title: "Find Creators",
       genres,
-      pages: activeResults,
-      searched_term: searchTerm
+      pages: results,
+      searched_term,
+      searchTerm,
+      cur_page: pg_num,
+      total_pages
     });
   } catch (err) {
     return next(err);

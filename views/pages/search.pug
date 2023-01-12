@@ -34,3 +34,18 @@ block content
                 div  
                   h4= page.title 
                   p= page.genre.map(genre => genre.type).join(", ")
+
+        div.page-btns-container.flex-h(style="margin-top:15px;justify-content:center")
+          if cur_page > 1
+            a(href=`/search?searchTerm=${searchTerm}&page=${cur_page - 1}`) 
+              button.btn.btn-tertiary ◀
+          else 
+            button.btn.btn-tertiary(style="opacity:0") ◀ 
+
+          p= cur_page + "/" + total_pages 
+
+          if cur_page < total_pages
+            a(href=`/search?searchTerm=${searchTerm}&page=${cur_page + 1}`) 
+              button.btn.btn-tertiary ▶
+          else 
+            button.btn.btn-tertiary(style="opacity:0") ▶

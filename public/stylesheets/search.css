@@ -5,6 +5,8 @@ h1 {
 .search-page-input-container {
   width: 100%;
   max-width: 600px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .search-page-input-container > .form-control {
@@ -57,23 +59,6 @@ h1 {
   margin: 0;
 }
 
-/* .genres-container > a {
-  border-radius: 20px;
-  background-color: #b6dddfbe;
-  box-shadow: 0 0 2px 0px rgba(0, 0, 0, 0.371);
-  padding: 2px 10px;
-  font-size: 0.9rem;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-} */
-
-@media (hover: hover) {
-  /* .genres-container > a:hover {
-    background-color: #4271df6c;
-  } */
-}
-
 .results-container {
   padding: 15px 15px 30px;
   width: 100%;
@@ -91,8 +76,12 @@ h1 {
 
 @media only screen and (max-width: 600px) {
   .page-wrapper {
-    margin-left: 5px;
-    margin-right: 5px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .results-container {
+    border-radius: 0;
   }
 }
 
@@ -119,4 +108,15 @@ h1 {
   max-height: 70px;
   max-width: 70px;
   border-radius: 50%;
+}
+
+.page-btns-container > a > button {
+  width: 36px;
+  height: 36px;
+  font-family: "Hiragino Sans", monospace;
+}
+
+.page-btns-container > p {
+  font-size: 0.8rem;
+  color: gray;
 }
