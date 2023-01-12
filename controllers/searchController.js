@@ -24,7 +24,7 @@ exports.display_all_pages_get = async (req, res, next) => {
 exports.search_form_get = async (req, res, next) => {
   const pg_num = !req.query.page ? 1 : Number(req.query.page);
   // Set limit
-  const pagination_limit = 1;
+  const pagination_limit = 10;
 
   // Get search query
   const searchTerm = req.query.searchTerm;
@@ -91,22 +91,6 @@ exports.search_form_get = async (req, res, next) => {
       results_promise,
       total_results_count_promise
     ]);
-    // if (genre_check[0] === "browse-genre") {
-    //   const results = await Page.find({ genre: genre_check[2] })
-    //     .populate("genre")
-    //     .exec();
-    //   const activeResults = results.filter((page) => page.active);
-
-    //   return res.render("pages/search", {
-    //     title: "Find Creators",
-    //     genres,
-    //     pages: activeResults,
-    //     searched_term: genre_check[1]
-    //   });
-    // }
-
-    // const results = await Page.find({ title: regs }).populate("genre").exec();
-    // const activeResults = results.filter((page) => page.active);
 
     const total_pages = Math.ceil(total_results_count / pagination_limit);
 
