@@ -12,10 +12,26 @@ block content
       div.subs-container
         div.flex-h
           p(style="width:100%;text-align:center") Subs Count:
+            p(style="font-size:.8rem") Total Active: #{total_active}
           each membership, key in subs_by_membership  
-            p(style="font-size:.8rem") #{key}: #{membership.length}
+            p(style="font-size:.8rem") #{key}: #{membership}
 
         each sub of subs 
           div.sub-wrapper 
             p= sub.user.username
             p(class=(sub.membership ? "active" : "warning"))= sub.membership ? sub.membership.title : "Deleted membership"
+        
+        div.page-btns-container.flex-h(style="margin-top:15px")
+          if cur_page > 1
+            a(href=`/account/analytics?page=${cur_page - 1}`) 
+              button.btn.btn-tertiary ◀
+          else 
+            button.btn.btn-tertiary(style="opacity:0") ◀ 
+
+          p= cur_page + "/" + total_pages 
+
+          if cur_page < total_pages
+            a(href=`/account/analytics?page=${cur_page + 1}`) 
+              button.btn.btn-tertiary ▶
+          else 
+            button.btn.btn-tertiary(style="opacity:0") ▶

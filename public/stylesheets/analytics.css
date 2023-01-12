@@ -52,3 +52,14 @@
     align-items: flex-start;
   }
 }
+
+.page-btns-container > a > button {
+  width: 36px;
+  height: 36px;
+  font-family: "Hiragino Sans", monospace;
+}
+
+.page-btns-container > p {
+  font-size: 0.8rem;
+  color: gray;
+}

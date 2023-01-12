@@ -131,8 +131,14 @@ ul {
   }
 
   .btn-disabled:hover {
-    background-color: #34289f;
-    color: rgb(230, 167, 167);
+    /* background-color: inherit;
+    color: inherit;
+    border-color: inherit;
+    filter: brightness(100%); */
+    border: inset 2px gray;
+    color: black;
+    background-color: rgba(220, 220, 220, 0.858);
+    filter: none;
   }
 }
 

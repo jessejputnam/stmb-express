@@ -72,31 +72,61 @@ exports.subscription_delete_post = async (req, res, next) => {
 
 // Handle display analytics on GET
 exports.analytics_get = async (req, res, next) => {
+  const pg_num = !req.query.page ? 1 : Number(req.query.page);
+
+  // Set limit
+  const pagination_limit = 20;
+
   const page = req.user.creator.page;
 
   try {
-    const subs = await Subscription.find({ page: page })
+    const subs_promise = Subscription.find({ page: page })
+      .limit(pagination_limit)
+      .skip((pg_num - 1) * pagination_limit)
       .populate("user")
       .populate("membership")
       .exec();
 
+    const all_subs_promise = Subscription.find({ page: page })
+      .populate("user")
+      .populate("membership")
+      .exec();
+
+    const total_subs_count_promise = Subscription.countDocuments({
+      page: page
+    });
+
+    const [subs, all_subs, total_subs_count] = await Promise.all([
+      subs_promise,
+      all_subs_promise,
+      total_subs_count_promise
+    ]);
+
+    const active_sub_count = all_subs.filter((sub) => sub.membership).length;
+
     const subs_by_membership = {};
-    subs.forEach((sub) => {
+    all_subs.forEach((sub) => {
       const title = sub.membership
         ? sub.membership.title
         : "Deleted Membership";
 
       if (!(title in subs_by_membership)) {
-        subs_by_membership[title] = [];
+        subs_by_membership[title] = 0;
       }
 
-      subs_by_membership[title].push(sub);
+      subs_by_membership[title]++;
     });
+
+    const total_pages = Math.ceil(total_subs_count / pagination_limit);
 
     return res.render("pages/analytics", {
       title: "Analytics",
       subs,
-      subs_by_membership
+      total_subs: total_subs_count,
+      total_active: active_sub_count,
+      subs_by_membership,
+      cur_page: pg_num,
+      total_pages
     });
   } catch (err) {
     return next(err);
