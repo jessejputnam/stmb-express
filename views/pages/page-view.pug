@@ -99,9 +99,9 @@ block content
                           button.btn.btn-secondary.btn-disabled My page
                         //- Signed in, capable of subbing
                         else 
-                          form(method="POST" action=`/subscription/add`) 
+                          form.sub-form(method="POST" action=`/subscription/add`) 
                             input#membershipId(type="hidden" name="membershipId" required="true" value=membership._id)
-                            button.btn.btn-secondary(type="submit") Subscribe
+                            button.btn.btn-secondary.sub-btn(type="submit") Subscribe
 
                       p.membership-desc!= membership.description
 

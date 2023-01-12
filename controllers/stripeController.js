@@ -208,8 +208,11 @@ exports.cancel_sub_signup_post = async (req, res, next) => {
   const subId = req.params.id;
 
   try {
+    const sub = await Subscription.findById(subId);
+    const page = sub.page;
     await Subscription.findByIdAndRemove(subId);
-    return res.redirect("/home");
+
+    return res.redirect(`/${page}`);
   } catch (err) {
     return next(err);
   }

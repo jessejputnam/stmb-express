@@ -1,12 +1,34 @@
 "use strict";
 const posts_container = document.querySelector(".posts-wrapper");
 
+// const sub_forms = document.querySelectorAll(".sub-form");
+const sub_btns = document.querySelectorAll(".sub-btn");
+
 const load_more_btn = document.querySelector("#load-more");
 const page_num_input = document.querySelector("#page");
 const page_limit_input = document.querySelector("#limit");
 const page_id = document.querySelector("#pageId").value;
 const total_pages = Number(document.querySelector("#totalPages").value);
 const loader = document.querySelector(".loader");
+
+// Disable sub btns on click to disallow multiple calls
+sub_btns.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    const clicked = e.target;
+    const clicked_container = clicked.closest(".sub-form");
+
+    const loader = makeLoader();
+    clicked.classList.add("hidden");
+    clicked_container.append(loader);
+
+    sub_btns.forEach((button) => {
+      if (button !== clicked) {
+        button.disabled = true;
+        button.classList.add("btn-disabled");
+      }
+    });
+  });
+});
 
 // Fetch more pages of posts
 load_more_btn.addEventListener("click", async () => {
@@ -93,6 +115,13 @@ function addElement(el, classes = null, content = null) {
   if (content) newEl.textContent = content;
 
   return newEl;
+}
+
+// Create loader
+function makeLoader() {
+  const loader = addElement("div", ["loader"]);
+  loader.style = "height:30px;width:30px;border-width:4px";
+  return loader;
 }
 
 // Make Abbr Post
